@@ -1,0 +1,6 @@
+Debug/
+Release/
+x64/
+ConsoleMenu.vcxproj
+ConsoleMenu.vcxproj.filters
+ConsoleMenu.vcxproj.user

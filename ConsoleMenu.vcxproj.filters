@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Box">
+      <UniqueIdentifier>{62362f12-599c-4e54-bc2d-cf1c6ec85fcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Box">
+      <UniqueIdentifier>{ab9b4a96-31c1-43d1-9992-a8a0dd215970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Box\BoxContainer">
+      <UniqueIdentifier>{182a0318-6bc9-4763-957a-b126b731fc89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Box\BoxContainer">
+      <UniqueIdentifier>{f9e5f03a-d20c-445c-a2eb-558792df3526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Box\ContentBox">
+      <UniqueIdentifier>{026badbe-5a07-469d-8d4e-330677164607}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Box\ContentBox">
+      <UniqueIdentifier>{54b053a9-037f-4931-937d-f0d63d6166e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Box\ContentBox\TextBox">
+      <UniqueIdentifier>{2d824f94-1f53-47ca-892b-5d5dee718ef8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Box\ContentBox\TextBox">
+      <UniqueIdentifier>{e024790b-146f-49f1-b6d0-0e395571118b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EditConsole">
+      <UniqueIdentifier>{ecddc701-c868-437d-b396-70d0e7d4dc62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EditConsole">
+      <UniqueIdentifier>{d95e35aa-6c95-4bcb-ab3f-356005ebc8fa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Box\box.cpp">
+      <Filter>Source Files\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Box\BoxContainer\boxcontainer.cpp">
+      <Filter>Source Files\Box\BoxContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Box\ContentBox\spacer.cpp">
+      <Filter>Source Files\Box\ContentBox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Box\ContentBox\contentbox.cpp">
+      <Filter>Source Files\Box\ContentBox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditConsole\editconsole.cpp">
+      <Filter>Source Files\EditConsole</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditConsole\inputevent.cpp">
+      <Filter>Source Files\EditConsole</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Box\ContentBox\TextBox\scrollingtextbox.cpp">
+      <Filter>Source Files\Box\ContentBox\TextBox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Box\ContentBox\TextBox\textbox.cpp">
+      <Filter>Source Files\Box\ContentBox\TextBox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Box\ContentBox\TextBox\button.cpp">
+      <Filter>Source Files\Box\ContentBox\TextBox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Box\BoxContainer\horizontalboxcontainer.cpp">
+      <Filter>Source Files\Box\BoxContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Box\BoxContainer\verticalboxcontainer.cpp">
+      <Filter>Source Files\Box\BoxContainer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Box\box.h">
+      <Filter>Header Files\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="src\consolemenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Box\BoxContainer\boxcontainer.h">
+      <Filter>Header Files\Box\BoxContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Box\ContentBox\contentbox.h">
+      <Filter>Header Files\Box\ContentBox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Box\ContentBox\spacer.h">
+      <Filter>Header Files\Box\ContentBox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Flag\flag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EditConsole\editconsole.h">
+      <Filter>Header Files\EditConsole</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EditConsole\inputevent.h">
+      <Filter>Header Files\EditConsole</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Box\ContentBox\TextBox\textbox.h">
+      <Filter>Header Files\Box\ContentBox\TextBox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Box\ContentBox\TextBox\scrollingtextbox.h">
+      <Filter>Header Files\Box\ContentBox\TextBox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Box\ContentBox\TextBox\button.h">
+      <Filter>Header Files\Box\ContentBox\TextBox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Box\BoxContainer\verticalboxcontainer.h">
+      <Filter>Header Files\Box\BoxContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Box\BoxContainer\horizontalboxcontainer.h">
+      <Filter>Header Files\Box\BoxContainer</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

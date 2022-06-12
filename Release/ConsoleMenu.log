@@ -1,0 +1,4 @@
+﻿  contentbox.cpp
+C:\Users\Franz Alarcon\Documents\Visual Studio 2019\Projects\ConsoleMenu\ConsoleMenu\src\Box\ContentBox\contentbox.cpp(43,22): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+C:\Users\Franz Alarcon\Documents\Visual Studio 2019\Projects\ConsoleMenu\ConsoleMenu\src\Box\ContentBox\contentbox.cpp(43,27): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+  ConsoleMenu.vcxproj -> C:\Users\Franz Alarcon\Documents\Visual Studio 2019\Projects\ConsoleMenu\Release\ConsoleMenu.lib
