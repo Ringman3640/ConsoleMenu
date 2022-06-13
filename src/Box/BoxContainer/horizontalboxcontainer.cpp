@@ -75,10 +75,6 @@ Reply HorizontalBoxContainer::draw(Position pos, Boundary container) {
     std::vector<int> spacing = getSpacingWidth(contentBound, totalWidth, 
             dynamCount);
 
-    // TODO: printing inconsistenty
-    // Problem: no need to subtract verBorderSize from starting offset position value (messes up contents printing since 
-    // many need to reconsider how Boxes are printed and if the given is position is relative to the given boundary
-
     // Print contents
     int spacingIdx = spacing.size() - 1;
     Position offset{ actualWidth - vertBorderSize - 0, 0 }; // TODO: test the - 1
@@ -103,8 +99,55 @@ Reply HorizontalBoxContainer::draw(Position pos, Boundary container) {
 
 //------------------------------------------------------------------------------
 Reply HorizontalBoxContainer::buffer(Position pos, Boundary container) {
-    // stub
-    return Reply::FAILED;
+    // Get acutal dimensions and print base
+    int prevTargWidth = targetWidth;
+    int prevTargHeight = targetHeight;
+    targetWidth = getWidth();
+    targetHeight = getHeight();
+    bufferBase(pos, container);
+    targetWidth = prevTargWidth;
+    targetHeight = prevTargHeight;
+
+    // Check if there is anything to print
+    if (contents.empty()) {
+        return Reply::CONTINUE;
+    }
+
+    // Get total content width
+    int totalWidth = 0;
+    int dynamCount = 0;
+    for (int i = 0; i < contents.size(); ++i) {
+        if (!contents[i].fixed) {
+            totalWidth += contents[i].item->getWidth();
+            ++dynamCount;
+        }
+    }
+
+    // Get content space boundary and width spacing
+    Boundary contentBound = getContentBound(absolutePos);
+    std::vector<int> spacing = getSpacingWidth(contentBound, totalWidth,
+        dynamCount);
+
+    // Print contents
+    int spacingIdx = spacing.size() - 1;
+    Position offset{ actualWidth - vertBorderSize, 0 };
+    for (int i = contents.size() - 1; i >= 0; --i) {
+        if (contents[i].fixed) {
+            Position drawPos{ contents[i].pos.col + pos.col,
+                    contents[i].pos.row + pos.row };
+            contents[i].item->buffer(drawPos, contentBound);
+        }
+        else {
+            int itemWidth = contents[i].item->getWidth();
+            offset.col -= spacing[spacingIdx--] + itemWidth;
+            offset.row = getRowOffset(contents[i].item->getHeight());
+            contents[i].item->buffer(Position{ absolutePos.col + offset.col,
+                    absolutePos.row + offset.row }, contentBound);
+        }
+    }
+
+    drawn = true;
+    return Reply::CONTINUE;
 }
 
 //------------------------------------------------------------------------------
