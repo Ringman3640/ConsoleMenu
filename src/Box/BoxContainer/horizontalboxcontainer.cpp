@@ -71,7 +71,7 @@ Reply HorizontalBoxContainer::draw(Position pos, Boundary container) {
     }
 
     // Get content space boundary and width spacing
-    Boundary contentBound = getContentBound(pos);
+    Boundary contentBound = getContentBound(absolutePos);
     std::vector<int> spacing = getSpacingWidth(contentBound, totalWidth, 
             dynamCount);
 
@@ -92,8 +92,8 @@ Reply HorizontalBoxContainer::draw(Position pos, Boundary container) {
             int itemWidth = contents[i].item->getWidth();
             offset.col -= spacing[spacingIdx--] + itemWidth + 0; // TODO: test the + 1
             offset.row = getRowOffset(contents[i].item->getHeight());
-            contents[i].item->draw(Position{ offset.col, offset.row }, 
-                    contentBound);
+            contents[i].item->draw(Position{ absolutePos.col + offset.col, 
+                    absolutePos.row + offset.row }, contentBound);
         }
     }
 
