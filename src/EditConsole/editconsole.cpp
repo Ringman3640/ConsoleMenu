@@ -342,26 +342,23 @@ void EditConsole::writeToScreen(const Position& pos, const char text[]) {
 //------------------------------------------------------------------------------
 void EditConsole::writeToBuffer(const Position& pos, const char text[]) {
     int textIdx = 0;
+    if (writeBuffer.size() == 0) {
+        return;
+    }
     Position drawIdx = { pos.col, pos.row };
-    Position winDim = getWindowDimensions();
+    Position buffDim{ writeBuffer[0].size(), writeBuffer.size() - 1 };
 
     // Check draw position
-    if (drawIdx.col > winDim.col - 1) {
-        drawIdx.col = drawIdx.col % winDim.col;
-        ++drawIdx.row;
+    if (pos.col < 0 || pos.col > buffDim.col - 1) {
+        return;
     }
-    drawIdx.row = drawIdx.row % winDim.row;
+    if (pos.row < 0 || pos.row > buffDim.row - 1) {
+        return;
+    }
 
     // Write to write buffer
-    while (text[textIdx]) {
+    while (text[textIdx] && writeBuffer[pos.row][textIdx]) {
         writeBuffer[pos.row][drawIdx.col++] = text[textIdx++];
-
-        // Check next position
-        if (drawIdx.col > winDim.col - 1) {
-            drawIdx.col = drawIdx.col % winDim.col;
-            ++drawIdx.row;
-        }
-        drawIdx.row = drawIdx.row % winDim.row;
     }
 }
 
@@ -410,7 +407,7 @@ void EditConsole::clearInputBuffer() {
 //------------------------------------------------------------------------------
 void EditConsole::formatWriteBuffer() {
     Position winDim = getWindowDimensions();
-    writeBuffer.resize(winDim.row, std::vector<char>(winDim.col));
+    writeBuffer.resize(winDim.row + 1, std::vector<char>(winDim.col + 1));
     clearWriteBuffer();
 }
 
