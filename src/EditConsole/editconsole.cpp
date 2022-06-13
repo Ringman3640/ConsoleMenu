@@ -93,7 +93,9 @@ bool EditConsole::setWindowDimensions(short width, short height) {
     }
 
     SMALL_RECT dim = SMALL_RECT{ 0, 0, width, height };
-    return SetConsoleWindowInfo(OUT_HANDLE, TRUE, &dim);
+    bool result = SetConsoleWindowInfo(OUT_HANDLE, TRUE, &dim);
+    formatWriteBuffer();
+    return result;
 }
 
 //------------------------------------------------------------------------------
@@ -357,7 +359,7 @@ void EditConsole::writeToBuffer(const Position& pos, const char text[]) {
     }
 
     // Write to write buffer
-    while (text[textIdx] && writeBuffer[pos.row][textIdx]) {
+    while (text[textIdx] && writeBuffer[pos.row][drawIdx.col]) {
         writeBuffer[pos.row][drawIdx.col++] = text[textIdx++];
     }
 }
@@ -407,7 +409,8 @@ void EditConsole::clearInputBuffer() {
 //------------------------------------------------------------------------------
 void EditConsole::formatWriteBuffer() {
     Position winDim = getWindowDimensions();
-    writeBuffer.resize(winDim.row + 1, std::vector<char>(winDim.col + 1));
+    writeBuffer = std::vector<std::vector<char>>(winDim.row + 1, 
+            std::vector<char>(winDim.col + 1));
     clearWriteBuffer();
 }
 
