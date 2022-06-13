@@ -1,7 +1,0 @@
-﻿  horizontalboxcontainer.cpp
-C:\Users\Franz Alarcon\Documents\Visual Studio 2019\Projects\ConsoleMenu\ConsoleMenu\src\Box\BoxContainer\horizontalboxcontainer.cpp(42,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Franz Alarcon\Documents\Visual Studio 2019\Projects\ConsoleMenu\ConsoleMenu\src\Box\BoxContainer\horizontalboxcontainer.cpp(66,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Franz Alarcon\Documents\Visual Studio 2019\Projects\ConsoleMenu\ConsoleMenu\src\Box\BoxContainer\horizontalboxcontainer.cpp(112,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Franz Alarcon\Documents\Visual Studio 2019\Projects\ConsoleMenu\ConsoleMenu\src\Box\BoxContainer\horizontalboxcontainer.cpp(147,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Franz Alarcon\Documents\Visual Studio 2019\Projects\ConsoleMenu\ConsoleMenu\src\Box\BoxContainer\horizontalboxcontainer.cpp(167,23): warning C4018: '<': signed/unsigned mismatch
-  ConsoleMenu.vcxproj -> C:\Users\Franz Alarcon\Documents\Visual Studio 2019\Projects\ConsoleMenu\Debug\ConsoleMenu.lib
