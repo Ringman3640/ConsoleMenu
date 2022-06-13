@@ -147,7 +147,7 @@ int HorizontalBoxContainer::getHeight() const {
     for (int i = 0; i < contents.size(); ++i) {
         maxHeight = std::max<int>(maxHeight, contents[i].item->getHeight());
     }
-    maxHeight += horizBorderSize;
+    maxHeight += horizBorderSize * 2;
 
     //updateHeightWidth = false;
     return std::max<int>(targetHeight, maxHeight);
@@ -165,9 +165,9 @@ int HorizontalBoxContainer::getWidth() const {
 
     int maxWidth = 0;
     for (int i = 0; i < contents.size(); ++i) {
-        maxWidth = std::max<int>(maxWidth, contents[i].item->getHeight());
+        maxWidth += contents[i].item->getWidth();
     }
-    maxWidth += vertBorderSize;
+    maxWidth += vertBorderSize * 2;
 
     //updateHeightWidth = false;
     return std::max<int>(targetWidth, maxWidth);
