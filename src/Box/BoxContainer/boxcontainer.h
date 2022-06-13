@@ -10,9 +10,10 @@
 //     corresponding contained Box and returns its Reply.
 //
 // Class Functionality:
-//     - 
-//     - 
-//     - 
+//     - Inherits all methods and functionality of the Box class.
+//     - Set if the Box is dynamically sized (if its dimensions can grow based
+//     - on the size of its contents).
+//     - Set the distribution of Boxes contained within the BoxContainer.
 // 
 // Dependencies: Box class.
 //------------------------------------------------------------------------------
