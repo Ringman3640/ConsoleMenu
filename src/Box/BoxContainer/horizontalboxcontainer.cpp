@@ -21,14 +21,12 @@
 #include "Box/BoxContainer/horizontalboxcontainer.h"
 
 //------------------------------------------------------------------------------
-    // Default constructor
 HorizontalBoxContainer::HorizontalBoxContainer() :
     BoxContainer() {
 
 }
 
 //------------------------------------------------------------------------------
-// Parameterized constructor
 HorizontalBoxContainer::HorizontalBoxContainer(int width, int height) :
     BoxContainer(width, height) {
 
