@@ -128,7 +128,7 @@ protected:
     // Box data members
 
     // Static console object
-    static EditConsole& console;
+    static ConsoleEditor& console;
 
     // Box dimensions and position information
     Position absolutePos;

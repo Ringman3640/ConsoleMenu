@@ -1,13 +1,13 @@
 //------------------------------------------------------------------------------
 // editconsole.h
-// Interface for the EditConsole class
+// Interface for the ConsoleEditor class
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------
-// Description: The EditConsole class provides functions to view, modify,
+// Description: The ConsoleEditor class provides functions to view, modify,
 //      and control data regarding the default program console window. Acts as
 //      a wrapper for Windows API console functions. This class is implemented
 //      as a singleton; an instance must be aquired through the
-//      EditConsole::getInstance() method. 
+//      ConsoleEditor::getInstance() method. 
 //
 // Class Functionality:
 //     - Get and set the console window dimensions in character units.
@@ -32,12 +32,12 @@
 #include "EditConsole/inputevent.h"
 
 //------------------------------------------------------------------------------
-class EditConsole {
+class ConsoleEditor {
 
 public:
     //--------------------------------------------------------------------------
-    // Get an instance of the singleton EditConsole object.
-    static EditConsole& getInstance();
+    // Get an instance of the singleton ConsoleEditor object.
+    static ConsoleEditor& getInstance();
 
     //--------------------------------------------------------------------------
     // Change console mode settings that are necessary for function use. 
@@ -163,7 +163,7 @@ private:
 
     //--------------------------------------------------------------------------
     // Static singleton instance
-    static EditConsole consoleInstance;
+    static ConsoleEditor consoleInstance;
 
     //--------------------------------------------------------------------------
     // Windows console mode restoration members
@@ -175,8 +175,8 @@ private:
     std::vector<std::vector<char>> writeBuffer;
 
     //--------------------------------------------------------------------------
-    // Private default constructor for EditConsole class.
-    EditConsole();
+    // Private default constructor for ConsoleEditor class.
+    ConsoleEditor();
 
     //--------------------------------------------------------------------------
     // Read from the console input buffer into an INPUT_RECORD array.

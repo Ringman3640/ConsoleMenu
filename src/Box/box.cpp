@@ -29,7 +29,7 @@
 
 //------------------------------------------------------------------------------
 // Static member initialization
-EditConsole& Box::console = EditConsole::getInstance();
+ConsoleEditor& Box::console = ConsoleEditor::getInstance();
 const Position Box::DEFAULT_POS = Position{ 0, 0 };
 const Boundary Box::DEFAULT_BOUND = Boundary{ 0, 0, 0, 0 };
 const int Box::DEFAULT_HEIGHT = 5;

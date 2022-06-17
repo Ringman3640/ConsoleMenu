@@ -1,13 +1,13 @@
 //------------------------------------------------------------------------------
 // editconsole.cpp
-// Implementation for the EditConsole class
+// Implementation for the ConsoleEditor class
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------
-// Description: The EditConsole class provides functions to view, modify,
+// Description: The ConsoleEditor class provides functions to view, modify,
 //      and control data regarding the default program console window. Acts as
 //      a wrapper for Windows API console functions. This class is implemented
 //      as a singleton; an instance must be aquired through the
-//      EditConsole::getInstance() method. 
+//      ConsoleEditor::getInstance() method. 
 //
 // Class Functionality:
 //     - Get and set the console window dimensions in character units.
@@ -25,14 +25,14 @@
 
 #include "editconsole.h"
 
-const HANDLE EditConsole::OUT_HANDLE = GetStdHandle(STD_OUTPUT_HANDLE);
-const HANDLE EditConsole::IN_HANDLE = GetStdHandle(STD_INPUT_HANDLE);
-const HWND EditConsole::WINDOW_HANDLE = GetConsoleWindow();
+const HANDLE ConsoleEditor::OUT_HANDLE = GetStdHandle(STD_OUTPUT_HANDLE);
+const HANDLE ConsoleEditor::IN_HANDLE = GetStdHandle(STD_INPUT_HANDLE);
+const HWND ConsoleEditor::WINDOW_HANDLE = GetConsoleWindow();
 
-EditConsole EditConsole::consoleInstance;
+ConsoleEditor ConsoleEditor::consoleInstance;
 
 //------------------------------------------------------------------------------
-EditConsole::EditConsole() : 
+ConsoleEditor::ConsoleEditor() : 
     initialized{ false },
     restoreMode{ 0 } {
 
@@ -41,12 +41,12 @@ EditConsole::EditConsole() :
 }
 
 //------------------------------------------------------------------------------
-EditConsole& EditConsole::getInstance() {
+ConsoleEditor& ConsoleEditor::getInstance() {
     return consoleInstance;
 }
 
 //------------------------------------------------------------------------------
-void EditConsole::initialize() {
+void ConsoleEditor::initialize() {
     // Save previous mode
     GetConsoleMode(IN_HANDLE, &restoreMode);
 
@@ -63,7 +63,7 @@ void EditConsole::initialize() {
 }
 
 //------------------------------------------------------------------------------
-void EditConsole::restore() {
+void ConsoleEditor::restore() {
     if (!initialized) {
         return;
     }
@@ -74,18 +74,18 @@ void EditConsole::restore() {
 }
 
 //------------------------------------------------------------------------------
-bool EditConsole::setBufferDimensions(short width, short height) {
+bool ConsoleEditor::setBufferDimensions(short width, short height) {
     return SetConsoleScreenBufferSize(OUT_HANDLE, COORD{ width, height });
 }
 
 //------------------------------------------------------------------------------
-bool EditConsole::fitBufferToWindow() {
+bool ConsoleEditor::fitBufferToWindow() {
     Position winSize = getWindowDimensions();
     return setBufferDimensions(winSize.col + 1, winSize.row + 1);
 }
 
 //------------------------------------------------------------------------------
-bool EditConsole::setWindowDimensions(short width, short height) {
+bool ConsoleEditor::setWindowDimensions(short width, short height) {
     // Check if screen buffer is too small, resize if necessary
     Position buffSize = getBufferDimensions();
     if (buffSize.col <= width || buffSize.row <= height) {
@@ -99,7 +99,7 @@ bool EditConsole::setWindowDimensions(short width, short height) {
 }
 
 //------------------------------------------------------------------------------
-Position EditConsole::getBufferDimensions() {
+Position ConsoleEditor::getBufferDimensions() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         // Failed to get screen buffer info
@@ -111,7 +111,7 @@ Position EditConsole::getBufferDimensions() {
 }
 
 //------------------------------------------------------------------------------
-Position EditConsole::getWindowDimensions() {
+Position ConsoleEditor::getWindowDimensions() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         // Failed to get screen buffer info
@@ -122,7 +122,7 @@ Position EditConsole::getWindowDimensions() {
 }
 
 //------------------------------------------------------------------------------
-Boundary EditConsole::getBufferBoundary() {
+Boundary ConsoleEditor::getBufferBoundary() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         // Failed to get screen buffer info
@@ -134,7 +134,7 @@ Boundary EditConsole::getBufferBoundary() {
 }
 
 //------------------------------------------------------------------------------
-Boundary EditConsole::getWindowBoundary() {
+Boundary ConsoleEditor::getWindowBoundary() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         // Failed to get screen buffer info
@@ -145,7 +145,7 @@ Boundary EditConsole::getWindowBoundary() {
 }
 
 //------------------------------------------------------------------------------
-int EditConsole::getWindowWidth() {
+int ConsoleEditor::getWindowWidth() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         // Failed to get screen buffer info
@@ -156,7 +156,7 @@ int EditConsole::getWindowWidth() {
 }
 
 //------------------------------------------------------------------------------
-int EditConsole::getWindowHeight() {
+int ConsoleEditor::getWindowHeight() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         // Failed to get screen buffer info
@@ -167,7 +167,7 @@ int EditConsole::getWindowHeight() {
 }
 
 //------------------------------------------------------------------------------
-InputEvent EditConsole::getButtonInput() {
+InputEvent ConsoleEditor::getButtonInput() {
     INPUT_RECORD inBuff[1];
     int buffSize = readInputBuffer(inBuff, 1);
 
@@ -191,7 +191,7 @@ InputEvent EditConsole::getButtonInput() {
 }
 
 //------------------------------------------------------------------------------
-InputEvent EditConsole::getRawInput() {
+InputEvent ConsoleEditor::getRawInput() {
     INPUT_RECORD inBuff[1];
     int buffSize = readInputBuffer(inBuff, 1);
 
@@ -204,7 +204,7 @@ InputEvent EditConsole::getRawInput() {
 }
 
 //------------------------------------------------------------------------------
-Position EditConsole::getMousePosition() {
+Position ConsoleEditor::getMousePosition() {
     INPUT_RECORD inBuff[128];
     int buffSize = readInputBuffer(inBuff, 128);
 
@@ -226,17 +226,17 @@ Position EditConsole::getMousePosition() {
 }
 
 //------------------------------------------------------------------------------
-int EditConsole::getMouseX() {
+int ConsoleEditor::getMouseX() {
     return getMousePosition().col;
 }
 
 //------------------------------------------------------------------------------
-int EditConsole::getMouseY() {
+int ConsoleEditor::getMouseY() {
     return getMousePosition().row;
 }
 
 //------------------------------------------------------------------------------
-Position EditConsole::getCursorPosition() {
+Position ConsoleEditor::getCursorPosition() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         // Failed to get screen buffer info
@@ -247,7 +247,7 @@ Position EditConsole::getCursorPosition() {
 }
 
 //------------------------------------------------------------------------------
-bool EditConsole::setCursorPosition(Position pos) {
+bool ConsoleEditor::setCursorPosition(Position pos) {
     Position dimensions = getWindowDimensions();
 
     // Position out-of-bounds
@@ -261,7 +261,7 @@ bool EditConsole::setCursorPosition(Position pos) {
 }
 
 //------------------------------------------------------------------------------
-bool EditConsole::setCursorVisibility(bool visible) {
+bool ConsoleEditor::setCursorVisibility(bool visible) {
     // Retrieve current cursor info
     CONSOLE_CURSOR_INFO cursorInfo;
     if (!GetConsoleCursorInfo(OUT_HANDLE, &cursorInfo)) {
@@ -274,7 +274,7 @@ bool EditConsole::setCursorVisibility(bool visible) {
 }
 
 //------------------------------------------------------------------------------
-bool EditConsole::resetScrollPosition() {
+bool ConsoleEditor::resetScrollPosition() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     SMALL_RECT pos;
 
@@ -292,7 +292,7 @@ bool EditConsole::resetScrollPosition() {
 }
 
 //------------------------------------------------------------------------------
-bool EditConsole::scrollWindow(int amount) {
+bool ConsoleEditor::scrollWindow(int amount) {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     SMALL_RECT pos;
 
@@ -334,7 +334,7 @@ bool EditConsole::scrollWindow(int amount) {
 }
 
 //------------------------------------------------------------------------------
-void EditConsole::writeToScreen(const Position& pos, const char text[]) {
+void ConsoleEditor::writeToScreen(const Position& pos, const char text[]) {
     Position prevPos = getCursorPosition();
     setCursorPosition(pos);
     std::cout << text;
@@ -342,7 +342,7 @@ void EditConsole::writeToScreen(const Position& pos, const char text[]) {
 }
 
 //------------------------------------------------------------------------------
-void EditConsole::writeToBuffer(const Position& pos, const char text[]) {
+void ConsoleEditor::writeToBuffer(const Position& pos, const char text[]) {
     int textIdx = 0;
     if (writeBuffer.size() == 0) {
         return;
@@ -365,7 +365,7 @@ void EditConsole::writeToBuffer(const Position& pos, const char text[]) {
 }
 
 //------------------------------------------------------------------------------
-void EditConsole::printWriteBuffer() {
+void ConsoleEditor::printWriteBuffer() {
     Position prevPos = getCursorPosition();
     Position writePos = { 0, 0 };
 
@@ -379,7 +379,7 @@ void EditConsole::printWriteBuffer() {
 
 //------------------------------------------------------------------------------
 // https://stackoverflow.com/questions/5866529/how-do-we-clear-the-console-in-assembly/5866648#5866648
-void EditConsole::clearScreen() {
+void ConsoleEditor::clearScreen() {
     COORD tl = { 0, 0 };
     CONSOLE_SCREEN_BUFFER_INFO s;
     GetConsoleScreenBufferInfo(OUT_HANDLE, &s);
@@ -390,7 +390,7 @@ void EditConsole::clearScreen() {
 }
 
 //------------------------------------------------------------------------------
-void EditConsole::clearWriteBuffer() {
+void ConsoleEditor::clearWriteBuffer() {
     int rows = writeBuffer.size();
     int cols = writeBuffer[0].size();
     for (int i = 0; i < rows; ++i) {
@@ -402,12 +402,12 @@ void EditConsole::clearWriteBuffer() {
 }
 
 //------------------------------------------------------------------------------
-void EditConsole::clearInputBuffer() {
+void ConsoleEditor::clearInputBuffer() {
     FlushConsoleInputBuffer(IN_HANDLE);
 }
 
 //------------------------------------------------------------------------------
-void EditConsole::formatWriteBuffer() {
+void ConsoleEditor::formatWriteBuffer() {
     Position winDim = getWindowDimensions();
     writeBuffer = std::vector<std::vector<char>>(winDim.row + 1, 
             std::vector<char>(winDim.col + 1));
@@ -415,7 +415,7 @@ void EditConsole::formatWriteBuffer() {
 }
 
 //------------------------------------------------------------------------------
-int EditConsole::readInputBuffer(INPUT_RECORD inBuff[], int buffSize) {
+int ConsoleEditor::readInputBuffer(INPUT_RECORD inBuff[], int buffSize) {
     DWORD readRecords;
     if (!ReadConsoleInput(IN_HANDLE, inBuff, buffSize, &readRecords)) {
         // Failed to read console input
