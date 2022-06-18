@@ -23,7 +23,7 @@
 // Supported OS: Windows
 //------------------------------------------------------------------------------
 
-#include "editconsole.h"
+#include "consoleeditor.h"
 
 const HANDLE ConsoleEditor::OUT_HANDLE = GetStdHandle(STD_OUTPUT_HANDLE);
 const HANDLE ConsoleEditor::IN_HANDLE = GetStdHandle(STD_INPUT_HANDLE);
