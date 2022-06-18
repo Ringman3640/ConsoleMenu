@@ -29,7 +29,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <vector>
-#include "EditConsole/inputevent.h"
+#include "ConsoleEditor/inputevent.h"
 
 //------------------------------------------------------------------------------
 class ConsoleEditor {

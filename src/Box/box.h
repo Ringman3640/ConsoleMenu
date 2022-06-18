@@ -32,7 +32,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
-#include "EditConsole/editconsole.h"
+#include "ConsoleEditor/consoleeditor.h"
 #include "Flag/flag.h"
 
 //------------------------------------------------------------------------------

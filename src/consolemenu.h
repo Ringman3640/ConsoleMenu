@@ -15,7 +15,7 @@
 
 #pragma once
 
-#include "EditConsole/editconsole.h"
+#include "ConsoleEditor/consoleeditor.h"
 
 #include "Box/box.h"
 #include "Box/BoxContainer/boxcontainer.h"

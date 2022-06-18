@@ -19,7 +19,7 @@
 // Supported OS: Windows
 //------------------------------------------------------------------------------
 
-#include "EditConsole/inputevent.h"
+#include "ConsoleEditor/inputevent.h"
 
 //------------------------------------------------------------------------------
 inputEvent::Key inputEvent::operator | (Key left, Key right) {
