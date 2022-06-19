@@ -18,7 +18,7 @@
 
 #include "Box/ContentBox/TextBox/button.h"
 
-Reply Button::DEFAULT_CLICK_HANDLER() {
+Reply Button::DEFAULT_CLICK_HANDLER(Box& self) {
     return Reply::CONTINUE;
 }
 
@@ -55,7 +55,7 @@ Reply Button::interact(inputEvent::MouseEvent action) {
     }
 
     // Execute click handler and return reply
-    return clickHandler();
+    return clickHandler(*this);
 }
 
 //--------------------------------------------------------------------------
@@ -74,6 +74,6 @@ std::string Button::getClassName() const {
 }
 
 //--------------------------------------------------------------------------
-void Button::setAction(std::function<Reply()> action) {
+void Button::setAction(std::function<Reply(Box&)> action) {
     clickHandler = action;
 }
