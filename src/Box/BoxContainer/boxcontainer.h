@@ -20,6 +20,7 @@
 
 #pragma once
 
+#include <map>
 #include <vector>
 #include <algorithm>
 #include "Box/box.h"
@@ -45,6 +46,10 @@ public:
     //--------------------------------------------------------------------------
     // Parameterized constructor
     BoxContainer(int width, int height);
+
+    //--------------------------------------------------------------------------
+    // Virtual destructor
+    virtual ~BoxContainer();
 
     //--------------------------------------------------------------------------
     // Draw the contents of the BoxContainer to the output console given an
@@ -88,18 +93,23 @@ public:
     virtual int getWidth() const = 0;
 
     //--------------------------------------------------------------------------
-    // Insert a Box into the BoxContainer. The Box is marked as "dynamic",
-    // meaning that the Box is positioned according to the BoxContainer's 
-    // alignment and distribution flags.
-    virtual void insert(Box& inBox);
+    // Insert a Box into the BoxContainer at a given layer. The Box is marked as
+    // "dynamic", meaning that the Box is positioned according to the
+    // BoxContainer's alignment and distribution flags.
+    virtual void insert(int layer, const Box& inBox);
 
     //--------------------------------------------------------------------------
-    // Insert a Box into the BoxContainer at a specific position. The Box is 
-    // marked as "fixed", meaning that the the presence of the Box is not 
-    // affected by the alignment and distribution flags of the BoxContainer, and
-    // the distribution of the dynamic Boxes are not affected by the inserted
-    // Box.
-    virtual void insert(Box& inBox, Position pos);
+    // Insert a Box into the BoxContainer at a specific position at a given
+    // layer. The Box is marked as "fixed", meaning that the the presence of the
+    // Box is not affected by the alignment and distribution flags of the
+    // BoxContainer, and the distribution of the dynamic Boxes are not affected
+    // by the inserted Box.
+    virtual void insert(int layer, const Box& inBox, Position pos);
+
+    //--------------------------------------------------------------------------
+    // Get a pointer reference to a contained Box item given its layer value. 
+    // Returns nullptr if there was no Box found at the given layer.
+    virtual Box* get(int layer) const;
 
     //--------------------------------------------------------------------------
     // Set whether or not the BoxContainer is dynamically sized. A dynamically
@@ -125,7 +135,7 @@ protected:
         Position pos;
     };
 
-    std::vector<BoxItem> contents;
+    std::map<int, BoxItem> contents;
     BoxDistrib distribution;
     int returnHeight;
     int returnWidth;
@@ -142,5 +152,9 @@ protected:
     // content boundary, total height of the contents, and dynamic box count.
     std::vector<int> getSpacingHeight(const Boundary& container,
         int totalHeight, int dynamCount) const;
+
+    //--------------------------------------------------------------------------
+    // Clear the BoxContainer contents and free all allocated memory.
+    void clearContents();
 
 };

@@ -37,8 +37,8 @@ HorizontalBoxContainer::HorizontalBoxContainer(
         const HorizontalBoxContainer& cpy) :
     BoxContainer(cpy) {
 
-    for (int i = 0; i < cpy.contents.size(); ++i) {
-        this->contents[i].item = cpy.contents[i].item->copyBox();
+    for (auto it = cpy.contents.begin(); it != cpy.contents.end(); ++it) {
+        this->contents[it->first].item = it->second.item->copyBox();
     }
 }
 
@@ -61,9 +61,9 @@ Reply HorizontalBoxContainer::draw(Position pos, Boundary container) {
     // Get total content width
     int totalWidth = 0;
     int dynamCount = 0;
-    for (int i = 0; i < contents.size(); ++i) {
-        if (!contents[i].fixed) {
-            totalWidth += contents[i].item->getWidth();
+    for (auto it = contents.begin(); it != contents.end(); ++it) {
+        if (!it->second.fixed) {
+            totalWidth += it->second.item->getWidth();
             ++dynamCount;
         }
     }
@@ -76,17 +76,17 @@ Reply HorizontalBoxContainer::draw(Position pos, Boundary container) {
     // Print contents
     int spacingIdx = spacing.size() - 1;
     Position offset{ actualWidth - vertBorderSize - 0, 0 }; // TODO: test the - 1
-    for (int i = contents.size() - 1; i >= 0; --i) {
-        if (contents[i].fixed) {
-            Position drawPos{ contents[i].pos.col + pos.col, 
-                    contents[i].pos.row + pos.row };
-            contents[i].item->draw(drawPos, contentBound);
+    for (auto it = contents.begin(); it != contents.end(); ++it) {
+        if (it->second.fixed) {
+            Position drawPos{ it->second.pos.col + pos.col, it->second.pos.row 
+                    + pos.row };
+            it->second.item->draw(drawPos, contentBound);
         }
         else {
-            int itemWidth = contents[i].item->getWidth();
+            int itemWidth = it->second.item->getWidth();
             offset.col -= spacing[spacingIdx--] + itemWidth + 0; // TODO: test the + 1
-            offset.row = getRowOffset(contents[i].item->getHeight());
-            contents[i].item->draw(Position{ absolutePos.col + offset.col, 
+            offset.row = getRowOffset(it->second.item->getHeight());
+            it->second.item->draw(Position{ absolutePos.col + offset.col,
                     absolutePos.row + offset.row }, contentBound);
         }
     }
@@ -114,9 +114,9 @@ Reply HorizontalBoxContainer::buffer(Position pos, Boundary container) {
     // Get total content width
     int totalWidth = 0;
     int dynamCount = 0;
-    for (int i = 0; i < contents.size(); ++i) {
-        if (!contents[i].fixed) {
-            totalWidth += contents[i].item->getWidth();
+    for (auto it = contents.begin(); it != contents.end(); ++it) {
+        if (!it->second.fixed) {
+            totalWidth += it->second.item->getWidth();
             ++dynamCount;
         }
     }
@@ -129,17 +129,17 @@ Reply HorizontalBoxContainer::buffer(Position pos, Boundary container) {
     // Print contents
     int spacingIdx = spacing.size() - 1;
     Position offset{ actualWidth - vertBorderSize, 0 };
-    for (int i = contents.size() - 1; i >= 0; --i) {
-        if (contents[i].fixed) {
-            Position drawPos{ contents[i].pos.col + pos.col,
-                    contents[i].pos.row + pos.row };
-            contents[i].item->buffer(drawPos, contentBound);
+    for (auto it = contents.begin(); it != contents.end(); ++it) {
+        if (it->second.fixed) {
+            Position buffPos{ it->second.pos.col + pos.col, it->second.pos.row
+                    + pos.row };
+            it->second.item->buffer(buffPos, contentBound);
         }
         else {
-            int itemWidth = contents[i].item->getWidth();
+            int itemWidth = it->second.item->getWidth();
             offset.col -= spacing[spacingIdx--] + itemWidth;
-            offset.row = getRowOffset(contents[i].item->getHeight());
-            contents[i].item->buffer(Position{ absolutePos.col + offset.col,
+            offset.row = getRowOffset(it->second.item->getHeight());
+            it->second.item->buffer(Position{ absolutePos.col + offset.col,
                     absolutePos.row + offset.row }, contentBound);
         }
     }
@@ -150,9 +150,9 @@ Reply HorizontalBoxContainer::buffer(Position pos, Boundary container) {
 
 //------------------------------------------------------------------------------
 Reply HorizontalBoxContainer::interact(inputEvent::MouseEvent action) {
-    for (int i = 0; i < contents.size(); ++i) {
-        if (contents[i].item->posInBounds(action.mousePosition)) {
-            return contents[i].item->interact(action);
+    for (auto it = contents.begin(); it != contents.end(); ++it) {
+        if (it->second.item->posInBounds(action.mousePosition)) {
+            return it->second.item->interact(action);
         }
     }
 
@@ -185,8 +185,8 @@ int HorizontalBoxContainer::getHeight() const {
     }
 
     int maxHeight = 0;
-    for (int i = 0; i < contents.size(); ++i) {
-        maxHeight = std::max<int>(maxHeight, contents[i].item->getHeight());
+    for (auto it = contents.begin(); it != contents.end(); ++it) {
+        maxHeight = std::max<int>(maxHeight, it->second.item->getHeight());
     }
     maxHeight += horizBorderSize * 2;
 
@@ -205,8 +205,8 @@ int HorizontalBoxContainer::getWidth() const {
     }
 
     int maxWidth = 0;
-    for (int i = 0; i < contents.size(); ++i) {
-        maxWidth += contents[i].item->getWidth();
+    for (auto it = contents.begin(); it != contents.end(); ++it) {
+        maxWidth += it->second.item->getWidth();
     }
     maxWidth += vertBorderSize * 2;
 

@@ -38,15 +38,40 @@ BoxContainer::BoxContainer(int width, int height) :
 }
 
 //------------------------------------------------------------------------------
-void BoxContainer::insert(Box& inBox) {
-    contents.push_back(BoxItem{ &inBox, false, Position{-1, -1} });
+BoxContainer::~BoxContainer() {
+    clearContents();
+}
+
+//------------------------------------------------------------------------------
+void BoxContainer::insert(int layer, const Box& inBox) {
+    if (contents.find(layer) != contents.end()) {
+        delete contents[layer].item;
+        contents.erase(layer);
+    }
+
+    contents[layer] = BoxItem{ inBox.copyBox(), false, Position{-1, -1} };
     updateHeightWidth = true;
 }
 
 //------------------------------------------------------------------------------
-void BoxContainer::insert(Box& inBox, Position pos) {
-    contents.push_back(BoxItem{ &inBox, true, pos });
+void BoxContainer::insert(int layer, const Box& inBox, Position pos) {
+    if (contents.find(layer) != contents.end()) {
+        delete contents[layer].item;
+        contents.erase(layer);
+    }
+
+    contents[layer] = BoxItem{ inBox.copyBox(), true, pos };
     updateHeightWidth = true;
+}
+
+//------------------------------------------------------------------------------
+Box* BoxContainer::get(int layer) const {
+    auto target = contents.find(layer);
+    if (target == contents.end()) {
+        return nullptr;
+    }
+
+    return target->second.item;
 }
 
 //------------------------------------------------------------------------------
@@ -110,4 +135,11 @@ std::vector<int> BoxContainer::getSpacingHeight(const Boundary& container,
     }
 
     return std::move(spacing);
+}
+
+//------------------------------------------------------------------------------
+void BoxContainer::clearContents() {
+    for (auto it = contents.begin(); it != contents.end(); ++it) {
+        delete it->second.item;
+    }
 }
