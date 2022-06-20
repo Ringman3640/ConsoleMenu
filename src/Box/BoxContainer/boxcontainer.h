@@ -84,7 +84,7 @@ public:
 
     //--------------------------------------------------------------------------
     // Virtual destructor
-    virtual ~BoxContainer();
+    virtual ~BoxContainer() override;
 
     //--------------------------------------------------------------------------
     // Obtain an ItemAccessor for a specific layer within the BoxContainer.

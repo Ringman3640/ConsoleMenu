@@ -155,8 +155,9 @@ std::vector<int> BoxContainer::getSpacingHeight(const Boundary& container,
 
 //------------------------------------------------------------------------------
 void BoxContainer::clearContents() {
-    for (auto it = contents.begin(); it != contents.end(); ++it) {
-        delete it->second.item;
+    while (!contents.empty()) {
+        delete contents.begin()->second.item;
+        contents.erase(contents.begin()->first);
     }
 }
 
