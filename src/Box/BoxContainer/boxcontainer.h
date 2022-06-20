@@ -25,6 +25,41 @@
 #include <algorithm>
 #include "Box/box.h"
 
+class BoxContainer;
+
+//------------------------------------------------------------------------------
+// ItemAccessor class
+// interface for users to directly add or remove Box items to the container
+// through the bracket operator. Helper class for BoxContainer.
+class ItemAccessor {
+public:
+    //--------------------------------------------------------------------------
+    // Constructor
+    ItemAccessor(BoxContainer& container, int layer);
+
+    //--------------------------------------------------------------------------
+    // Assignment operator. Insert a dynamic Box into the target BoxContainer at
+    // the given layer.
+    void operator = (const Box& inBox);
+
+    //--------------------------------------------------------------------------
+    // Insert a dynamic Box into the target BoxContainer at the given layer.
+    void insert(const Box& inBox);
+
+    //--------------------------------------------------------------------------
+    // Insert a static Box into the target BoxContainer at the given layer.
+    void insert(const Box& inBox, const Position& pos);
+
+    //--------------------------------------------------------------------------
+    // Remove the Box located at a given layer in the target BoxContainer.
+    void remove();
+
+private:
+    BoxContainer* container;
+    int layer;
+
+};
+
 //------------------------------------------------------------------------------
 // BoxDistrib enumerator
 // Indicates how Boxes within the BoxContainer should be distributed along its
@@ -50,6 +85,10 @@ public:
     //--------------------------------------------------------------------------
     // Virtual destructor
     virtual ~BoxContainer();
+
+    //--------------------------------------------------------------------------
+    // Obtain an ItemAccessor for a specific layer within the BoxContainer.
+    ItemAccessor operator [] (int layer);
 
     //--------------------------------------------------------------------------
     // Draw the contents of the BoxContainer to the output console given an
@@ -104,7 +143,11 @@ public:
     // Box is not affected by the alignment and distribution flags of the
     // BoxContainer, and the distribution of the dynamic Boxes are not affected
     // by the inserted Box.
-    virtual void insert(int layer, const Box& inBox, Position pos);
+    virtual void insert(int layer, const Box& inBox, const Position& pos);
+
+    //--------------------------------------------------------------------------
+    // Remove a Box from the BoxContainer at a specified layer. 
+    virtual void remove(int layer);
 
     //--------------------------------------------------------------------------
     // Get a pointer reference to a contained Box item given its layer value. 

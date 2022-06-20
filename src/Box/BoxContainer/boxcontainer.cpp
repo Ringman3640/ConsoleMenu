@@ -43,6 +43,11 @@ BoxContainer::~BoxContainer() {
 }
 
 //------------------------------------------------------------------------------
+ItemAccessor BoxContainer::operator[] (int layer) {
+    return ItemAccessor(*this, layer);
+}
+
+//------------------------------------------------------------------------------
 void BoxContainer::insert(int layer, const Box& inBox) {
     if (contents.find(layer) != contents.end()) {
         delete contents[layer].item;
@@ -54,7 +59,7 @@ void BoxContainer::insert(int layer, const Box& inBox) {
 }
 
 //------------------------------------------------------------------------------
-void BoxContainer::insert(int layer, const Box& inBox, Position pos) {
+void BoxContainer::insert(int layer, const Box& inBox, const Position& pos) {
     if (contents.find(layer) != contents.end()) {
         delete contents[layer].item;
         contents.erase(layer);
@@ -62,6 +67,17 @@ void BoxContainer::insert(int layer, const Box& inBox, Position pos) {
 
     contents[layer] = BoxItem{ inBox.copyBox(), true, pos };
     updateHeightWidth = true;
+}
+
+//------------------------------------------------------------------------------
+void BoxContainer::remove(int layer) {
+    auto it = contents.find(layer);
+    if (it == contents.end()) {
+        return;
+    }
+
+    delete it->second.item;
+    contents.erase(layer);
 }
 
 //------------------------------------------------------------------------------
@@ -142,4 +158,35 @@ void BoxContainer::clearContents() {
     for (auto it = contents.begin(); it != contents.end(); ++it) {
         delete it->second.item;
     }
+}
+
+//------------------------------------------------------------------------------
+// ItemAccessor Methods
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+ItemAccessor::ItemAccessor(BoxContainer& container, int layer) :
+    container{ &container },
+    layer{ layer } {
+
+}
+
+//------------------------------------------------------------------------------
+void ItemAccessor::operator = (const Box& inBox) {
+    container->insert(layer, inBox);
+}
+
+//------------------------------------------------------------------------------
+void ItemAccessor::insert(const Box& inBox) {
+    container->insert(layer, inBox);
+}
+
+//------------------------------------------------------------------------------
+void ItemAccessor::insert(const Box& inBox, const Position& pos) {
+    container->insert(layer, inBox, pos);
+}
+
+//------------------------------------------------------------------------------
+void ItemAccessor::remove() {
+    container->remove(layer);
 }
