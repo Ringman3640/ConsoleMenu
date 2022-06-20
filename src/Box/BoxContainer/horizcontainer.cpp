@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// horizontalboxcontainer.cpp
+// horizcontainer.cpp
 // Implementation for the HorizContainer class
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// horizontalboxcontainer.h
+// horizcontainer.h
 // Interface for the HorizContainer class
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------
