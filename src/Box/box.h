@@ -48,6 +48,10 @@ public:
     Box(int width, int height);
 
     //--------------------------------------------------------------------------
+    // Virtual destructor
+    virtual ~Box();
+
+    //--------------------------------------------------------------------------
     // Draw the Box to the output console given an origin column and row, and
     // a constraining rectangle that represents the container boundaries that
     // the Box is within.
