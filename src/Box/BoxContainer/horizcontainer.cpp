@@ -17,7 +17,7 @@
 // Dependencies: BoxContainer class.
 //------------------------------------------------------------------------------
 
-#include "Box/BoxContainer/horizontalboxcontainer.h"
+#include "Box/BoxContainer/horizcontainer.h"
 
 //------------------------------------------------------------------------------
 HorizContainer::HorizContainer() :
