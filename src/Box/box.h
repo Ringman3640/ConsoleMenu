@@ -36,6 +36,17 @@
 #include "Flag/flag.h"
 
 //------------------------------------------------------------------------------
+// BorderFill struct
+// Contains information about the border fill characters for each side of
+// the box object.
+struct BorderFill {
+    char left;
+    char top;
+    char right;
+    char bottom;
+};
+
+//------------------------------------------------------------------------------
 class Box {
 public:
 
@@ -115,8 +126,12 @@ public:
     void setVerticalBorderSize(int size);
 
     //--------------------------------------------------------------------------
-    // Set the fill character that is used when drawing the border of the Box.
+    // Set the fill character for the horizontal and vertical borders.
     void setBorderFill(char fill);
+
+    //--------------------------------------------------------------------------
+    // Set the individual fill characters for all border sides.
+    void setBorderFill(const BorderFill& fill);
 
     //--------------------------------------------------------------------------
     // Set the alignment of the Box contents.
@@ -144,7 +159,7 @@ protected:
     // Box border information
     int horizBorderSize;
     int vertBorderSize;
-    char borderFill;
+    BorderFill borderFill;
 
     // Redraw method utilization
     Position targetPos;
@@ -181,6 +196,6 @@ private:
     static const int DEFAULT_WIDTH;
     static const int DEFAULT_HORIZ_BORDER_SIZE;
     static const int DEFAULT_VERT_BORDER_SIZE;
-    static const char DEFAULT_BORDER_FILL;
+    static const BorderFill DEFAULT_BORDER_FILL;
 
 };
