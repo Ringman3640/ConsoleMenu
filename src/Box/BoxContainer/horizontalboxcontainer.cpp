@@ -1,19 +1,18 @@
 //------------------------------------------------------------------------------
 // horizontalboxcontainer.cpp
-// Implementation for the HorizontalBoxContainer class
+// Implementation for the HorizContainer class
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------
-// Description: A HorizontalBoxContainer is a type of Box that contains and
-//     manages other Box objects. HorizontalBoxContainers are responsible for
-//     printing all contained Boxes horizontally within its boundary according
-//     to the specified Alignment and BoxDistrib flags applied. Any input 
-//     MouseEvent is passed into the corresponding contained Box and returns its
-//     Reply.
+// Description: A HorizContainer is a type of Box that contains and manages
+//     other Box objects. HorizContainers are responsible for printing all
+//     contained Boxes horizontally within its boundary according to the
+//     specified Alignment and BoxDistrib flags applied. Any input MouseEvent is
+//     passed into the corresponding contained Box and returns its Reply
 //
 // Class Functionality:
-//     - 
-//     - 
-//     - 
+//     - Inherits all methods and functionality of the BoxContainer class.
+//     - Implements the draw() and interact() BoxContainer methods.
+//     - Draw the HorizContainer to the console window.
 // 
 // Dependencies: BoxContainer class.
 //------------------------------------------------------------------------------
@@ -21,20 +20,20 @@
 #include "Box/BoxContainer/horizontalboxcontainer.h"
 
 //------------------------------------------------------------------------------
-HorizontalBoxContainer::HorizontalBoxContainer() :
+HorizContainer::HorizContainer() :
     BoxContainer() {
 
 }
 
 //------------------------------------------------------------------------------
-HorizontalBoxContainer::HorizontalBoxContainer(int width, int height) :
+HorizContainer::HorizContainer(int width, int height) :
     BoxContainer(width, height) {
 
 }
 
 //------------------------------------------------------------------------------
-HorizontalBoxContainer::HorizontalBoxContainer(
-        const HorizontalBoxContainer& cpy) :
+HorizContainer::HorizContainer(
+        const HorizContainer& cpy) :
     BoxContainer(cpy) {
 
     for (auto it = cpy.contents.begin(); it != cpy.contents.end(); ++it) {
@@ -43,7 +42,7 @@ HorizontalBoxContainer::HorizontalBoxContainer(
 }
 
 //------------------------------------------------------------------------------
-Reply HorizontalBoxContainer::draw(Position pos, Boundary container) {
+Reply HorizContainer::draw(Position pos, Boundary container) {
     // Get acutal dimensions and print base
     int prevTargWidth = targetWidth;
     int prevTargHeight = targetHeight;
@@ -96,7 +95,7 @@ Reply HorizontalBoxContainer::draw(Position pos, Boundary container) {
 }
 
 //------------------------------------------------------------------------------
-Reply HorizontalBoxContainer::buffer(Position pos, Boundary container) {
+Reply HorizContainer::buffer(Position pos, Boundary container) {
     // Get acutal dimensions and print base
     int prevTargWidth = targetWidth;
     int prevTargHeight = targetHeight;
@@ -149,7 +148,7 @@ Reply HorizontalBoxContainer::buffer(Position pos, Boundary container) {
 }
 
 //------------------------------------------------------------------------------
-Reply HorizontalBoxContainer::interact(inputEvent::MouseEvent action) {
+Reply HorizContainer::interact(inputEvent::MouseEvent action) {
     for (auto it = contents.begin(); it != contents.end(); ++it) {
         if (it->second.item->posInBounds(action.mousePosition)) {
             return it->second.item->interact(action);
@@ -160,22 +159,22 @@ Reply HorizontalBoxContainer::interact(inputEvent::MouseEvent action) {
 }
 
 //------------------------------------------------------------------------------
-Box* HorizontalBoxContainer::copyBox() const {
-    return new HorizontalBoxContainer(*this);
+Box* HorizContainer::copyBox() const {
+    return new HorizContainer(*this);
 }
 
 //------------------------------------------------------------------------------
-Box* HorizontalBoxContainer::createBox() const {
-    return new HorizontalBoxContainer();
+Box* HorizContainer::createBox() const {
+    return new HorizContainer();
 }
 
 //------------------------------------------------------------------------------
-std::string HorizontalBoxContainer::getClassName() const {
-    return std::string("HorizontalBoxContainer");
+std::string HorizContainer::getClassName() const {
+    return std::string("HorizContainer");
 }
 
 //------------------------------------------------------------------------------
-int HorizontalBoxContainer::getHeight() const {
+int HorizContainer::getHeight() const {
     if (!updateHeightWidth) {
         return returnHeight;
     }
@@ -195,7 +194,7 @@ int HorizontalBoxContainer::getHeight() const {
 }
 
 //------------------------------------------------------------------------------
-int HorizontalBoxContainer::getWidth() const {
+int HorizContainer::getWidth() const {
     if (!updateHeightWidth) {
         return returnWidth;
     }
@@ -215,7 +214,7 @@ int HorizontalBoxContainer::getWidth() const {
 }
 
 //------------------------------------------------------------------------------
-std::vector<int> HorizontalBoxContainer::getSpacingWidth(
+std::vector<int> HorizContainer::getSpacingWidth(
         const Boundary& container, int totalWidth, int dynamCount) const {
     int contentWidth = container.right - container.left + 1;
     int totalSpace = contentWidth - totalWidth;
@@ -282,7 +281,7 @@ std::vector<int> HorizontalBoxContainer::getSpacingWidth(
 }
 
 //------------------------------------------------------------------------------
-int HorizontalBoxContainer::getRowOffset(int boxHeight) const {
+int HorizContainer::getRowOffset(int boxHeight) const {
     if (align & Alignment::TOP) {
         return 0;
     }

@@ -1,38 +1,37 @@
 //------------------------------------------------------------------------------
 // horizontalboxcontainer.h
-// Interface for the HorizontalBoxContainer class
+// Interface for the HorizContainer class
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------
-// Description: A HorizontalBoxContainer is a type of Box that contains and
-//     manages other Box objects. HorizontalBoxContainers are responsible for
-//     printing all contained Boxes horizontally within its boundary according
-//     to the specified Alignment and BoxDistrib flags applied. Any input 
-//     MouseEvent is passed into the corresponding contained Box and returns its
-//     Reply.
+// Description: A HorizContainer is a type of Box that contains and manages
+//     other Box objects. HorizContainers are responsible for printing all
+//     contained Boxes horizontally within its boundary according to the
+//     specified Alignment and BoxDistrib flags applied. Any input MouseEvent is
+//     passed into the corresponding contained Box and returns its Reply
 //
 // Class Functionality:
-//     - 
-//     - 
-//     - 
+//     - Inherits all methods and functionality of the BoxContainer class.
+//     - Implements the draw() and interact() BoxContainer methods.
+//     - Draw the HorizContainer to the console window.
 // 
 // Dependencies: BoxContainer class.
 //------------------------------------------------------------------------------
 
 #include "Box/BoxContainer/boxcontainer.h"
 
-class HorizontalBoxContainer : public BoxContainer {
+class HorizContainer : public BoxContainer {
 public:
     //--------------------------------------------------------------------------
     // Default constructor
-    HorizontalBoxContainer();
+    HorizContainer();
 
     //--------------------------------------------------------------------------
     // Parameterized constructor
-    HorizontalBoxContainer(int width, int height);
+    HorizContainer(int width, int height);
 
     //--------------------------------------------------------------------------
     // Copy constructor
-    HorizontalBoxContainer(const HorizontalBoxContainer& cpy);
+    HorizContainer(const HorizContainer& cpy);
 
     //--------------------------------------------------------------------------
     // Draw the contents of the BoxContainer to the output console given an
