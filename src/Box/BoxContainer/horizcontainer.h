@@ -17,6 +17,8 @@
 // Dependencies: BoxContainer class.
 //------------------------------------------------------------------------------
 
+#pragma once
+
 #include "Box/BoxContainer/boxcontainer.h"
 
 class HorizContainer : public BoxContainer {
