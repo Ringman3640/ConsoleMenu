@@ -75,7 +75,7 @@ Reply HorizContainer::draw(Position pos, Boundary container) {
     // Print contents
     int spacingIdx = spacing.size() - 1;
     Position offset{ actualWidth - vertBorderSize - 0, 0 }; // TODO: test the - 1
-    for (auto it = contents.begin(); it != contents.end(); ++it) {
+    for (auto it = contents.rbegin(); it != contents.rend(); ++it) {
         if (it->second.fixed) {
             Position drawPos{ it->second.pos.col + pos.col, it->second.pos.row 
                     + pos.row };
@@ -128,7 +128,7 @@ Reply HorizContainer::buffer(Position pos, Boundary container) {
     // Print contents
     int spacingIdx = spacing.size() - 1;
     Position offset{ actualWidth - vertBorderSize, 0 };
-    for (auto it = contents.begin(); it != contents.end(); ++it) {
+    for (auto it = contents.rbegin(); it != contents.rend(); ++it) {
         if (it->second.fixed) {
             Position buffPos{ it->second.pos.col + pos.col, it->second.pos.row
                     + pos.row };
