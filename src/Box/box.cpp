@@ -343,6 +343,14 @@ void Box::calculateActualDimAndPos(Position pos, Boundary container) {
             actualHeight -= rowOffset;
         }
     }
+
+    // Check actual width and height for negative
+    if (actualWidth < 0) {
+        actualWidth = 0;
+    }
+    if (actualHeight < 0) {
+        actualHeight = 0;
+    }
 }
 
 //------------------------------------------------------------------------------
