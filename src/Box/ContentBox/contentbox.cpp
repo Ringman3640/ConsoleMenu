@@ -18,10 +18,12 @@
 
 #include "Box/ContentBox/contentbox.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 ContentBox::ContentBox() :
     Box() {
-    
+
 }
 
 //------------------------------------------------------------------------------
@@ -38,4 +40,6 @@ int ContentBox::getHeight() const {
 //------------------------------------------------------------------------------
 int ContentBox::getWidth() const {
     return targetWidth;
+}
+
 }

@@ -24,6 +24,8 @@
 #include <vector>
 #include "Box/ContentBox/contentbox.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 class TextBox : public ContentBox {
 public:
@@ -82,3 +84,5 @@ protected:
     void applyHorizontalAlignment();
 
 };
+
+}

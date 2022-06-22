@@ -20,6 +20,8 @@
 
 #include "Box/ContentBox/TextBox/textbox.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 TextBox::TextBox(std::string text) :
     ContentBox(),
@@ -91,7 +93,7 @@ Reply TextBox::buffer(Position pos, Boundary container) {
     // Print text
     int startRow = vertOffset + absolutePos.row;
     for (int i = 0; i < printableLines && i < lines.size(); ++i) {
-        console.writeToBuffer(Position{ absolutePos.col + vertBorderSize, 
+        console.writeToBuffer(Position{ absolutePos.col + vertBorderSize,
                 startRow + horizBorderSize + i }, lines[i].c_str());
     }
 
@@ -184,4 +186,6 @@ void TextBox::applyHorizontalAlignment() {
         }
         return;
     }
+}
+
 }

@@ -19,6 +19,8 @@
 
 #include "Box/BoxContainer/horizcontainer.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 HorizContainer::HorizContainer() :
     BoxContainer() {
@@ -33,7 +35,7 @@ HorizContainer::HorizContainer(int width, int height) :
 
 //------------------------------------------------------------------------------
 HorizContainer::HorizContainer(
-        const HorizContainer& cpy) :
+    const HorizContainer& cpy) :
     BoxContainer(cpy) {
 
     for (auto it = cpy.contents.begin(); it != cpy.contents.end(); ++it) {
@@ -69,15 +71,15 @@ Reply HorizContainer::draw(Position pos, Boundary container) {
 
     // Get content space boundary and width spacing
     Boundary contentBound = getContentBound(absolutePos);
-    std::vector<int> spacing = getSpacingWidth(contentBound, totalWidth, 
-            dynamCount);
+    std::vector<int> spacing = getSpacingWidth(contentBound, totalWidth,
+        dynamCount);
 
     // Print contents
     int spacingIdx = spacing.size() - 1;
     Position offset{ actualWidth - vertBorderSize - 0, 0 }; // TODO: test the - 1
     for (auto it = contents.rbegin(); it != contents.rend(); ++it) {
         if (it->second.fixed) {
-            Position drawPos{ it->second.pos.col + pos.col, it->second.pos.row 
+            Position drawPos{ it->second.pos.col + pos.col, it->second.pos.row
                     + pos.row };
             it->second.item->draw(drawPos, contentBound);
         }
@@ -215,7 +217,7 @@ int HorizContainer::getWidth() const {
 
 //------------------------------------------------------------------------------
 std::vector<int> HorizContainer::getSpacingWidth(
-        const Boundary& container, int totalWidth, int dynamCount) const {
+    const Boundary& container, int totalWidth, int dynamCount) const {
     int contentWidth = container.right - container.left + 1;
     int totalSpace = contentWidth - totalWidth;
     std::vector<int> spacing;
@@ -247,8 +249,8 @@ std::vector<int> HorizContainer::getSpacingWidth(
         spacing[0] = 0;
 
         // Distribute remainder
-        remainder = (dynamCount == 1) ? totalSpace : 
-                totalSpace % (dynamCount - 1);
+        remainder = (dynamCount == 1) ? totalSpace :
+            totalSpace % (dynamCount - 1);
         for (int i = 0; i < remainder; ++i) {
             ++spacing[i + 1]; // + 1 to skip first index
         }
@@ -291,4 +293,6 @@ int HorizContainer::getRowOffset(int boxHeight) const {
 
     // Default alignment is MIDDLE
     return (actualHeight - boxHeight) / 2;
+}
+
 }

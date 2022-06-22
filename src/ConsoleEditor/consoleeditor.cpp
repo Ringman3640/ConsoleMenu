@@ -25,6 +25,8 @@
 
 #include "consoleeditor.h"
 
+namespace conu {
+
 const HANDLE ConsoleEditor::OUT_HANDLE = GetStdHandle(STD_OUTPUT_HANDLE);
 const HANDLE ConsoleEditor::IN_HANDLE = GetStdHandle(STD_INPUT_HANDLE);
 const HWND ConsoleEditor::WINDOW_HANDLE = GetConsoleWindow();
@@ -32,7 +34,7 @@ const HWND ConsoleEditor::WINDOW_HANDLE = GetConsoleWindow();
 ConsoleEditor ConsoleEditor::consoleInstance;
 
 //------------------------------------------------------------------------------
-ConsoleEditor::ConsoleEditor() : 
+ConsoleEditor::ConsoleEditor() :
     initialized{ false },
     restoreMode{ 0 } {
 
@@ -129,7 +131,7 @@ Boundary ConsoleEditor::getBufferBoundary() {
         return Boundary{ -1, -1, -1, -1 };
     }
 
-    return Boundary{ 0, 0, winInfo.dwMaximumWindowSize.X, 
+    return Boundary{ 0, 0, winInfo.dwMaximumWindowSize.X,
             winInfo.dwMaximumWindowSize.Y };
 }
 
@@ -220,7 +222,7 @@ Position ConsoleEditor::getMousePosition() {
         }
 
         // Return mouse position
-        return Position{ inBuff[i].Event.MouseEvent.dwMousePosition.X, 
+        return Position{ inBuff[i].Event.MouseEvent.dwMousePosition.X,
                 inBuff[i].Event.MouseEvent.dwMousePosition.Y };
     }
 }
@@ -251,13 +253,13 @@ bool ConsoleEditor::setCursorPosition(Position pos) {
     Position dimensions = getWindowDimensions();
 
     // Position out-of-bounds
-    if (pos.col > dimensions.col || pos.row > dimensions.row 
-            || pos.col < 0 || pos.row < 0) {
+    if (pos.col > dimensions.col || pos.row > dimensions.row
+        || pos.col < 0 || pos.row < 0) {
         return false;
     }
 
-    return SetConsoleCursorPosition(OUT_HANDLE, 
-            COORD{ static_cast<short>(pos.col), static_cast<short>(pos.row) });
+    return SetConsoleCursorPosition(OUT_HANDLE,
+        COORD{ static_cast<short>(pos.col), static_cast<short>(pos.row) });
 }
 
 //------------------------------------------------------------------------------
@@ -409,8 +411,8 @@ void ConsoleEditor::clearInputBuffer() {
 //------------------------------------------------------------------------------
 void ConsoleEditor::formatWriteBuffer() {
     Position winDim = getWindowDimensions();
-    writeBuffer = std::vector<std::vector<char>>(winDim.row + 1, 
-            std::vector<char>(winDim.col + 1));
+    writeBuffer = std::vector<std::vector<char>>(winDim.row + 1,
+        std::vector<char>(winDim.col + 1));
     clearWriteBuffer();
 }
 
@@ -423,4 +425,6 @@ int ConsoleEditor::readInputBuffer(INPUT_RECORD inBuff[], int buffSize) {
     }
 
     return readRecords;
+}
+
 }

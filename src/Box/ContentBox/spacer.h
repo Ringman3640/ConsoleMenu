@@ -20,6 +20,8 @@
 
 #include "Box/ContentBox/contentbox.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 class Spacer : public ContentBox {
 public:
@@ -30,7 +32,7 @@ public:
     //--------------------------------------------------------------------------
     // Parameterized constructor
     Spacer(int width, int height);
-    
+
     //--------------------------------------------------------------------------
     // Draw the Spacer to the output console given an origin column and row, and
     // a constraining rectangle that represents the container boundaries that
@@ -61,3 +63,5 @@ public:
     virtual std::string getClassName() const override;
 
 };
+
+}

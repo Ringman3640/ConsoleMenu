@@ -35,6 +35,8 @@
 #include "ConsoleEditor/consoleeditor.h"
 #include "Flag/flag.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 // BorderFill struct
 // Contains information about the border fill characters for each side of
@@ -164,7 +166,7 @@ protected:
     // Redraw method utilization
     Position targetPos;
     Boundary savedBound;
-    
+
     // Drawing information
     Alignment align;
     bool drawn;
@@ -199,3 +201,5 @@ private:
     static const BorderFill DEFAULT_BORDER_FILL;
 
 };
+
+}

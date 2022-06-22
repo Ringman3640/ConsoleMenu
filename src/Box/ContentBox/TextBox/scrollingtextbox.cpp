@@ -19,6 +19,8 @@
 
 #include "Box/ContentBox/TextBox/scrollingtextbox.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 ScrollingTextBox::ScrollingTextBox() :
     TextBox(),
@@ -27,8 +29,8 @@ ScrollingTextBox::ScrollingTextBox() :
 }
 
 //------------------------------------------------------------------------------
-ScrollingTextBox::ScrollingTextBox(int width, int height, 
-        std::string text) :
+ScrollingTextBox::ScrollingTextBox(int width, int height,
+    std::string text) :
     TextBox(width, height, text),
     scrollPos{ 0 } {
 
@@ -132,10 +134,10 @@ void ScrollingTextBox::drawScrollTBox() {
     std::string clearLine(printableWidth, ' ');
     int startRow = vertOffset + absolutePos.row;
     for (int i = 0; i < printableLines && i < lines.size(); ++i) {
-        console.setCursorPosition(Position{ absolutePos.col + vertBorderSize, 
+        console.setCursorPosition(Position{ absolutePos.col + vertBorderSize,
                 startRow + horizBorderSize + i });
         std::cout << clearLine;
-        console.setCursorPosition(Position{ absolutePos.col + vertBorderSize, 
+        console.setCursorPosition(Position{ absolutePos.col + vertBorderSize,
                 startRow + horizBorderSize + i });
         std::cout << lines[i + scrollPos];
     }
@@ -184,4 +186,6 @@ void ScrollingTextBox::bufferScrollTBox() {
         console.writeToBuffer(Position{ absolutePos.col + vertBorderSize,
                 startRow + horizBorderSize + i }, lines[i + scrollPos].c_str());
     }
+}
+
 }

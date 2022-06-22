@@ -31,6 +31,8 @@
 #include <vector>
 #include "ConsoleEditor/inputevent.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 class ConsoleEditor {
 
@@ -183,3 +185,5 @@ private:
     int readInputBuffer(INPUT_RECORD inBuff[], int buffSize);
 
 };
+
+}

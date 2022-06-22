@@ -18,6 +18,8 @@
 
 #include "Box/ContentBox/TextBox/button.h"
 
+namespace conu {
+
 Reply Button::DEFAULT_CLICK_HANDLER(Box& self) {
     return Reply::CONTINUE;
 }
@@ -49,8 +51,8 @@ Reply Button::interact(inputEvent::MouseEvent action) {
     }
 
     // Check if action is a left click
-    if (!action.leftClick || action.eventFlag 
-            != inputEvent::Mouse::CLICKED) {
+    if (!action.leftClick || action.eventFlag
+        != inputEvent::Mouse::CLICKED) {
         return Reply::IGNORED;
     }
 
@@ -76,4 +78,6 @@ std::string Button::getClassName() const {
 //--------------------------------------------------------------------------
 void Button::setAction(std::function<Reply(Box&)> action) {
     clickHandler = action;
+}
+
 }

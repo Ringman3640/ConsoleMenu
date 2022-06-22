@@ -21,6 +21,8 @@
 
 #include "Box/ContentBox/TextBox/textbox.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 class ScrollingTextBox : public TextBox {
 public:
@@ -76,3 +78,5 @@ private:
     void bufferScrollTBox();
 
 };
+
+}

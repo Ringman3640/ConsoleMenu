@@ -18,6 +18,8 @@
 
 #include "Box/ContentBox/spacer.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 Spacer::Spacer() :
     ContentBox() {
@@ -64,4 +66,6 @@ Box* Spacer::createBox() const {
 //--------------------------------------------------------------------------
 std::string Spacer::getClassName() const {
     return std::string("Spacer");
+}
+
 }

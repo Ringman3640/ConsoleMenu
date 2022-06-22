@@ -21,6 +21,8 @@
 
 #include "Box/BoxContainer/boxcontainer.h"
 
+namespace conu {
+
 class HorizContainer : public BoxContainer {
 public:
     //--------------------------------------------------------------------------
@@ -92,3 +94,5 @@ private:
     int getRowOffset(int boxHeight) const;
 
 };
+
+}

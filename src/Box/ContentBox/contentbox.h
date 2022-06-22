@@ -20,6 +20,8 @@
 
 #include "Box/box.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 class ContentBox : public Box {
 public:
@@ -69,3 +71,5 @@ public:
     virtual int getWidth() const override;
 
 };
+
+}

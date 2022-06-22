@@ -22,6 +22,8 @@
 #include <type_traits>
 #include <windows.h>
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 // Position structure
 // Contains a coordinate position relative to the some origin point. For the 
@@ -49,77 +51,77 @@ struct Boundary {
 // inputEvent namespace
 // Contains structures and enumerators used by the InputEvent class.
 namespace inputEvent {
-    //--------------------------------------------------------------------------
-    // InputType enumerators
-    // Enumerators for the InputEvent struct. Indicates the event type held
-    // within the input union.
-    enum class Type {
-        MOUSE_INPUT,        // Indicates a mouse input in 'info'
-        KEY_INPUT,          // Indicates a keyboard input in 'info'
-        RESIZE_INPUT,       // Indicates a screen resize event in 'info'
-        INVALID             // Indicates an invalid input fron the console
-    };
+//--------------------------------------------------------------------------
+// InputType enumerators
+// Enumerators for the InputEvent struct. Indicates the event type held
+// within the input union.
+enum class Type {
+    MOUSE_INPUT,        // Indicates a mouse input in 'info'
+    KEY_INPUT,          // Indicates a keyboard input in 'info'
+    RESIZE_INPUT,       // Indicates a screen resize event in 'info'
+    INVALID             // Indicates an invalid input fron the console
+};
 
-    //--------------------------------------------------------------------------
-    // Mouse enumerators
-    // Enumerators for the MouseEvent struct.
-    enum class Mouse {
-        CLICKED,            // The left or right mouse button was clicked
-        DOUBLE_CLICKED,     // The left or right mouse button was double clicked
-        WHEELED_FORWARD,    // The scroll wheel was rolled away from the user
-        WHEELED_BACKWARD,   // The scroll wheel was rolled towards the user
-        WHEELED_LEFT,       // The scroll wheel was rolled left
-        WHEELED_RIGHT,      // The scroll wheel was rolled right
-        MOVED               // The mouse was moved
-    };
+//--------------------------------------------------------------------------
+// Mouse enumerators
+// Enumerators for the MouseEvent struct.
+enum class Mouse {
+    CLICKED,            // The left or right mouse button was clicked
+    DOUBLE_CLICKED,     // The left or right mouse button was double clicked
+    WHEELED_FORWARD,    // The scroll wheel was rolled away from the user
+    WHEELED_BACKWARD,   // The scroll wheel was rolled towards the user
+    WHEELED_LEFT,       // The scroll wheel was rolled left
+    WHEELED_RIGHT,      // The scroll wheel was rolled right
+    MOVED               // The mouse was moved
+};
 
-    //--------------------------------------------------------------------------
-    // MouseEvent struct
-    // Contains information about a mouse event from the console input buffer.
-    struct MouseEvent {
-        Position mousePosition;
-        Mouse eventFlag;
-        bool leftClick;
-        bool rightClick;
-    };
+//--------------------------------------------------------------------------
+// MouseEvent struct
+// Contains information about a mouse event from the console input buffer.
+struct MouseEvent {
+    Position mousePosition;
+    Mouse eventFlag;
+    bool leftClick;
+    bool rightClick;
+};
 
-    //--------------------------------------------------------------------------
-    // Key enumerators
-    // Enumerators for the KeyEvent struct.
-    enum class Key {
-        NONE        = 0,        // Initializing enum, ignore
-        CAPSLOCK    = 1 << 0,   // Indicates that CAPSLOCK is on
-        CTRL        = 1 << 1,   // Indicates that left CTRL is held
-        ALT         = 1 << 2,   // Indicates that left ALT is held
-        SHIFT       = 1 << 3,   // Indicates that SHIFT is held
-    };
+//--------------------------------------------------------------------------
+// Key enumerators
+// Enumerators for the KeyEvent struct.
+enum class Key {
+    NONE = 0,        // Initializing enum, ignore
+    CAPSLOCK = 1 << 0,   // Indicates that CAPSLOCK is on
+    CTRL = 1 << 1,   // Indicates that left CTRL is held
+    ALT = 1 << 2,   // Indicates that left ALT is held
+    SHIFT = 1 << 3,   // Indicates that SHIFT is held
+};
 
-    //--------------------------------------------------------------------------
-    // Key operator | overload
-    // Returns the logical OR combination of the left and right Key flags.
-    Key operator | (Key left, Key right);
-    
-    //--------------------------------------------------------------------------
-    // Key operator & overload
-    // Returns the logical AND result of the left and right Key flags.
-    int operator & (Key left, Key right);
+//--------------------------------------------------------------------------
+// Key operator | overload
+// Returns the logical OR combination of the left and right Key flags.
+Key operator | (Key left, Key right);
 
-    //--------------------------------------------------------------------------
-    // KeyEvent struct
-    // Contains information about a key event from the console input buffer.
-    struct KeyEvent {
-        Key eventFlag;
-        bool keyedDown;
-        int repeatCount;
-        char character;
-    };
+//--------------------------------------------------------------------------
+// Key operator & overload
+// Returns the logical AND result of the left and right Key flags.
+int operator & (Key left, Key right);
 
-    //--------------------------------------------------------------------------
-    // ResizeEvent struct
-    // Contains information about a resize event from the console input buffer.
-    struct ResizeEvent {
-        Position size;
-    };
+//--------------------------------------------------------------------------
+// KeyEvent struct
+// Contains information about a key event from the console input buffer.
+struct KeyEvent {
+    Key eventFlag;
+    bool keyedDown;
+    int repeatCount;
+    char character;
+};
+
+//--------------------------------------------------------------------------
+// ResizeEvent struct
+// Contains information about a resize event from the console input buffer.
+struct ResizeEvent {
+    Position size;
+};
 }
 
 //------------------------------------------------------------------------------
@@ -150,3 +152,5 @@ private:
     inputEvent::ResizeEvent initResizeEvent(WINDOW_BUFFER_SIZE_RECORD inEvent);
 
 };
+
+}

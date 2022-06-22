@@ -19,6 +19,8 @@
 
 #include "Box/BoxContainer/vertcontainer.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 VertContainer::VertContainer() :
     BoxContainer() {
@@ -70,7 +72,7 @@ Reply VertContainer::draw(Position pos, Boundary container) {
     // Get content space boundary and width spacing
     Boundary contentBound = getContentBound(absolutePos);
     std::vector<int> spacing = getSpacingHeight(contentBound, totalHeight,
-            dynamCount);
+        dynamCount);
 
     // Print contents
     int spacingIdx = spacing.size() - 1;
@@ -123,7 +125,7 @@ Reply VertContainer::buffer(Position pos, Boundary container) {
     // Get content space boundary and width spacing
     Boundary contentBound = getContentBound(absolutePos);
     std::vector<int> spacing = getSpacingHeight(contentBound, totalHeight,
-            dynamCount);
+        dynamCount);
 
     // Print contents
     int spacingIdx = spacing.size() - 1;
@@ -293,4 +295,6 @@ int VertContainer::getColOffset(int boxWidth) const {
 
     // Default alignment is MIDDLE
     return (actualWidth - boxWidth) / 2;
+}
+
 }

@@ -21,6 +21,8 @@
 
 #include "Box/BoxContainer/boxcontainer.h"
 
+namespace conu {
+
 class VertContainer : public BoxContainer {
 public:
     //--------------------------------------------------------------------------
@@ -91,3 +93,5 @@ private:
     // calculated.
     int getColOffset(int boxWidth) const;
 };
+
+}

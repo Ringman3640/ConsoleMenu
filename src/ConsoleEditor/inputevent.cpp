@@ -21,17 +21,19 @@
 
 #include "ConsoleEditor/inputevent.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 inputEvent::Key inputEvent::operator | (Key left, Key right) {
-    return static_cast<Key>(static_cast<std::underlying_type<Key>::type>(left) 
-            | static_cast<std::underlying_type<Key>::type>(right));
+    return static_cast<Key>(static_cast<std::underlying_type<Key>::type>(left)
+        | static_cast<std::underlying_type<Key>::type>(right));
 }
 
 //------------------------------------------------------------------------------
 int inputEvent::operator & (Key left, Key right) {
     return static_cast<std::underlying_type<Key>::type>(
-            static_cast<std::underlying_type<Key>::type>(left)
-            & static_cast<std::underlying_type<Key>::type>(right));
+        static_cast<std::underlying_type<Key>::type>(left)
+        & static_cast<std::underlying_type<Key>::type>(right));
 }
 
 //------------------------------------------------------------------------------
@@ -69,7 +71,7 @@ inputEvent::MouseEvent InputEvent::initMouseEvent(MOUSE_EVENT_RECORD inEvent) {
     inputEvent::MouseEvent ret;
 
     // Get mouse position
-    ret.mousePosition = Position{ inEvent.dwMousePosition.X, 
+    ret.mousePosition = Position{ inEvent.dwMousePosition.X,
             inEvent.dwMousePosition.Y };
 
     // Set event flag
@@ -163,8 +165,10 @@ inputEvent::KeyEvent InputEvent::initKeyEvent(KEY_EVENT_RECORD inEvent) {
 }
 
 //------------------------------------------------------------------------------
-inputEvent::ResizeEvent InputEvent::initResizeEvent(WINDOW_BUFFER_SIZE_RECORD 
-        inEvent) {
-    return inputEvent::ResizeEvent{ Position{ inEvent.dwSize.X, 
+inputEvent::ResizeEvent InputEvent::initResizeEvent(WINDOW_BUFFER_SIZE_RECORD
+    inEvent) {
+    return inputEvent::ResizeEvent{ Position{ inEvent.dwSize.X,
             inEvent.dwSize.Y } };
+}
+
 }

@@ -15,6 +15,8 @@
 
 #include "Box/BoxContainer/boxcontainer.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 BoxContainer::BoxContainer() :
     Box(),
@@ -111,7 +113,7 @@ Boundary BoxContainer::getContentBound(const Position& pos) const {
 
 //------------------------------------------------------------------------------
 std::vector<int> BoxContainer::getSpacingHeight(const Boundary& container,
-        int totalHeight, int dynamCount) const {
+    int totalHeight, int dynamCount) const {
     int contentHeight = container.bottom - container.top;
     int remainingSpace = contentHeight - totalHeight;
     std::vector<int> spacing;
@@ -190,4 +192,6 @@ void ItemAccessor::insert(const Box& inBox, const Position& pos) {
 //------------------------------------------------------------------------------
 void ItemAccessor::remove() {
     container->remove(layer);
+}
+
 }

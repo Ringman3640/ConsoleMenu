@@ -28,6 +28,8 @@
 #include <algorithm>
 #include "Box/box.h"
 
+namespace conu {
+
 class BoxContainer;
 
 //------------------------------------------------------------------------------
@@ -71,7 +73,7 @@ enum class BoxDistrib {
     EVEN_SPACED,        // Spaces of equal width next to each Box.
     SPACED_TO_EDGE,     // Similar to EVEN_SPACED, but there is no space between 
                         // the edge of the BoxContainer and the internal Boxes.
-    NONE                // No spacing, all internal Boxes are touching. 
+                        NONE                // No spacing, all internal Boxes are touching. 
 };
 
 //------------------------------------------------------------------------------
@@ -204,3 +206,5 @@ protected:
     void clearContents();
 
 };
+
+}

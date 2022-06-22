@@ -27,6 +27,8 @@
 
 #include "Box/box.h"
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 // Static member initialization
 ConsoleEditor& Box::console = ConsoleEditor::getInstance();
@@ -50,7 +52,7 @@ Box::Box() :
     borderFill{ DEFAULT_BORDER_FILL },
     targetPos{ DEFAULT_POS },
     savedBound{ DEFAULT_BOUND },
-    align{Alignment::LEFT | Alignment::MIDDLE},
+    align{ Alignment::LEFT | Alignment::MIDDLE },
     drawn{ false } {
 
 }
@@ -376,7 +378,7 @@ void Box::printBase(Position pos, Boundary container) {
 
     // Draw Box base to console
     for (int i = 0; i < actualHeight; ++i) {
-        console.setCursorPosition(Position{ absolutePos.col, 
+        console.setCursorPosition(Position{ absolutePos.col,
                 absolutePos.row + i });
         if (i + 1 <= horizBorderSize) {
             std::cout << topBorderRow;
@@ -414,7 +416,7 @@ void Box::bufferBase(Position pos, Boundary container) {
     // Draw Box base to console
     for (int i = 0; i < actualHeight; ++i) {
         if (i + 1 <= horizBorderSize) {
-            console.writeToBuffer(Position{ absolutePos.col, 
+            console.writeToBuffer(Position{ absolutePos.col,
                     absolutePos.row + i }, topBorderRow.c_str());
         }
         else if (actualHeight - i <= horizBorderSize) {
@@ -426,4 +428,6 @@ void Box::bufferBase(Position pos, Boundary container) {
                     absolutePos.row + i }, internalRow.c_str());
         }
     }
+}
+
 }

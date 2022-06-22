@@ -19,6 +19,8 @@
 #include <functional>
 #include "Box/ContentBox/TextBox/textbox.h"
 
+namespace conu {
+
 class Button : public TextBox {
 public:
     //--------------------------------------------------------------------------
@@ -64,3 +66,5 @@ private:
     static Reply DEFAULT_CLICK_HANDLER(Box& self);
 
 };
+
+}
