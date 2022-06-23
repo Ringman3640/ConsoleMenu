@@ -338,8 +338,13 @@ bool ConsoleEditor::scrollWindow(int amount) {
 //------------------------------------------------------------------------------
 void ConsoleEditor::writeToScreen(const Position& pos, const char text[]) {
     Position prevPos = getCursorPosition();
+    LPDWORD charsWritten = 0;
+    DWORD charsToWrite = 0;
+
+    for (charsToWrite = 0; text[charsToWrite]; ++charsToWrite);
+
     setCursorPosition(pos);
-    std::cout << text;
+    WriteConsoleA(OUT_HANDLE, text, charsToWrite, charsWritten, NULL);
     setCursorPosition(prevPos);
 }
 
@@ -350,13 +355,13 @@ void ConsoleEditor::writeToBuffer(const Position& pos, const char text[]) {
         return;
     }
     Position drawIdx = { pos.col, pos.row };
-    Position buffDim{ writeBuffer[0].size(), writeBuffer.size() - 1 };
+    Position buffDim{ writeBuffer[0].size(), writeBuffer.size() };
 
     // Check draw position
-    if (pos.col < 0 || pos.col > buffDim.col - 1) {
+    if (pos.col < 0 || pos.col > buffDim.col) {
         return;
     }
-    if (pos.row < 0 || pos.row > buffDim.row - 1) {
+    if (pos.row < 0 || pos.row > buffDim.row) {
         return;
     }
 
@@ -370,10 +375,12 @@ void ConsoleEditor::writeToBuffer(const Position& pos, const char text[]) {
 void ConsoleEditor::printWriteBuffer() {
     Position prevPos = getCursorPosition();
     Position writePos = { 0, 0 };
+    LPDWORD charsWritten = 0;
 
     for (writePos.row; writePos.row < writeBuffer.size(); ++writePos.row) {
         setCursorPosition(writePos);
-        std::cout << &writeBuffer[writePos.row][0];
+        WriteConsoleA(OUT_HANDLE, &writeBuffer[writePos.row][0], 
+                writeBuffer[writePos.row].size(), charsWritten, NULL);
     }
 
     setCursorPosition(prevPos);
@@ -396,10 +403,9 @@ void ConsoleEditor::clearWriteBuffer() {
     int rows = writeBuffer.size();
     int cols = writeBuffer[0].size();
     for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols - 1; ++j) {
+        for (int j = 0; j < cols; ++j) {
             writeBuffer[i][j] = ' ';
         }
-        writeBuffer[i][cols - 1] = '\0';
     }
 }
 
@@ -411,8 +417,8 @@ void ConsoleEditor::clearInputBuffer() {
 //------------------------------------------------------------------------------
 void ConsoleEditor::formatWriteBuffer() {
     Position winDim = getWindowDimensions();
-    writeBuffer = std::vector<std::vector<char>>(winDim.row + 1,
-        std::vector<char>(winDim.col + 1));
+    writeBuffer = std::vector<std::vector<char>>(winDim.row,
+        std::vector<char>(winDim.col));
     clearWriteBuffer();
 }
 
