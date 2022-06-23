@@ -366,7 +366,7 @@ void ConsoleEditor::writeToBuffer(const Position& pos, const char text[]) {
     }
 
     // Write to write buffer
-    while (text[textIdx] && writeBuffer[pos.row][drawIdx.col]) {
+    while (text[textIdx] && pos.col + textIdx < writeBuffer[pos.row].size()) {
         writeBuffer[pos.row][drawIdx.col++] = text[textIdx++];
     }
 }
