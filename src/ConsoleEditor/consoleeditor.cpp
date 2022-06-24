@@ -83,7 +83,19 @@ bool ConsoleEditor::setBufferDimensions(short width, short height) {
 //------------------------------------------------------------------------------
 bool ConsoleEditor::fitBufferToWindow() {
     Position winSize = getWindowDimensions();
-    return setBufferDimensions(winSize.col + 1, winSize.row + 1);
+    SMALL_RECT dim = { 0, 0, winSize.col - 1, winSize.row - 1 };
+
+    // I do not know why, but I need to resize the window buffer screen and the
+    // window buffer to accurately resize the screen (removing the additional
+    // width and height from the scroll bars)
+    // Thank you win32 api
+    if (!setBufferDimensions(winSize.col, winSize.row)) {
+        return false;
+    }
+    if (!SetConsoleWindowInfo(OUT_HANDLE, TRUE, &dim)) {
+        return false;
+    }
+    return setBufferDimensions(winSize.col, winSize.row);
 }
 
 //------------------------------------------------------------------------------
@@ -91,10 +103,10 @@ bool ConsoleEditor::setWindowDimensions(short width, short height) {
     // Check if screen buffer is too small, resize if necessary
     Position buffSize = getBufferDimensions();
     if (buffSize.col <= width || buffSize.row <= height) {
-        setBufferDimensions(width + 1, height + 1);
+        setBufferDimensions(width, height);
     }
 
-    SMALL_RECT dim = SMALL_RECT{ 0, 0, width, height };
+    SMALL_RECT dim = SMALL_RECT{ 0, 0, width - 1, height - 1 };
     bool result = SetConsoleWindowInfo(OUT_HANDLE, TRUE, &dim);
     formatWriteBuffer();
     return result;
@@ -120,7 +132,7 @@ Position ConsoleEditor::getWindowDimensions() {
         return Position{ -1, -1 };
     }
 
-    return Position{ winInfo.srWindow.Right, winInfo.srWindow.Bottom };
+    return Position{ winInfo.srWindow.Right + 1, winInfo.srWindow.Bottom + 1 };
 }
 
 //------------------------------------------------------------------------------
