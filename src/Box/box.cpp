@@ -280,10 +280,10 @@ void Box::calculateActualDimAndPos(Position pos, Boundary container) {
     if (container.left < 0) {
         container.left = 0;
     }
-    if (container.bottom > winDim.row) {
+    if (container.bottom > --winDim.row) {
         container.bottom = winDim.row;
     }
-    if (container.right > winDim.col) {
+    if (container.right > --winDim.col) {
         container.right = winDim.col;
     }
 
