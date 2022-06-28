@@ -367,7 +367,7 @@ void ConsoleEditor::writeToBuffer(const Position& pos, const char text[]) {
         return;
     }
     Position drawIdx = { pos.col, pos.row };
-    Position buffDim{ writeBuffer[0].size(), writeBuffer.size() };
+    Position buffDim{ writeBuffer[0].size() - 1, writeBuffer.size() - 1 };
 
     // Check draw position
     if (pos.col < 0 || pos.col > buffDim.col) {
