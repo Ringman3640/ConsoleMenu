@@ -137,7 +137,7 @@ public:
 
     //--------------------------------------------------------------------------
     // Set the alignment of the Box contents.
-    void setAlignment(Alignment inAlign);
+    void setAlignment(Align inAlign);
 
     //--------------------------------------------------------------------------
     // Check if the provided coordinate position is within the bounds of the
@@ -168,7 +168,7 @@ protected:
     Boundary savedBound;
 
     // Drawing information
-    Alignment align;
+    Align alignment;
     bool drawn;
 
     //--------------------------------------------------------------------------

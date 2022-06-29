@@ -266,10 +266,10 @@ std::vector<int> HorizContainer::getSpacingWidth(
             return std::move(spacing);
         }
 
-        if (align & Alignment::LEFT) {
+        if (alignment & Align::LEFT) {
             spacing[spacing.size() - 1] = totalSpace;
         }
-        else if (align & Alignment::RIGHT) {
+        else if (alignment & Align::RIGHT) {
             // do nothing
         }
         else {
@@ -284,10 +284,10 @@ std::vector<int> HorizContainer::getSpacingWidth(
 
 //------------------------------------------------------------------------------
 int HorizContainer::getRowOffset(int boxHeight) const {
-    if (align & Alignment::TOP) {
+    if (alignment & Align::TOP) {
         return 0;
     }
-    if (align & Alignment::BOTTOM) {
+    if (alignment & Align::BOTTOM) {
         return actualHeight - boxHeight;
     }
 

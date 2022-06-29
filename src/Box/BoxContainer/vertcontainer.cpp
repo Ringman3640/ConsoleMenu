@@ -268,10 +268,10 @@ std::vector<int> VertContainer::getSpacingHeight(
             return std::move(spacing);
         }
 
-        if (align & Alignment::LEFT) {
+        if (alignment & Align::LEFT) {
             spacing[spacing.size() - 1] = totalSpace;
         }
-        else if (align & Alignment::RIGHT) {
+        else if (alignment & Align::RIGHT) {
             // do nothing
         }
         else {
@@ -286,10 +286,10 @@ std::vector<int> VertContainer::getSpacingHeight(
 
 //------------------------------------------------------------------------------
 int VertContainer::getColOffset(int boxWidth) const {
-    if (align & Alignment::LEFT) {
+    if (alignment & Align::LEFT) {
         return 0;
     }
-    if (align & Alignment::RIGHT) {
+    if (alignment & Align::RIGHT) {
         return actualWidth - boxWidth;
     }
 

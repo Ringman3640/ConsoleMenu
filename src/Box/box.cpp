@@ -52,7 +52,7 @@ Box::Box() :
     borderFill{ DEFAULT_BORDER_FILL },
     targetPos{ DEFAULT_POS },
     savedBound{ DEFAULT_BOUND },
-    align{ Alignment::LEFT | Alignment::MIDDLE },
+    alignment{ Align::LEFT | Align::MIDDLE },
     drawn{ false } {
 
 }
@@ -69,7 +69,7 @@ Box::Box(int width, int height) :
     borderFill{ DEFAULT_BORDER_FILL },
     targetPos{ DEFAULT_POS },
     savedBound{ DEFAULT_BOUND },
-    align{ Alignment::LEFT | Alignment::MIDDLE },
+    alignment{ Align::LEFT | Align::MIDDLE },
     drawn{ false } {
 
     // Cannot have negative width or height
@@ -158,8 +158,8 @@ void Box::setBorderFill(const BorderFill& fill) {
 }
 
 //------------------------------------------------------------------------------
-void Box::setAlignment(Alignment inAlign) {
-    align = inAlign;
+void Box::setAlignment(Align inAlign) {
+    alignment = inAlign;
 }
 
 //------------------------------------------------------------------------------

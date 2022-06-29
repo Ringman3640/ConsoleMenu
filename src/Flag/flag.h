@@ -4,18 +4,18 @@
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------
 // Description: Flags are enumerator classes that indicate some state, response,
-//     or action. flag.h includes two enumerator flags: Alignment and Reply.
+//     or action. flag.h includes two enumerator flags: Align and Reply.
 // 
-//     Alignment indicates how content should be printed to the console relative
+//     Align indicates how content should be printed to the console relative
 //     to the content's container. 
 //
 //     Reply indicates what action should be taken by the caller of a function
 //     or method once the function or method returns.
 //
 // File Functionality:
-//     - Defines Alignment and Reply enumerator flags.
+//     - Defines Align and Reply enumerator flags.
 //     - Defines and implements logical AND and OR operator overlaods for 
-//       Alignment and Reply flags. 
+//       Align and Reply flags. 
 // 
 //------------------------------------------------------------------------------
 
@@ -26,10 +26,10 @@
 namespace conu {
 
 //------------------------------------------------------------------------------
-// Alignment enumerator
-// Indicates the alignment of conent within a container. Alignment consists of
+// Align enumerator
+// Indicates the alignment of conent within a container. Align consists of
 // horizontal and vertical alignment.
-enum class Alignment {
+enum class Align {
     // Horizontal alignment
     LEFT        = 1 << 0,   // Content alignment along left border
     CENTER      = 1 << 1,   // Content centered horizontally
@@ -41,16 +41,16 @@ enum class Alignment {
     BOTTOM      = 1 << 5    // Content alignment along bottom border
 };
 
-inline Alignment operator | (Alignment left, Alignment right) {
-    return static_cast<Alignment>(
-            static_cast<std::underlying_type<Alignment>::type>(left)
-            | static_cast<std::underlying_type<Alignment>::type>(right));
+inline Align operator | (Align left, Align right) {
+    return static_cast<Align>(
+            static_cast<std::underlying_type<Align>::type>(left)
+            | static_cast<std::underlying_type<Align>::type>(right));
 }
 
-inline int operator & (Alignment left, Alignment right) {
+inline int operator & (Align left, Align right) {
     return static_cast<int>(
-        static_cast<std::underlying_type<Alignment>::type>(left)
-        & static_cast<std::underlying_type<Alignment>::type>(right));
+        static_cast<std::underlying_type<Align>::type>(left)
+        & static_cast<std::underlying_type<Align>::type>(right));
 }
 
 //------------------------------------------------------------------------------

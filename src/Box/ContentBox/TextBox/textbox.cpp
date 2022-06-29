@@ -46,13 +46,13 @@ Reply TextBox::draw(Position pos, Boundary container) {
     int printableLines = actualHeight - (horizBorderSize * 2);
     int vertOffset = 0;
     if (lines.size() < printableLines) {
-        if (align & Alignment::TOP) {
+        if (alignment & Align::TOP) {
             vertOffset = 0;
         }
-        else if (align & Alignment::MIDDLE) {
+        else if (alignment & Align::MIDDLE) {
             vertOffset = (printableLines - lines.size()) / 2;
         }
-        else if (align & Alignment::BOTTOM) {
+        else if (alignment & Align::BOTTOM) {
             vertOffset = printableLines - lines.size();
         }
     }
@@ -79,13 +79,13 @@ Reply TextBox::buffer(Position pos, Boundary container) {
     int printableLines = actualHeight - (horizBorderSize * 2);
     int vertOffset = 0;
     if (lines.size() < printableLines) {
-        if (align & Alignment::TOP) {
+        if (alignment & Align::TOP) {
             vertOffset = 0;
         }
-        else if (align & Alignment::MIDDLE) {
+        else if (alignment & Align::MIDDLE) {
             vertOffset = (printableLines - lines.size()) / 2;
         }
-        else if (align & Alignment::BOTTOM) {
+        else if (alignment & Align::BOTTOM) {
             vertOffset = printableLines - lines.size();
         }
     }
@@ -169,17 +169,17 @@ void TextBox::splitText() {
 void TextBox::applyHorizontalAlignment() {
     int contentWidth = actualWidth - (vertBorderSize * 2);
 
-    if (align & Alignment::LEFT) {
+    if (alignment & Align::LEFT) {
         return;
     }
-    if (align & Alignment::CENTER) {
+    if (alignment & Align::CENTER) {
         for (int i = 0; i < lines.size(); ++i) {
             int padding = (contentWidth - lines[i].size()) / 2;
             lines[i] = std::string(padding, ' ') + lines[i];
         }
         return;
     }
-    if (align & Alignment::RIGHT) {
+    if (alignment & Align::RIGHT) {
         for (int i = 0; i < lines.size(); ++i) {
             int padding = (contentWidth - lines[i].size());
             lines[i] = std::string(padding, ' ') + lines[i];

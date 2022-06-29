@@ -108,13 +108,13 @@ void ScrollingTextBox::drawScrollTBox() {
 
     int vertOffset = 0;
     if (lines.size() < printableLines) {
-        if (align & Alignment::TOP) {
+        if (alignment & Align::TOP) {
             vertOffset = 0;
         }
-        else if (align & Alignment::MIDDLE) {
+        else if (alignment & Align::MIDDLE) {
             vertOffset = (printableLines - lines.size()) / 2;
         }
-        else if (align & Alignment::BOTTOM) {
+        else if (alignment & Align::BOTTOM) {
             vertOffset = printableLines - lines.size();
         }
     }
@@ -154,13 +154,13 @@ void ScrollingTextBox::bufferScrollTBox() {
 
     int vertOffset = 0;
     if (lines.size() < printableLines) {
-        if (align & Alignment::TOP) {
+        if (alignment & Align::TOP) {
             vertOffset = 0;
         }
-        else if (align & Alignment::MIDDLE) {
+        else if (alignment & Align::MIDDLE) {
             vertOffset = (printableLines - lines.size()) / 2;
         }
-        else if (align & Alignment::BOTTOM) {
+        else if (alignment & Align::BOTTOM) {
             vertOffset = printableLines - lines.size();
         }
     }
