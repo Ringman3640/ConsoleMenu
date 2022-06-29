@@ -23,6 +23,8 @@
 
 #include <type_traits>
 
+namespace conu {
+
 //------------------------------------------------------------------------------
 // Alignment enumerator
 // Indicates the alignment of conent within a container. Alignment consists of
@@ -75,4 +77,6 @@ inline int operator & (Reply left, Reply right) {
     return static_cast<int>(
         static_cast<std::underlying_type<Reply>::type>(left)
         & static_cast<std::underlying_type<Reply>::type>(right));
+}
+
 }
