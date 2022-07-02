@@ -113,6 +113,32 @@ bool ConsoleEditor::setWindowDimensions(short width, short height) {
 }
 
 //------------------------------------------------------------------------------
+void ConsoleEditor::allowWindowResizing(bool resizable) {
+    HWND handle = GetConsoleWindow();
+    if (resizable) {
+        SetWindowLong(handle, GWL_STYLE, GetWindowLong(handle, GWL_STYLE)
+            | WS_SIZEBOX);
+    }
+    else {
+        SetWindowLong(handle, GWL_STYLE, GetWindowLong(handle, GWL_STYLE)
+            & ~WS_SIZEBOX);
+    }
+}
+
+//------------------------------------------------------------------------------
+void ConsoleEditor::allowMaximizeBox(bool maximizable) {
+    HWND handle = GetConsoleWindow();
+    if (maximizable) {
+        SetWindowLong(handle, GWL_STYLE, GetWindowLong(handle, GWL_STYLE)
+            | WS_MAXIMIZEBOX);
+    }
+    else {
+        SetWindowLong(handle, GWL_STYLE, GetWindowLong(handle, GWL_STYLE)
+            & ~WS_MAXIMIZEBOX);
+    }
+}
+
+//------------------------------------------------------------------------------
 Position ConsoleEditor::getBufferDimensions() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {

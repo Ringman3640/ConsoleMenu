@@ -63,6 +63,14 @@ public:
     bool setWindowDimensions(short width, short height);
 
     //--------------------------------------------------------------------------
+    // Set whether or not the console window can be resized from the corner.
+    void allowWindowResizing(bool resizable);
+
+    //--------------------------------------------------------------------------
+    // Set whether or not the console window can be maximized.
+    void allowMaximizeBox(bool maximizable);
+
+    //--------------------------------------------------------------------------
     // Get the height and width of the console screen buffer in character units.
     Position getBufferDimensions();
 
