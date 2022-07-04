@@ -29,6 +29,9 @@
 #include <Windows.h>
 #include <iostream>
 #include <vector>
+#include <thread>
+#include <mutex>
+#include <functional>
 #include "ConsoleEditor/inputevent.h"
 
 namespace conu {
@@ -164,6 +167,11 @@ public:
     // Format the write buffer to the size of the current console window.
     void formatWriteBuffer();
 
+    //--------------------------------------------------------------------------
+    // Set the resize handler that is called whenever the resize manager detects
+    // a change in dimensions of the console window.
+    void setResizeHandler(std::function<void(void)> resizeHandler);
+
 private:
     //--------------------------------------------------------------------------
     // Static handlers
@@ -171,18 +179,21 @@ private:
     static const HANDLE IN_HANDLE;
     static const HWND WINDOW_HANDLE;
 
-    //--------------------------------------------------------------------------
     // Static singleton instance
     static ConsoleEditor consoleInstance;
 
-    //--------------------------------------------------------------------------
     // Windows console mode restoration members
     bool initialized;
     DWORD restoreMode;
 
-    //--------------------------------------------------------------------------
+    // Resize manager thread instance members
+    std::thread* resizeManagerThread;
+    std::function<void(void)> resizeHandler;
+    bool terminateResizeManager;
+
     // Write buffer information
     std::vector<std::vector<char>> writeBuffer;
+    std::mutex writeBufferLock;
 
     //--------------------------------------------------------------------------
     // Private default constructor for ConsoleEditor class.
@@ -191,6 +202,10 @@ private:
     //--------------------------------------------------------------------------
     // Read from the console input buffer into an INPUT_RECORD array.
     int readInputBuffer(INPUT_RECORD inBuff[], int buffSize);
+
+    //--------------------------------------------------------------------------
+    // Thread for polling and handling window resizing events.
+    void resizeManager();
 
 };
 

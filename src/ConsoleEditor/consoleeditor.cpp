@@ -36,9 +36,11 @@ ConsoleEditor ConsoleEditor::consoleInstance;
 //------------------------------------------------------------------------------
 ConsoleEditor::ConsoleEditor() :
     initialized{ false },
-    restoreMode{ 0 } {
+    restoreMode{ 0 },
+    resizeManagerThread{ nullptr },
+    resizeHandler{ []() { return; } },
+    terminateResizeManager{ false } {
 
-    initialize();
     formatWriteBuffer();
 }
 
@@ -62,6 +64,14 @@ void ConsoleEditor::initialize() {
 
     // Clear the console input buffer
     FlushConsoleInputBuffer(IN_HANDLE);
+    
+    // Start resize manager
+    if (resizeManagerThread == nullptr) {
+        std::lock_guard<std::mutex> lock(writeBufferLock);
+        terminateResizeManager = false;
+        resizeManagerThread = new std::thread(&ConsoleEditor::resizeManager, 
+                this);
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -73,6 +83,15 @@ void ConsoleEditor::restore() {
     // Restore console mode
     SetConsoleMode(IN_HANDLE, restoreMode);
     initialized = false;
+
+    // Terminate resize manager
+    if (resizeManagerThread != nullptr) {
+        std::lock_guard<std::mutex> lock(writeBufferLock);
+        terminateResizeManager = true;
+        resizeManagerThread->join();
+        delete resizeManagerThread;
+        resizeManagerThread = nullptr;
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -388,6 +407,8 @@ void ConsoleEditor::writeToScreen(const Position& pos, const char text[]) {
 
 //------------------------------------------------------------------------------
 void ConsoleEditor::writeToBuffer(const Position& pos, const char text[]) {
+    std::lock_guard<std::mutex> lock(writeBufferLock);
+
     int textIdx = 0;
     if (writeBuffer.size() == 0) {
         return;
@@ -411,6 +432,8 @@ void ConsoleEditor::writeToBuffer(const Position& pos, const char text[]) {
 
 //------------------------------------------------------------------------------
 void ConsoleEditor::printWriteBuffer() {
+    std::lock_guard<std::mutex> lock(writeBufferLock);
+
     Position prevPos = getCursorPosition();
     Position writePos = { 0, 0 };
     LPDWORD charsWritten = 0;
@@ -438,6 +461,8 @@ void ConsoleEditor::clearScreen() {
 
 //------------------------------------------------------------------------------
 void ConsoleEditor::clearWriteBuffer() {
+    std::lock_guard<std::mutex> lock(writeBufferLock);
+
     int rows = writeBuffer.size();
     int cols = writeBuffer[0].size();
     for (int i = 0; i < rows; ++i) {
@@ -454,10 +479,19 @@ void ConsoleEditor::clearInputBuffer() {
 
 //------------------------------------------------------------------------------
 void ConsoleEditor::formatWriteBuffer() {
+    std::unique_lock<std::mutex> lock(writeBufferLock);
+
     Position winDim = getWindowDimensions();
     writeBuffer = std::vector<std::vector<char>>(winDim.row,
         std::vector<char>(winDim.col));
+
+    lock.unlock();
     clearWriteBuffer();
+}
+
+//------------------------------------------------------------------------------
+void ConsoleEditor::setResizeHandler(std::function<void(void)> resizeHandler) {
+    this->resizeHandler = resizeHandler;
 }
 
 //------------------------------------------------------------------------------
@@ -469,6 +503,26 @@ int ConsoleEditor::readInputBuffer(INPUT_RECORD inBuff[], int buffSize) {
     }
 
     return readRecords;
+}
+
+//------------------------------------------------------------------------------
+void ConsoleEditor::resizeManager() {
+    Position prevDim = getWindowDimensions(), currDim;
+
+    while (true) {
+        if (terminateResizeManager) {
+            return;
+        }
+
+        currDim = getWindowDimensions();
+        if (currDim.col != prevDim.col || currDim.row != prevDim.row) {
+            formatWriteBuffer();
+            resizeHandler();
+            prevDim = currDim;
+        }
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    }
 }
 
 }
