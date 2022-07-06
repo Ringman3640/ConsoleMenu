@@ -130,6 +130,10 @@ public:
     bool setCursorVisibility(bool visible);
 
     //--------------------------------------------------------------------------
+    // Set the font size of the console text.
+    bool setFontSize(int size);
+
+    //--------------------------------------------------------------------------
     // Reset the scroll position to show the top of the console window.
     bool resetScrollPosition();
 

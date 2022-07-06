@@ -333,6 +333,21 @@ bool ConsoleEditor::setCursorVisibility(bool visible) {
 }
 
 //------------------------------------------------------------------------------
+bool ConsoleEditor::setFontSize(int size) {
+    CONSOLE_FONT_INFOEX fontInfo;
+
+    fontInfo.cbSize = sizeof(CONSOLE_FONT_INFOEX);
+    if (!GetCurrentConsoleFontEx(OUT_HANDLE, FALSE, &fontInfo)) {
+        return false;
+    }
+
+    fontInfo.dwFontSize.Y = size;
+    fontInfo.dwFontSize.X = size / 2;
+
+    return SetCurrentConsoleFontEx(OUT_HANDLE, FALSE, &fontInfo);
+}
+
+//------------------------------------------------------------------------------
 bool ConsoleEditor::resetScrollPosition() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     SMALL_RECT pos;
