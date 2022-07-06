@@ -76,7 +76,7 @@ Reply HorizContainer::draw(Position pos, Boundary container) {
 
     // Print contents
     int spacingIdx = spacing.size() - 1;
-    Position offset{ actualWidth - vertBorderSize - 0, 0 }; // TODO: test the - 1
+    Position offset{ actualWidth - vertBorderSize, 0 };
     for (auto it = contents.rbegin(); it != contents.rend(); ++it) {
         if (it->second.fixed) {
             Position drawPos{ it->second.pos.col + pos.col, it->second.pos.row
@@ -85,7 +85,7 @@ Reply HorizContainer::draw(Position pos, Boundary container) {
         }
         else {
             int itemWidth = it->second.item->getWidth();
-            offset.col -= spacing[spacingIdx--] + itemWidth + 0; // TODO: test the + 1
+            offset.col -= spacing[spacingIdx--] + itemWidth;
             offset.row = getRowOffset(it->second.item->getHeight());
             it->second.item->draw(Position{ absolutePos.col + offset.col,
                     absolutePos.row + offset.row }, contentBound);

@@ -129,7 +129,7 @@ Reply VertContainer::buffer(Position pos, Boundary container) {
 
     // Print contents
     int spacingIdx = spacing.size() - 1;
-    Position offset{ 0, actualHeight - horizBorderSize - 0 }; // TODO: test the - 1
+    Position offset{ 0, actualHeight - horizBorderSize };
     for (auto it = contents.rbegin(); it != contents.rend(); ++it) {
         if (it->second.fixed) {
             Position drawPos{ it->second.pos.col + pos.col, it->second.pos.row
@@ -138,7 +138,7 @@ Reply VertContainer::buffer(Position pos, Boundary container) {
         }
         else {
             int itemHeight = it->second.item->getHeight();
-            offset.row -= spacing[spacingIdx--] + itemHeight + 0; // TODO: test the + 1
+            offset.row -= spacing[spacingIdx--] + itemHeight;
             offset.col = getColOffset(it->second.item->getWidth());
             it->second.item->buffer(Position{ absolutePos.col + offset.col,
                     absolutePos.row + offset.row }, contentBound);
