@@ -32,6 +32,7 @@
 #include <thread>
 #include <mutex>
 #include <functional>
+#include <algorithm>
 #include "ConsoleEditor/inputevent.h"
 
 namespace conu {

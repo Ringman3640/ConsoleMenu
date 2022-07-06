@@ -122,11 +122,13 @@ bool ConsoleEditor::setWindowDimensions(short width, short height) {
     // Check if screen buffer is too small, resize if necessary
     Position buffSize = getBufferDimensions();
     if (buffSize.col <= width || buffSize.row <= height) {
-        setBufferDimensions(width, height);
+        setBufferDimensions(std::max<int>(width, buffSize.col), 
+                std::max<int>(height, buffSize.row));
     }
 
     SMALL_RECT dim = SMALL_RECT{ 0, 0, width - 1, height - 1 };
     bool result = SetConsoleWindowInfo(OUT_HANDLE, TRUE, &dim);
+    DWORD error = GetLastError();
     formatWriteBuffer();
     return result;
 }
