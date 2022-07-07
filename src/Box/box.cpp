@@ -169,10 +169,12 @@ bool Box::posInBounds(Position pos) const {
         return false;
     }
 
-    if (pos.col < absolutePos.col || pos.col > absolutePos.col + actualWidth) {
+    if (pos.col < absolutePos.col || pos.col > absolutePos.col 
+            + actualWidth - 1) {
         return false;
     }
-    if (pos.row < absolutePos.row || pos.row > absolutePos.row + actualHeight) {
+    if (pos.row < absolutePos.row || pos.row > absolutePos.row 
+            + actualHeight - 1) {
         return false;
     }
 
