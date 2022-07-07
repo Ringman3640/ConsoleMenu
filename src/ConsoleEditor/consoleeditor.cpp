@@ -95,42 +95,26 @@ void ConsoleEditor::restore() {
 }
 
 //------------------------------------------------------------------------------
-bool ConsoleEditor::setBufferDimensions(short width, short height) {
-    return SetConsoleScreenBufferSize(OUT_HANDLE, COORD{ width, height });
-}
-
-//------------------------------------------------------------------------------
-bool ConsoleEditor::fitBufferToWindow() {
-    Position winSize = getWindowDimensions();
-    SMALL_RECT dim = { 0, 0, winSize.col - 1, winSize.row - 1 };
-
-    // I do not know why, but I need to resize the window buffer screen and the
-    // window buffer to accurately resize the screen (removing the additional
-    // width and height from the scroll bars)
-    // Thank you win32 api
-    if (!setBufferDimensions(winSize.col, winSize.row)) {
-        return false;
-    }
-    if (!SetConsoleWindowInfo(OUT_HANDLE, TRUE, &dim)) {
-        return false;
-    }
-    return setBufferDimensions(winSize.col, winSize.row);
-}
-
-//------------------------------------------------------------------------------
 bool ConsoleEditor::setWindowDimensions(short width, short height) {
     // Check if screen buffer is too small, resize if necessary
-    Position buffSize = getBufferDimensions();
-    if (buffSize.col <= width || buffSize.row <= height) {
-        setBufferDimensions(std::max<int>(width, buffSize.col), 
-                std::max<int>(height, buffSize.row));
+    CONSOLE_SCREEN_BUFFER_INFO buffSize;
+    if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &buffSize)) {
+        // Failed to get screen buffer info
+        return false;
+    }
+    if (buffSize.dwMaximumWindowSize.X <= width 
+            || buffSize.dwMaximumWindowSize.Y <= height) {
+        SHORT buffWidth = std::max<int>(width, buffSize.dwMaximumWindowSize.X);
+        SHORT buffHeight = std::max<int>(height, buffSize.dwMaximumWindowSize.Y);
+        SetConsoleScreenBufferSize(OUT_HANDLE, COORD{ buffWidth, buffHeight });
     }
 
     SMALL_RECT dim = SMALL_RECT{ 0, 0, width - 1, height - 1 };
-    bool result = SetConsoleWindowInfo(OUT_HANDLE, TRUE, &dim);
-    DWORD error = GetLastError();
+    if (!SetConsoleWindowInfo(OUT_HANDLE, TRUE, &dim)) {
+        return false;
+    }
     formatWriteBuffer();
-    return result;
+    return fitBufferToWindow();
 }
 
 //------------------------------------------------------------------------------
@@ -160,18 +144,6 @@ void ConsoleEditor::allowMaximizeBox(bool maximizable) {
 }
 
 //------------------------------------------------------------------------------
-Position ConsoleEditor::getBufferDimensions() {
-    CONSOLE_SCREEN_BUFFER_INFO winInfo;
-    if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
-        // Failed to get screen buffer info
-        return Position{ -1, -1 };
-    }
-
-    return Position{ winInfo.dwMaximumWindowSize.X,
-            winInfo.dwMaximumWindowSize.Y };
-}
-
-//------------------------------------------------------------------------------
 Position ConsoleEditor::getWindowDimensions() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
@@ -180,18 +152,6 @@ Position ConsoleEditor::getWindowDimensions() {
     }
 
     return Position{ winInfo.srWindow.Right + 1, winInfo.srWindow.Bottom + 1 };
-}
-
-//------------------------------------------------------------------------------
-Boundary ConsoleEditor::getBufferBoundary() {
-    CONSOLE_SCREEN_BUFFER_INFO winInfo;
-    if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
-        // Failed to get screen buffer info
-        return Boundary{ -1, -1, -1, -1 };
-    }
-
-    return Boundary{ 0, 0, winInfo.dwMaximumWindowSize.X,
-            winInfo.dwMaximumWindowSize.Y };
 }
 
 //------------------------------------------------------------------------------
@@ -350,66 +310,6 @@ bool ConsoleEditor::setFontSize(int size) {
 }
 
 //------------------------------------------------------------------------------
-bool ConsoleEditor::resetScrollPosition() {
-    CONSOLE_SCREEN_BUFFER_INFO winInfo;
-    SMALL_RECT pos;
-
-    // Get position and dimensions of the console window
-    if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
-        return false;
-    }
-
-    // Set position to the top of the window
-    pos = winInfo.srWindow;
-    pos.Bottom -= pos.Top;
-    pos.Top = 0;
-
-    return SetConsoleWindowInfo(OUT_HANDLE, true, &pos);
-}
-
-//------------------------------------------------------------------------------
-bool ConsoleEditor::scrollWindow(int amount) {
-    CONSOLE_SCREEN_BUFFER_INFO winInfo;
-    SMALL_RECT pos;
-
-    // A zero amount does nothing
-    if (amount == 0) {
-        return true;
-    }
-
-    // Get position and dimensions of the console window
-    if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
-        return false;
-    }
-
-    pos = winInfo.srWindow;
-
-    // Positive amount; scroll up
-    if (amount > 0) {
-        // Do not scroll past the window boundary
-        if (pos.Top - amount < 0) {
-            amount = pos.Top;
-        }
-
-        // Set scrolled position
-        pos.Top -= amount;
-        pos.Bottom -= amount;
-    }
-    // Negative amount; scroll down
-    // ERROR: Need to check for lower boundary
-    else {
-        // Do not scroll below the window boundary
-        if (pos.Bottom - amount >= winInfo.dwSize.Y) {
-            amount = winInfo.dwSize.Y - pos.Bottom;
-        }
-        pos.Top -= amount;
-        pos.Bottom -= amount;
-    }
-
-    return SetConsoleWindowInfo(OUT_HANDLE, true, &pos);
-}
-
-//------------------------------------------------------------------------------
 void ConsoleEditor::writeToScreen(const Position& pos, const char text[]) {
     Position prevPos = getCursorPosition();
     LPDWORD charsWritten = 0;
@@ -523,6 +423,29 @@ int ConsoleEditor::readInputBuffer(INPUT_RECORD inBuff[], int buffSize) {
 }
 
 //------------------------------------------------------------------------------
+bool ConsoleEditor::fitBufferToWindow() {
+    Position winSize = getWindowDimensions();
+    SMALL_RECT dim = { 0, 0, winSize.col - 1, winSize.row - 1 };
+
+    // I do not know why, but I need to resize the window buffer screen and the
+    // window buffer to accurately resize the screen (removing the additional
+    // width and height from the scroll bars)
+    // Thank you win32 api
+    if (!SetConsoleScreenBufferSize(OUT_HANDLE, 
+            COORD{ static_cast<short>(winSize.col), 
+            static_cast<short>(winSize.row) })) {
+        return false;
+    }
+
+    if (!SetConsoleWindowInfo(OUT_HANDLE, TRUE, &dim)) {
+        return false;
+    }
+    return SetConsoleScreenBufferSize(OUT_HANDLE,
+            COORD{ static_cast<short>(winSize.col),
+            static_cast<short>(winSize.row) });
+}
+
+//------------------------------------------------------------------------------
 void ConsoleEditor::resizeManager() {
     Position prevDim = getWindowDimensions(), currDim;
 
@@ -534,6 +457,7 @@ void ConsoleEditor::resizeManager() {
         currDim = getWindowDimensions();
         if (currDim.col != prevDim.col || currDim.row != prevDim.row) {
             formatWriteBuffer();
+            fitBufferToWindow();
             resizeHandler();
             prevDim = currDim;
         }

@@ -11,7 +11,6 @@
 //
 // Class Functionality:
 //     - Get and set the console window dimensions in character units.
-//     - Get and set the console buffer dimensions in character units.
 //     - Receive input from the console's input buffer.
 //     - Get the position of the mouse cursor on the console window.
 //     - Get and set the position of the console cursor on the console window. 
@@ -55,14 +54,6 @@ public:
     void restore();
 
     //--------------------------------------------------------------------------
-    // Resize the console screen buffer to fit the size of the console window.
-    bool fitBufferToWindow();
-
-    //--------------------------------------------------------------------------
-    // Set the height and width of the console screen buffer in character units.
-    bool setBufferDimensions(short width, short height);
-
-    //--------------------------------------------------------------------------
     // Set the height and width of the active console window in chracter units. 
     bool setWindowDimensions(short width, short height);
 
@@ -75,16 +66,8 @@ public:
     void allowMaximizeBox(bool maximizable);
 
     //--------------------------------------------------------------------------
-    // Get the height and width of the console screen buffer in character units.
-    Position getBufferDimensions();
-
-    //--------------------------------------------------------------------------
     // Get the height and width of the active console window in character units.
     Position getWindowDimensions();
-
-    //--------------------------------------------------------------------------
-    // Get the dimensions of the console screen buffer as a Boundary struct.
-    Boundary getBufferBoundary();
 
     //--------------------------------------------------------------------------
     // Get the dimensions of the active console window as a Boundary struct.
@@ -133,15 +116,6 @@ public:
     //--------------------------------------------------------------------------
     // Set the font size of the console text.
     bool setFontSize(int size);
-
-    //--------------------------------------------------------------------------
-    // Reset the scroll position to show the top of the console window.
-    bool resetScrollPosition();
-
-    //--------------------------------------------------------------------------
-    // Scroll the console window a given amount of rows. A positive amount
-    // scrolls the window up. A negative amount scrolls the window down.
-    bool scrollWindow(int amount);
 
     //--------------------------------------------------------------------------
     // Write character text to the console screen starting at some given
@@ -207,6 +181,10 @@ private:
     //--------------------------------------------------------------------------
     // Read from the console input buffer into an INPUT_RECORD array.
     int readInputBuffer(INPUT_RECORD inBuff[], int buffSize);
+
+    //--------------------------------------------------------------------------
+    // Resize the console screen buffer to fit the size of the console window.
+    bool fitBufferToWindow();
 
     //--------------------------------------------------------------------------
     // Thread for polling and handling window resizing events.
