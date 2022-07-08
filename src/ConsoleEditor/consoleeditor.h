@@ -166,9 +166,9 @@ private:
     DWORD restoreMode;
 
     // Resize manager thread instance members
-    std::thread* resizeManagerThread;
+    std::thread resizeManagerThread;
     std::function<void(void)> resizeHandler;
-    bool terminateResizeManager;
+    bool terminateResizeManager, resizeManagerActive;
 
     // Write buffer information
     std::vector<std::vector<char>> writeBuffer;

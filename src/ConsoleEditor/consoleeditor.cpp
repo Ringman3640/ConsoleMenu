@@ -37,9 +37,10 @@ ConsoleEditor ConsoleEditor::consoleInstance;
 ConsoleEditor::ConsoleEditor() :
     initialized{ false },
     restoreMode{ 0 },
-    resizeManagerThread{ nullptr },
+    resizeManagerThread{ },
     resizeHandler{ []() { return; } },
-    terminateResizeManager{ false } {
+    terminateResizeManager{ false },
+    resizeManagerActive{ false } {
 
     formatWriteBuffer();
 }
@@ -66,11 +67,11 @@ void ConsoleEditor::initialize() {
     FlushConsoleInputBuffer(IN_HANDLE);
     
     // Start resize manager
-    if (resizeManagerThread == nullptr) {
+    if (!resizeManagerActive) {
         std::lock_guard<std::mutex> lock(writeBufferLock);
         terminateResizeManager = false;
-        resizeManagerThread = new std::thread(&ConsoleEditor::resizeManager, 
-                this);
+        resizeManagerActive = true;
+        resizeManagerThread = std::thread(&ConsoleEditor::resizeManager, this);
     }
 }
 
@@ -85,12 +86,11 @@ void ConsoleEditor::restore() {
     initialized = false;
 
     // Terminate resize manager
-    if (resizeManagerThread != nullptr) {
+    if (resizeManagerActive) {
         std::lock_guard<std::mutex> lock(writeBufferLock);
         terminateResizeManager = true;
-        resizeManagerThread->join();
-        delete resizeManagerThread;
-        resizeManagerThread = nullptr;
+        resizeManagerThread.join();
+        resizeManagerActive = false;
     }
 }
 
