@@ -52,7 +52,6 @@ ConsoleEditor& ConsoleEditor::getInstance() {
 
 //------------------------------------------------------------------------------
 void ConsoleEditor::initialize() {
-    // Save previous mode
     GetConsoleMode(IN_HANDLE, &restoreMode);
 
     // Enable window input and mouse input in console, and disable quick edit
@@ -112,7 +111,6 @@ bool ConsoleEditor::setWindowDimensions(short width, short height) {
     // Check if screen buffer is too small, resize if necessary
     CONSOLE_SCREEN_BUFFER_INFO buffSize;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &buffSize)) {
-        // Failed to get screen buffer info
         return false;
     }
     if (buffSize.dwMaximumWindowSize.X <= width 
@@ -160,7 +158,6 @@ void ConsoleEditor::allowMaximizeBox(bool maximizable) {
 Position ConsoleEditor::getWindowDimensions() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
-        // Failed to get screen buffer info
         return Position{ -1, -1 };
     }
 
@@ -171,7 +168,6 @@ Position ConsoleEditor::getWindowDimensions() {
 Boundary ConsoleEditor::getWindowBoundary() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
-        // Failed to get screen buffer info
         return Boundary{ -1, -1, -1, -1 };
     }
 
@@ -182,7 +178,6 @@ Boundary ConsoleEditor::getWindowBoundary() {
 int ConsoleEditor::getWindowWidth() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
-        // Failed to get screen buffer info
         return -1;
     }
 
@@ -193,7 +188,6 @@ int ConsoleEditor::getWindowWidth() {
 int ConsoleEditor::getWindowHeight() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
-        // Failed to get screen buffer info
         return -1;
     }
 
@@ -205,7 +199,6 @@ InputEvent ConsoleEditor::getButtonInput() {
     INPUT_RECORD inBuff[1];
     int buffSize = readInputBuffer(inBuff, 1);
 
-    // Failed to read console input
     if (buffSize == -1) {
         return InputEvent(inputEvent::Type::INVALID);
     }
@@ -215,7 +208,6 @@ InputEvent ConsoleEditor::getButtonInput() {
         && inBuff[0].Event.MouseEvent.dwEventFlags == MOUSE_MOVED) {
         readInputBuffer(inBuff, 1);
 
-        // Failed to read console input
         if (buffSize == -1) {
             return InputEvent(inputEvent::Type::INVALID);
         }
@@ -273,7 +265,6 @@ int ConsoleEditor::getMouseY() {
 Position ConsoleEditor::getCursorPosition() {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
-        // Failed to get screen buffer info
         return Position{ -1, -1 };
     }
 
@@ -296,10 +287,8 @@ bool ConsoleEditor::setCursorPosition(Position pos) {
 
 //------------------------------------------------------------------------------
 bool ConsoleEditor::setCursorVisibility(bool visible) {
-    // Retrieve current cursor info
     CONSOLE_CURSOR_INFO cursorInfo;
     if (!GetConsoleCursorInfo(OUT_HANDLE, &cursorInfo)) {
-        // Could not obtain cursor info
         return false;
     }
 
@@ -428,7 +417,6 @@ void ConsoleEditor::setResizeHandler(std::function<void(void)> resizeHandler) {
 int ConsoleEditor::readInputBuffer(INPUT_RECORD inBuff[], int buffSize) {
     DWORD readRecords;
     if (!ReadConsoleInput(IN_HANDLE, inBuff, buffSize, &readRecords)) {
-        // Failed to read console input
         return -1;
     }
 
