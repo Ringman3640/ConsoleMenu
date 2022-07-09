@@ -54,6 +54,18 @@ public:
     void restore();
 
     //--------------------------------------------------------------------------
+    // Launch the resize manager if it is not already started.
+    void startResizeManager();
+
+    //--------------------------------------------------------------------------
+    // Terminate the resize manager if it is currently running.
+    void stopResizeManager();
+
+    //--------------------------------------------------------------------------
+    // Check if the resize manager is currently running.
+    bool resizeManagerRunning() const;
+
+    //--------------------------------------------------------------------------
     // Set the height and width of the active console window in chracter units. 
     bool setWindowDimensions(short width, short height);
 

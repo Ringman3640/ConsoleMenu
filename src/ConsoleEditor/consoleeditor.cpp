@@ -63,16 +63,7 @@ void ConsoleEditor::initialize() {
     SetConsoleMode(IN_HANDLE, mode);
     initialized = true;
 
-    // Clear the console input buffer
     FlushConsoleInputBuffer(IN_HANDLE);
-    
-    // Start resize manager
-    if (!resizeManagerActive) {
-        std::lock_guard<std::mutex> lock(writeBufferLock);
-        terminateResizeManager = false;
-        resizeManagerActive = true;
-        resizeManagerThread = std::thread(&ConsoleEditor::resizeManager, this);
-    }
 }
 
 //------------------------------------------------------------------------------
@@ -81,17 +72,39 @@ void ConsoleEditor::restore() {
         return;
     }
 
-    // Restore console mode
     SetConsoleMode(IN_HANDLE, restoreMode);
     initialized = false;
 
-    // Terminate resize manager
+    stopResizeManager();
+}
+
+//------------------------------------------------------------------------------
+void ConsoleEditor::startResizeManager() {
     if (resizeManagerActive) {
-        std::lock_guard<std::mutex> lock(writeBufferLock);
-        terminateResizeManager = true;
-        resizeManagerThread.join();
-        resizeManagerActive = false;
+        return;
     }
+
+    std::lock_guard<std::mutex> lock(writeBufferLock);
+    terminateResizeManager = false;
+    resizeManagerActive = true;
+    resizeManagerThread = std::thread(&ConsoleEditor::resizeManager, this);
+}
+
+//------------------------------------------------------------------------------
+void ConsoleEditor::stopResizeManager() {
+    if (!resizeManagerActive) {
+        return;
+    }
+
+    std::lock_guard<std::mutex> lock(writeBufferLock);
+    terminateResizeManager = true;
+    resizeManagerThread.join();
+    resizeManagerActive = false;
+}
+
+//------------------------------------------------------------------------------
+bool ConsoleEditor::resizeManagerRunning() const {
+    return resizeManagerActive;
 }
 
 //------------------------------------------------------------------------------
