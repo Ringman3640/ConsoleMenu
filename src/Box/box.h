@@ -27,8 +27,6 @@
 
 #pragma once
 
-#define MAXIMUM (std::numeric_limits<int>::max)()
-
 #include <iostream>
 #include <string>
 #include <limits>
@@ -36,6 +34,8 @@
 #include "Flag/flag.h"
 
 namespace conu {
+
+const int MAXIMUM = (std::numeric_limits<int>::max)();
 
 //------------------------------------------------------------------------------
 // BorderFill struct
