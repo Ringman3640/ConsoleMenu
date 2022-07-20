@@ -202,4 +202,9 @@ void ItemAccessor::remove() {
     container->remove(layer);
 }
 
+//------------------------------------------------------------------------------
+Box* ItemAccessor::get() {
+    return container->get(layer);
+}
+
 }

@@ -59,6 +59,11 @@ public:
     // Remove the Box located at a given layer in the target BoxContainer.
     void remove();
 
+    //--------------------------------------------------------------------------
+    // Get a pointer reference to a contained Box item.
+    // Returns nullptr if there was no Box.
+    Box* get();
+
 private:
     BoxContainer* container;
     int layer;
