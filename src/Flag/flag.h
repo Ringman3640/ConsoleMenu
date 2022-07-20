@@ -58,24 +58,12 @@ inline int operator & (Align left, Align right) {
 // Indicates a condition or operational message from a returning execution 
 // function. 
 enum class Reply {
-    IGNORED         = 1 << 0,   // Executed no corresponding action
-    CONTINUE        = 1 << 1,   // Executed sucessfully, continue operation
-    REFRESH         = 1 << 2,   // Refresh the entire console screen
-    REPEAT          = 1 << 3,   // Request the execution to be repeated
-    FAILED          = 1 << 4,   // Failed to perform the requested action
-    EXIT            = 1 << 5    // Indicate the callee container to exit
+    IGNORED     = 1 << 0,   // Executed no corresponding action
+    CONTINUE    = 1 << 1,   // Executed sucessfully, continue operation
+    REFRESH     = 1 << 2,   // Refresh the entire console screen
+    REPEAT      = 1 << 3,   // Request the execution to be repeated
+    FAILED      = 1 << 4,   // Failed to perform the requested action
+    EXIT        = 1 << 5    // Indicate the callee container to exit
 };
-
-inline Reply operator | (Reply left, Reply right) {
-    return static_cast<Reply>(
-        static_cast<std::underlying_type<Reply>::type>(left)
-        | static_cast<std::underlying_type<Reply>::type>(right));
-}
-
-inline int operator & (Reply left, Reply right) {
-    return static_cast<int>(
-        static_cast<std::underlying_type<Reply>::type>(left)
-        & static_cast<std::underlying_type<Reply>::type>(right));
-}
 
 }
