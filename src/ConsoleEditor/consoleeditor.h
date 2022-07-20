@@ -79,19 +79,19 @@ public:
 
     //--------------------------------------------------------------------------
     // Get the height and width of the active console window in character units.
-    Position getWindowDimensions();
+    Position getWindowDimensions() const;
 
     //--------------------------------------------------------------------------
     // Get the dimensions of the active console window as a Boundary struct.
-    Boundary getWindowBoundary();
+    Boundary getWindowBoundary() const;
 
     //--------------------------------------------------------------------------
     // Get the width of the active console window in character units.
-    int getWindowWidth();
+    int getWindowWidth() const;
 
     //--------------------------------------------------------------------------
     // Get the width of the active console window in character units.
-    int getWindowHeight();
+    int getWindowHeight() const;
 
     //--------------------------------------------------------------------------
     // Get a mouse or keyboard input from the console input buffer.

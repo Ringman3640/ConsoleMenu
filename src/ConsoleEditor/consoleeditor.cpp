@@ -155,7 +155,7 @@ void ConsoleEditor::allowMaximizeBox(bool maximizable) {
 }
 
 //------------------------------------------------------------------------------
-Position ConsoleEditor::getWindowDimensions() {
+Position ConsoleEditor::getWindowDimensions() const {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         return Position{ -1, -1 };
@@ -165,7 +165,7 @@ Position ConsoleEditor::getWindowDimensions() {
 }
 
 //------------------------------------------------------------------------------
-Boundary ConsoleEditor::getWindowBoundary() {
+Boundary ConsoleEditor::getWindowBoundary() const {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         return Boundary{ -1, -1, -1, -1 };
@@ -175,7 +175,7 @@ Boundary ConsoleEditor::getWindowBoundary() {
 }
 
 //------------------------------------------------------------------------------
-int ConsoleEditor::getWindowWidth() {
+int ConsoleEditor::getWindowWidth() const {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         return -1;
@@ -185,7 +185,7 @@ int ConsoleEditor::getWindowWidth() {
 }
 
 //------------------------------------------------------------------------------
-int ConsoleEditor::getWindowHeight() {
+int ConsoleEditor::getWindowHeight() const {
     CONSOLE_SCREEN_BUFFER_INFO winInfo;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &winInfo)) {
         return -1;
