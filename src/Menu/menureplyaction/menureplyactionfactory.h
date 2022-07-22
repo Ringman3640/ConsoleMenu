@@ -7,7 +7,7 @@
 //     objects given a Reply key. All recieved MenuReplyActions from this
 //     factory must be deleted by the caller to free allocated memory.
 // 
-// Dependencies: Flan enums and MenuReplyAction class and derived classes.
+// Dependencies: Flag enums and MenuReplyAction class and derived classes.
 //------------------------------------------------------------------------------
 
 #pragma once
@@ -23,12 +23,12 @@ namespace conu {
 class MenuReplyActionFactory {
 public:
     //--------------------------------------------------------------------------
-    // Constructor
-    MenuReplyActionFactory();
-
-    //--------------------------------------------------------------------------
     // Virtual destructor
     virtual ~MenuReplyActionFactory();
+
+    //--------------------------------------------------------------------------
+    // Get the singleton instance of the class.
+    static MenuReplyActionFactory& getInstance();
 
     //--------------------------------------------------------------------------
     // Get a corresponding MenyReplyAction given a Reply
@@ -36,7 +36,15 @@ public:
     MenuReplyAction* getAction(Reply key);
 
 private:
+    // Singleton instance
+    static MenuReplyActionFactory instance;
+
+    // Table of MenuReplyAction objects to create from
     std::unordered_map<Reply, MenuReplyAction*> lookupTable;
+
+    //--------------------------------------------------------------------------
+    // Private constructor
+    MenuReplyActionFactory();
 
 };
 

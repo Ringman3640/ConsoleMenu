@@ -15,6 +15,10 @@
 namespace conu {
 
 //------------------------------------------------------------------------------
+// Static instance initialization
+MenuReplyActionFactory MenuReplyActionFactory::instance;
+
+//------------------------------------------------------------------------------
 MenuReplyActionFactory::MenuReplyActionFactory() {
     // Add addiitonal MenuReplyActions here
     lookupTable.insert({ Reply::REFRESH, new MenuRefreshAction });
@@ -26,6 +30,11 @@ MenuReplyActionFactory::~MenuReplyActionFactory() {
     for (auto& it : lookupTable) {
         delete it.second;
     }
+}
+
+//------------------------------------------------------------------------------
+MenuReplyActionFactory& MenuReplyActionFactory::getInstance() {
+    return instance;
 }
 
 //------------------------------------------------------------------------------
