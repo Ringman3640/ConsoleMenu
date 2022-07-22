@@ -41,6 +41,10 @@ class ConsoleEditor {
 
 public:
     //--------------------------------------------------------------------------
+    // Destructor
+    ~ConsoleEditor();
+
+    //--------------------------------------------------------------------------
     // Get an instance of the singleton ConsoleEditor object.
     static ConsoleEditor& getInstance();
 

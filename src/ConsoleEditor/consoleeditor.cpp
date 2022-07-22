@@ -46,6 +46,11 @@ ConsoleEditor::ConsoleEditor() :
 }
 
 //------------------------------------------------------------------------------
+ConsoleEditor::~ConsoleEditor() {
+    stopResizeManager();
+}
+
+//------------------------------------------------------------------------------
 ConsoleEditor& ConsoleEditor::getInstance() {
     return consoleInstance;
 }
