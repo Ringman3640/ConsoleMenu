@@ -12,17 +12,19 @@
 //------------------------------------------------------------------------------
 
 #include "Menu/menu.h"
-
+#include "menureplyaction/menureplyactionfactory.h"
 
 namespace conu {
 
 //------------------------------------------------------------------------------
 // Static member initialization
 ConsoleEditor& Menu::console = ConsoleEditor::getInstance();
+MenuReplyActionFactory& Menu::actionFactory
+        = MenuReplyActionFactory::getInstance();
 
 //------------------------------------------------------------------------------
 Menu::Menu() :
-    container{ VertContainer() },
+    container{ VertContainer(MAXIMUM, MAXIMUM) },
     exitMenu{ false },
     exitReply{ Reply::CONTINUE } {
 
@@ -86,12 +88,22 @@ void Menu::setExitReply(Reply exitReply) {
 //------------------------------------------------------------------------------
 void Menu::entryLoop() {
     exitMenu = false;
+    print();
 
     while (!exitMenu) {
         conu::InputEvent input = console.getButtonInput();
+        if (input.type != inputEvent::Type::MOUSE_INPUT) {
+            continue;
+        }
 
+        Reply response = container.interact(input.info.mouse);
+        MenuReplyAction* action = actionFactory.getAction(response);
+        if (action == nullptr) {
+            continue;
+        }
 
-
+        action->execute(*this);
+        delete action;
     }
 }
 

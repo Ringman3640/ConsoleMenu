@@ -16,9 +16,10 @@
 #include "ConsoleEditor/consoleeditor.h"
 #include "Box/box.h"
 #include "Box/BoxContainer/vertcontainer.h"
-#include "menureplyaction/menureplyactionfactory.h"
 
 namespace conu {
+
+class MenuReplyActionFactory;
 
 //------------------------------------------------------------------------------
 // 
@@ -69,7 +70,7 @@ public:
 
 private:
     static ConsoleEditor& console;
-    static MenuReplyActionFactory actionFactory;
+    static MenuReplyActionFactory& actionFactory;
 
     VertContainer container;
     bool exitMenu;
