@@ -14,6 +14,7 @@
 #pragma once
 
 #include "ConsoleEditor/consoleeditor.h"
+#include "Menu/menumanager.h"
 #include "Box/box.h"
 #include "Box/BoxContainer/vertcontainer.h"
 
@@ -31,7 +32,7 @@ struct MenuOptions {
     MenuOptions() :
         useBuffering{ true },
         useAutoPrint{ true },
-        frameRate{ 30 } {
+        frameRate{ DEFAULT_FRAME_RATE } {
     
     }
 };
@@ -70,6 +71,7 @@ public:
 
 private:
     static ConsoleEditor& console;
+    static MenuManager& manager;
     static MenuReplyActionFactory& actionFactory;
 
     VertContainer container;

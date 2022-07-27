@@ -19,6 +19,7 @@ namespace conu {
 //------------------------------------------------------------------------------
 // Static member initialization
 ConsoleEditor& Menu::console = ConsoleEditor::getInstance();
+MenuManager& Menu::manager = MenuManager::getInstance();
 MenuReplyActionFactory& Menu::actionFactory
         = MenuReplyActionFactory::getInstance();
 
@@ -42,9 +43,9 @@ ItemAccessor Menu::operator [] (int layer) {
 
 //------------------------------------------------------------------------------
 Reply Menu::enter() {
-    // TODO: Add push_back to future renderer
+    manager.pushMenu(*this);
     entryLoop();
-    // TODO: Add pop to future renderer
+    manager.popMenu();
 
     return exitReply;
 }
