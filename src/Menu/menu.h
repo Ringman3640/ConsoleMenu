@@ -3,10 +3,16 @@
 // Interface for the Menu class
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------
-// Description: 
+// Description: Menu is a wrapper for the VertContainer class. Each Menu is
+//     responsible for a single VertContaner object and manages all inputs
+//     sent to the window screen and the corresponding REPLY returned by the
+//     VertContainer interaction. Menu objects can be printed to the window
+//     screen at regular intervals using the auto print system. 
 //
 // Class Functionality:
-//     - 
+//     - Access/modify the Menu's VertContainer.
+//     - Set/get the Menu's options.
+//     - Automatically print the contents of the Menu at regular intervals.
 // 
 // Dependencies: Box, ConsoleEditor, and MenuReplyActionFactory class.
 //------------------------------------------------------------------------------
