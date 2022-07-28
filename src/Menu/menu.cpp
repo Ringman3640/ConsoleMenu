@@ -24,6 +24,15 @@ MenuReplyActionFactory& Menu::actionFactory
         = MenuReplyActionFactory::getInstance();
 
 //------------------------------------------------------------------------------
+MenuOptions::MenuOptions() :
+    printOnEnter{ true },
+    useBuffering{ true },
+    useAutoPrint{ true },
+    frameRate{ DEFAULT_FRAME_RATE } {
+
+}
+
+//------------------------------------------------------------------------------
 Menu::Menu() :
     container{ VertContainer(MAXIMUM, MAXIMUM) },
     exitMenu{ false },
@@ -43,10 +52,15 @@ ItemAccessor Menu::operator [] (int layer) {
 
 //------------------------------------------------------------------------------
 Reply Menu::enter() {
+    exitMenu = false;
     manager.pushMenu(*this);
-    entryLoop();
-    manager.popMenu();
 
+    if (options.printOnEnter) {
+        print();
+    }
+    entryLoop();
+
+    manager.popMenu();
     return exitReply;
 }
 
@@ -88,9 +102,6 @@ void Menu::setExitReply(Reply exitReply) {
 
 //------------------------------------------------------------------------------
 void Menu::entryLoop() {
-    exitMenu = false;
-    print();
-
     while (!exitMenu) {
         conu::InputEvent input = console.getButtonInput();
         if (input.type != inputEvent::Type::MOUSE_INPUT) {
