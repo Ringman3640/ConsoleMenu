@@ -34,8 +34,8 @@ class BoxContainer;
 
 //------------------------------------------------------------------------------
 // ItemAccessor class
-// interface for users to directly add or remove Box items to the container
-// through the bracket operator. Helper class for BoxContainer.
+// Interface for users to directly add or remove Box items to the container
+//     through the bracket operator. Helper class for BoxContainer.
 class ItemAccessor {
 public:
     //--------------------------------------------------------------------------
