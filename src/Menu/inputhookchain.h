@@ -62,7 +62,7 @@ public:
     //--------------------------------------------------------------------------
     // Add an input hook to the start of the hook chain.
     // Returns a handle to the inserted hook to use for removal.
-    HookHandle addInputHook(std::function<void(InputEvent&)> hook);
+    HookHandle addInputHook(std::function<void(conu::InputEvent&)> hook);
 
     //--------------------------------------------------------------------------
     // Remove an inserted hook from the hook chain given the hook's handle.
@@ -71,6 +71,8 @@ public:
 
     //--------------------------------------------------------------------------
     // Execute the hook chain given an InputEvent struct.
+    // The chain execution will terminate if the InputEvent type is assigned to
+    //     INVALID at any point in the chain.
     void startHookChain(InputEvent& input) const;
 
     //--------------------------------------------------------------------------
