@@ -3,10 +3,16 @@
 // Implementation for the InputHookChain class
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------
-// Description: 
+// Description: An InputHookChain is a collection of input hooks that are called
+//     in series given an InputEvent struct. Hooks are added into the chain in
+//     list order. InputEvents are first processed by the most recently-added
+//     hook and then passed down the list of hooks. Added hooks can be removed
+//     from the chain given a handle to that hook.
 //
 // Class Functionality:
-//     - 
+//     - Add an input hook and obtain a handle to that added hook. 
+//     - Remove an input hook from the chain given it's handle.
+//     - Start the hook chain given an InputEvent.
 // 
 // Dependencies: InputEvent struct.
 //------------------------------------------------------------------------------
