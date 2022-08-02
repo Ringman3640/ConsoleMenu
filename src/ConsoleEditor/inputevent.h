@@ -19,6 +19,8 @@
 // Supported OS: Windows
 //------------------------------------------------------------------------------
 
+#pragma once
+
 #include <type_traits>
 #include <windows.h>
 
