@@ -13,8 +13,11 @@
 //     - Access/modify the Menu's VertContainer.
 //     - Set/get the Menu's options.
 //     - Automatically print the contents of the Menu at regular intervals.
+//     - Add input hooks to modify/respond to user inputs before they are 
+//       processed.
 // 
-// Dependencies: Box, ConsoleEditor, and MenuReplyActionFactory class.
+// Dependencies: Box, ConsoleEditor, MenuReplyActionFactory, and InputHookChain
+//      class.
 //------------------------------------------------------------------------------
 
 #include "Menu/menu.h"
@@ -107,9 +110,20 @@ void Menu::setExitReply(Reply exitReply) {
 }
 
 //------------------------------------------------------------------------------
+HookHandle Menu::addInputHook(std::function<void(InputEvent&)> hook) {
+    return hookChain.addInputHook(hook);
+}
+
+//------------------------------------------------------------------------------
+bool Menu::removeInputHook(HookHandle& handle) {
+    return hookChain.removeInputHook(handle);
+}
+
+//------------------------------------------------------------------------------
 void Menu::entryLoop() {
     while (!exitMenu) {
         conu::InputEvent input = console.getButtonInput();
+        hookChain.startHookChain(input);
         if (input.type != inputEvent::Type::MOUSE_INPUT) {
             continue;
         }

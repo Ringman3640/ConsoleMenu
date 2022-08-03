@@ -13,14 +13,19 @@
 //     - Access/modify the Menu's VertContainer.
 //     - Set/get the Menu's options.
 //     - Automatically print the contents of the Menu at regular intervals.
+//     - Add input hooks to modify/respond to user inputs before they are 
+//       processed.
 // 
-// Dependencies: Box, ConsoleEditor, and MenuReplyActionFactory class.
+// Dependencies: Box, ConsoleEditor, MenuReplyActionFactory, and InputHookChain
+//      class.
 //------------------------------------------------------------------------------
 
 #pragma once
 
+#include <functional>
 #include "ConsoleEditor/consoleeditor.h"
 #include "Menu/menumanager.h"
+#include "Menu/inputhookchain.h"
 #include "Box/box.h"
 #include "Box/BoxContainer/vertcontainer.h"
 
@@ -108,6 +113,25 @@ public:
     // Set the Reply that is returned by the menu upon exit from enter().
     void setExitReply(Reply exitReply);
 
+    //--------------------------------------------------------------------------
+    // Add an input hook to the Menu's InputEvent processing pipeline.
+    // An input hook is a procedure that is called-back whenever an InputEvent
+    //     is processed by the Menu by the user's input. The procedure function
+    //     must return void and must recieve a reference to a single InputEvent.
+    // In the InputEvent processing pipeline, the most recently added hook is
+    //     first called. The modified/unmodified InputEvent after completion of
+    //     the first hook is then passed onto the next, most recent hook and
+    //     so on until all hooks are called, or if the InputEvent type becomes
+    //     INVALID.
+    // Returns a handle to the added input hook to be used to remove the hook.
+    HookHandle addInputHook(std::function<void(conu::InputEvent&)> hook);
+
+    //--------------------------------------------------------------------------
+    // Remove an input hook from the Menu given a handle to the added hook.
+    // Returns true if the hook was successfully removed. Returns false if the
+    //     hook was not contained in the Menu.
+    bool removeInputHook(HookHandle& handle);
+
 private:
     // Static member data
     static ConsoleEditor& console;
@@ -115,6 +139,7 @@ private:
     static MenuReplyActionFactory& actionFactory;
 
     // Member data
+    InputHookChain hookChain;
     VertContainer container;
     bool exitMenu;
     Reply exitReply;
