@@ -76,7 +76,7 @@ public:
     //     being auto printed.
     // If there is no Menu currently being auto printed, the reference value
     //     will be a negative value.
-    static const int& getLiveFrameRate();
+    static int& getLiveFrameRate();
 
 private:
     // ManagerState enumerator to indicate the target/current state of the 

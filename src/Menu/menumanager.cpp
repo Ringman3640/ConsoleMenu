@@ -110,7 +110,7 @@ int MenuManager::getDefaultFrameRate() {
 }
 
 //------------------------------------------------------------------------------
-const int& MenuManager::getLiveFrameRate() {
+int& MenuManager::getLiveFrameRate() {
     return realtimeFrameRate;
 }
 
