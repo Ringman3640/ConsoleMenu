@@ -142,7 +142,8 @@ void LiveTextBox::updateTextBoxContent() {
         break;
     }
     
-    setText(content);
+    //setText(content);
+    text = content;
 }
 
 }

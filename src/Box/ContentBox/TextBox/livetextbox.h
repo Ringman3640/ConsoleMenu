@@ -81,6 +81,9 @@ public:
     void setLiveVariable(double& var);
     void setLiveVariable(std::string& var);
 
+    // Deleted setText() method
+    void setText(std::string text) = delete;
+
 private:
     // VARAIBLE_TYPE enumerator
     // Indicates which type of pointer is saved in the savedVar union
