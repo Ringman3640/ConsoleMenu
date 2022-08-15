@@ -106,37 +106,6 @@ Reply Graphic::draw(Position pos, Boundary container) {
 }
 
 //------------------------------------------------------------------------------
-int Graphic::getHorizontalOffset() {
-    if (alignment & Align::LEFT) {
-        return vertBorderSize;
-    }
-    if (alignment & Align::CENTER) {
-        return -(targetWidth - actualWidth) / 2;
-    }
-    if (alignment & Align::RIGHT) {
-        return -(targetWidth - actualWidth + vertBorderSize);
-    }
-
-    // Else use LEFT alignment by default
-    return vertBorderSize;
-}
-
-int Graphic::getVerticalOffset() {
-    if (alignment & Align::TOP) {
-        return horizBorderSize;
-    }
-    if (alignment & Align::MIDDLE) {
-        return (targetHeight - actualHeight) / 2;
-    }
-    if (alignment & Align::BOTTOM) {
-        return -(targetHeight - actualHeight + horizBorderSize);
-    }
-
-    // Else use BOTTOM alignment by default
-    return horizBorderSize;
-}
-
-//------------------------------------------------------------------------------
 Reply Graphic::buffer(Position pos, Boundary container) {
     bufferBase(pos, container);
     if (actualWidth == 0 || actualHeight == 0) {
@@ -239,6 +208,38 @@ void Graphic::updateCanvasSize() {
     for (int i = 0; i < targetHeight; ++i) {
         canvas[i].resize(targetWidth, DEFAULT_CANVAS_FILL);
     }
+}
+
+//------------------------------------------------------------------------------
+int Graphic::getHorizontalOffset() {
+    if (alignment & Align::LEFT) {
+        return vertBorderSize;
+    }
+    if (alignment & Align::CENTER) {
+        return -(targetWidth - actualWidth) / 2;
+    }
+    if (alignment & Align::RIGHT) {
+        return -(targetWidth - actualWidth + vertBorderSize);
+    }
+
+    // Else use LEFT alignment by default
+    return vertBorderSize;
+}
+
+//------------------------------------------------------------------------------
+int Graphic::getVerticalOffset() {
+    if (alignment & Align::TOP) {
+        return horizBorderSize;
+    }
+    if (alignment & Align::MIDDLE) {
+        return (targetHeight - actualHeight) / 2;
+    }
+    if (alignment & Align::BOTTOM) {
+        return -(targetHeight - actualHeight + horizBorderSize);
+    }
+
+    // Else use BOTTOM alignment by default
+    return horizBorderSize;
 }
 
 //------------------------------------------------------------------------------
