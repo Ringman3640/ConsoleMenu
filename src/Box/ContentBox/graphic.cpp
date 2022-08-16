@@ -201,6 +201,13 @@ GraphicLine Graphic::at(int idx) {
 }
 
 //------------------------------------------------------------------------------
+void Graphic::clear() {
+    for (int row = 0; row < canvas.size(); ++row) {
+        std::fill(canvas[row].begin(), canvas[row].end(), ' ');
+    }
+}
+
+//------------------------------------------------------------------------------
 void Graphic::updateCanvasSize() {
     canvas.resize(targetHeight, 
             std::vector<char>(targetWidth, DEFAULT_CANVAS_FILL));

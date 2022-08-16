@@ -24,6 +24,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include <algorithm>
 #include "Box/ContentBox/contentbox.h"
 
 namespace conu {
@@ -81,6 +82,10 @@ public:
     // Get a GraphicLine from the Graphic's canvas.
     // Throws out_of_range exception if index is outisde the canvas range.
     GraphicLine at(int idx);
+
+    //--------------------------------------------------------------------------
+    // Clear the Graphic canvas
+    void clear();
 
 private:
     static const char DEFAULT_CANVAS_FILL;
