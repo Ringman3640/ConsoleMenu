@@ -56,7 +56,7 @@ public:
     // argument.
     void setAction(std::function<Reply(Button&)> action);
 
-private:
+protected:
     //--------------------------------------------------------------------------
     // Click handler function that is called in interact()
     std::function<Reply(Button&)> clickHandler;
