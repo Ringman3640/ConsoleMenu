@@ -61,10 +61,6 @@ private:
     // Click handler function that is called in interact()
     std::function<Reply(Button&)> clickHandler;
 
-    //--------------------------------------------------------------------------
-    // Static method for default clickHandler value
-    static Reply DEFAULT_CLICK_HANDLER(Box& self);
-
 };
 
 }

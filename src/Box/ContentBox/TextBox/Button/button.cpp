@@ -20,21 +20,17 @@
 
 namespace conu {
 
-Reply Button::DEFAULT_CLICK_HANDLER(Box& self) {
-    return Reply::CONTINUE;
-}
-
 //--------------------------------------------------------------------------
 Button::Button(std::string text) :
     TextBox(text),
-    clickHandler{ DEFAULT_CLICK_HANDLER } {
+    clickHandler{ nullptr } {
 
 }
 
 //--------------------------------------------------------------------------
 Button::Button(int width, int height, std::string text) :
     TextBox(width, height, text),
-    clickHandler{ DEFAULT_CLICK_HANDLER } {
+    clickHandler{ nullptr } {
 
 }
 
@@ -42,6 +38,9 @@ Button::Button(int width, int height, std::string text) :
 Reply Button::interact(inputEvent::MouseEvent action) {
     // Check if Box has been drawn
     if (!drawn) {
+        return Reply::FAILED;
+    }
+    if (clickHandler == nullptr) {
         return Reply::FAILED;
     }
 
