@@ -16,7 +16,7 @@
 // Dependencies: TextBox class.
 //------------------------------------------------------------------------------
 
-#include "Box/ContentBox/TextBox/button.h"
+#include "Box/ContentBox/TextBox/Button/button.h"
 
 namespace conu {
 
