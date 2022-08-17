@@ -76,7 +76,7 @@ std::string Button::getClassName() const {
 }
 
 //--------------------------------------------------------------------------
-void Button::setAction(std::function<Reply(Box&)> action) {
+void Button::setAction(std::function<Reply(Button&)> action) {
     clickHandler = action;
 }
 

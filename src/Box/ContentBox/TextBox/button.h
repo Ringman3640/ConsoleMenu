@@ -54,12 +54,12 @@ public:
     // The function has a parameter to a Box reference. When the function is 
     // invoked, the current Button will pass a reference to itself as an
     // argument.
-    void setAction(std::function<Reply(Box&)> action);
+    void setAction(std::function<Reply(Button&)> action);
 
 private:
     //--------------------------------------------------------------------------
     // Click handler function that is called in interact()
-    std::function<Reply(Box&)> clickHandler;
+    std::function<Reply(Button&)> clickHandler;
 
     //--------------------------------------------------------------------------
     // Static method for default clickHandler value
