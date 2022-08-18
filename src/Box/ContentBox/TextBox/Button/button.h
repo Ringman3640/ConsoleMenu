@@ -16,6 +16,8 @@
 // Dependencies: TextBox class.
 //------------------------------------------------------------------------------
 
+#pragma once
+
 #include <functional>
 #include "Box/ContentBox/TextBox/textbox.h"
 
