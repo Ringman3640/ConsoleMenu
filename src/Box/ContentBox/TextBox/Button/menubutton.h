@@ -7,7 +7,7 @@
 //     interacted with a mouse click event. Before entering the Menu, a user-
 //     defined execution is perfomed if provided. 
 // 
-// Dependencies: TextBox class.
+// Dependencies: Button class.
 //------------------------------------------------------------------------------
 
 #pragma once
