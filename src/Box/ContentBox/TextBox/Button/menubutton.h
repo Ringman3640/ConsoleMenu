@@ -44,7 +44,7 @@ public:
     virtual Box* createBox() const override;
 
     //--------------------------------------------------------------------------
-    // Get the name of the specific MenuButton class. Returns "Button".
+    // Get the name of the specific MenuButton class. Returns "MenuButton".
     virtual std::string getClassName() const override;
 
 private:
