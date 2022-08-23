@@ -27,5 +27,6 @@
 #include "Box/ContentBox/TextBox/scrollingtextbox.h"
 #include "Box/ContentBox/TextBox/Button/button.h"
 #include "Box/ContentBox/TextBox/Button/menubutton.h"
+#include "Box/ContentBox/TextBox/Button/exitbutton.h"
 
 #include "Menu/menu.h"
