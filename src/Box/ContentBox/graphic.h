@@ -45,18 +45,6 @@ public:
     Graphic(int width, int height);
 
     //--------------------------------------------------------------------------
-    // Draw the Graphic to the output console given an origin column and row,
-    // and a constraining rectangle that represents the container boundaries
-    // that the Graphic is within. Returns a CONTINUE Reply.
-    virtual Reply draw(Position pos, Boundary container) override;
-
-    //--------------------------------------------------------------------------
-    // Buffer the Box to EditConsole's write buffer given an origin column and
-    // row, and a constraining rectangle that represents the container
-    // boundaries that the Box is within. 
-    virtual Reply buffer(Position pos, Boundary container) override;
-
-    //--------------------------------------------------------------------------
     // Execute an action given a specific mouse event. Returns an IGNORED Reply.
     virtual Reply interact(inputEvent::MouseEvent action) override;
 
@@ -90,6 +78,14 @@ public:
 private:
     static const char DEFAULT_CANVAS_FILL;
     std::vector<std::vector<char>> canvas;
+
+    //--------------------------------------------------------------------------
+    // The protocol used to print the Box object to the screen or buffer
+    // (indicated by the drawMode parameter). Each derived class of Box should
+    // implement their own protocol, which is then called through draw(),
+    // buffer(), redraw(), or rebuffer().
+    virtual Reply printProtocol(Position pos, Boundary container,
+            bool drawMode) override;
 
     //--------------------------------------------------------------------------
     // Resize the canvas to fit the Graphic dimensions

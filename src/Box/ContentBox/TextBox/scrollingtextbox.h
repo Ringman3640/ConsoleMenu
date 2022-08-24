@@ -35,19 +35,12 @@ public:
     ScrollingTextBox(int width, int height, std::string text = std::string());
 
     //--------------------------------------------------------------------------
-    // Draw the ScrollingTextBox to the output console given an origin column
-    // and row, and a constraining rectangle that represents the container
-    // boundaries that the TextBox is within. Returns a CONTINUE Reply.
-    virtual Reply draw(Position pos, Boundary container) override;
-
-    //--------------------------------------------------------------------------
-    // Buffer the Box to EditConsole's write buffer given an origin column and
-    // row, and a constraining rectangle that represents the container
-    // boundaries that the Box is within. 
-    virtual Reply buffer(Position pos, Boundary container) override;
-
-    //--------------------------------------------------------------------------
-    // Execute an action given a specific mouse event. Returns a CONTINUE Reply.
+    // Interact with the ScrollingTextBox given a MouseEvent. Any MouseEvent
+    // that indicates a scroll will change the scroll position of the 
+    // ScrollingTextBox's contents.
+    // If the Box has not been drawn yet, FAILED is returned.
+    // If the MouseEvent is out-of-bounds or not a scroll, IGNORED is returned.
+    // If the ScrollingTextBox is successfully scrolled, REFRESH is returned. 
     virtual Reply interact(inputEvent::MouseEvent action) override;
 
     //--------------------------------------------------------------------------
@@ -68,14 +61,12 @@ private:
     int scrollPos;
 
     //--------------------------------------------------------------------------
-    // Draw the ScrollingTextBox given calculated width, height, and position.
-    // Helper fuction for draw() and interact().
-    void drawScrollTBox();
-
-    //--------------------------------------------------------------------------
-    // Buffer the ScrollingTextBox given calculated width, height, and position
-    // to EditConsole's write buffer. Helper fuction for draw() and interact().
-    void bufferScrollTBox();
+    // The protocol used to print the Box object to the screen or buffer
+    // (indicated by the drawMode parameter). Each derived class of Box should
+    // implement their own protocol, which is then called through draw(),
+    // buffer(), redraw(), or rebuffer().
+    virtual Reply printProtocol(Position pos, Boundary container,
+            bool drawMode) override;
 
 };
 

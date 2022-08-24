@@ -34,18 +34,6 @@ public:
     ContentBox(int width, int height);
 
     //--------------------------------------------------------------------------
-    // Draw the ContentBox to the output console given an origin column and row,
-    // and a constraining rectangle that represents the container boundaries
-    // that the ContainerBox is within.
-    virtual Reply draw(Position pos, Boundary container) = 0;
-
-    //--------------------------------------------------------------------------
-    // Buffer the Box to EditConsole's write buffer given an origin column and
-    // row, and a constraining rectangle that represents the container
-    // boundaries that the Box is within. 
-    virtual Reply buffer(Position pos, Boundary container) = 0;
-
-    //--------------------------------------------------------------------------
     // Execute an action given a specific mouse event.
     virtual Reply interact(inputEvent::MouseEvent action) = 0;
 
@@ -69,6 +57,15 @@ public:
     //--------------------------------------------------------------------------
     // Get the target width of the Box.
     virtual int getWidth() const override;
+
+private:
+    //--------------------------------------------------------------------------
+    // The protocol used to print the Box object to the screen or buffer
+    // (indicated by the drawMode parameter). Each derived class of Box should
+    // implement their own protocol, which is then called through draw(),
+    // buffer(), redraw(), or rebuffer().
+    virtual Reply printProtocol(Position pos, Boundary container,
+            bool drawMode) = 0;
 
 };
 

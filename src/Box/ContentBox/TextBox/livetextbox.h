@@ -43,18 +43,6 @@ public:
     LiveTextBox(int width, int height, std::string text = std::string());
 
     //--------------------------------------------------------------------------
-    // Draw the LiveTextBox to the output console given an origin column and
-    // row, and a constraining rectangle that represents the container
-    // boundaries that the LiveTextBox is within. Returns a CONTINUE Reply.
-    virtual Reply draw(Position pos, Boundary container) override;
-
-    //--------------------------------------------------------------------------
-    // Buffer the Box to EditConsole's write buffer given an origin column and
-    // row, and a constraining rectangle that represents the container
-    // boundaries that the Box is within. 
-    virtual Reply buffer(Position pos, Boundary container) override;
-
-    //--------------------------------------------------------------------------
     // Execute an action given a specific mouse event. Returns an IGNORED Reply.
     virtual Reply interact(inputEvent::MouseEvent action) override;
 
@@ -114,6 +102,17 @@ private:
     LiveVariableData savedVar;
     VARIABLE_TYPE savedType;
 
+    //--------------------------------------------------------------------------
+    // The protocol used to print the Box object to the screen or buffer
+    // (indicated by the drawMode parameter). Each derived class of Box should
+    // implement their own protocol, which is then called through draw(),
+    // buffer(), redraw(), or rebuffer().
+    virtual Reply printProtocol(Position pos, Boundary container,
+            bool drawMode) override;
+
+    //--------------------------------------------------------------------------
+    // Update the displayed contents of the LiveTextBox.
+    // Helper function for printProtocol().
     void updateTextBoxContent();
 
 };

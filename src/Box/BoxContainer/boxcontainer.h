@@ -101,18 +101,6 @@ public:
     ItemAccessor operator [] (int layer);
 
     //--------------------------------------------------------------------------
-    // Draw the contents of the BoxContainer to the output console given an
-    // origin column and row, and a constraining rectangle that represents the
-    // container boundaries that the BoxContainer is within.
-    virtual Reply draw(Position pos, Boundary container) = 0;
-
-    //--------------------------------------------------------------------------
-    // Buffer the contents BoxContainer to EditConsole's write buffer given an
-    // origin column and row, and a constraining rectangle that represents the
-    // container boundaries that the BoxContainer is within.
-    virtual Reply buffer(Position pos, Boundary container) = 0;
-
-    //--------------------------------------------------------------------------
     // Recieve a MouseEvent and send it to the corresponding contained Box.
     virtual Reply interact(inputEvent::MouseEvent action) = 0;
 
@@ -194,6 +182,14 @@ protected:
     int returnWidth;
     mutable bool updateHeightWidth;
     bool dynamicSized;
+
+    //--------------------------------------------------------------------------
+    // The protocol used to print the Box object to the screen or buffer
+    // (indicated by the drawMode parameter). Each derived class of Box should
+    // implement their own protocol, which is then called through draw(),
+    // buffer(), redraw(), or rebuffer().
+    virtual Reply printProtocol(Position pos, Boundary container,
+            bool drawMode) = 0;
 
     //--------------------------------------------------------------------------
     // Get the content boundary of the BoxContainer (accounting for horizontal

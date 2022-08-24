@@ -65,18 +65,6 @@ public:
     virtual ~Box();
 
     //--------------------------------------------------------------------------
-    // Draw the Box to the output console given an origin column and row, and
-    // a constraining rectangle that represents the container boundaries that
-    // the Box is within.
-    virtual Reply draw(Position pos, Boundary container) = 0;
-
-    //--------------------------------------------------------------------------
-    // Buffer the Box to EditConsole's write buffer given an origin column and
-    // row, and a constraining rectangle that represents the container
-    // boundaries that the Box is within. 
-    virtual Reply buffer(Position pos, Boundary container) = 0;
-
-    //--------------------------------------------------------------------------
     // Execute an action given a specific mouse event. 
     virtual Reply interact(inputEvent::MouseEvent action) = 0;
 
@@ -101,13 +89,29 @@ public:
     virtual int getWidth() const = 0;
 
     //--------------------------------------------------------------------------
+    // Draw the Box to the output console given an origin column and row, and
+    // a constraining rectangle that represents the container boundaries that
+    // the Box is within.
+    virtual Reply draw(Position pos, Boundary container);
+
+    //--------------------------------------------------------------------------
+    // Buffer the Box to EditConsole's write buffer given an origin column and
+    // row, and a constraining rectangle that represents the container
+    // boundaries that the Box is within. 
+    virtual Reply buffer(Position pos, Boundary container);
+
+    //--------------------------------------------------------------------------
     // Redraw the Box given the same conditions as the previous draw() or 
     // buffer() call.
+    // Requires that the Box have been printed through draw() or buffer()
+    // previously. Otherwise, returns FAILED.
     virtual Reply redraw();
 
     //--------------------------------------------------------------------------
     // Rebuffer the Box to EditConsole's write buffer given the same conditions
-    // as teh previous draw() or buffer() call.
+    // as the previous draw() or buffer() call.
+    // Requires that the Box have been printed through draw() or buffer()
+    // previously. Otherwise, returns FAILED.
     virtual Reply rebuffer();
 
     //--------------------------------------------------------------------------
@@ -172,6 +176,20 @@ protected:
     bool drawn;
 
     //--------------------------------------------------------------------------
+    // The protocol used to print the Box object to the screen or buffer
+    // (indicated by the drawMode parameter). Each derived class of Box should
+    // implement their own protocol, which is then called through draw(),
+    // buffer(), redraw(), or rebuffer().
+    virtual Reply printProtocol(Position pos, Boundary container, 
+            bool drawMode) = 0;
+
+    //--------------------------------------------------------------------------
+    // Print a line of text to the console's screen or buffer (indicated by
+    // the drawMode parameter).
+    // Helper function for printProtocol.
+    void printLine(const Position& pos, const char text[], bool drawMode);
+
+    //--------------------------------------------------------------------------
     // Calculate the actual dimentions and position of the Box. Returns the
     // calculated absolute origin position of the ContentBox (relative to the
     // origin of the console screen).
@@ -179,15 +197,11 @@ protected:
 
     //--------------------------------------------------------------------------
     // Print the base of the Box, including the Box borders and clearing the 
-    // inside of the Box. Returns the calculated absolute origin position of the
-    // ContentBox (realative to the origin of the console screen).
-    virtual void printBase(Position pos, Boundary container);
-
-    //--------------------------------------------------------------------------
-    // Buffer the base of the Box to EditConsole's write buffer. Returns the
-    // calculated absolute origin position of the Box (realative to the origin 
-    // of the console screen).
-    virtual void bufferBase(Position pos, Boundary container);
+    // inside of the Box.
+    // Automatically calls calculateActualDimAndPos().
+    // Indicate if the base should be drawn or buffered with the drawMode
+    // parameter.
+    virtual void printBase(Position pos, Boundary container, bool drawMode);
 
 private:
     //--------------------------------------------------------------------------
@@ -201,5 +215,13 @@ private:
     static const BorderFill DEFAULT_BORDER_FILL;
 
 };
+
+//------------------------------------------------------------------------------
+// Inline printLine() definition.
+inline void Box::printLine(const Position& pos, const char text[], 
+        bool useDrawing) {
+    useDrawing ? console.writeToScreen(pos, text) 
+            : console.writeToBuffer(pos, text);
+}
 
 }

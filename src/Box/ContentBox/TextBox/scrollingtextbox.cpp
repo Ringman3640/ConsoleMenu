@@ -37,26 +37,6 @@ ScrollingTextBox::ScrollingTextBox(int width, int height,
 }
 
 //------------------------------------------------------------------------------
-Reply ScrollingTextBox::draw(Position pos, Boundary container) {
-    printBase(pos, container);
-
-    drawScrollTBox();
-
-    drawn = true;
-    return Reply::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
-Reply ScrollingTextBox::buffer(Position pos, Boundary container) {
-    bufferBase(pos, container);
-
-    bufferScrollTBox();
-
-    drawn = true;
-    return Reply::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
 Reply ScrollingTextBox::interact(inputEvent::MouseEvent action) {
     // Make sure TextBox has already been drawn
     if (!drawn) {
@@ -78,8 +58,7 @@ Reply ScrollingTextBox::interact(inputEvent::MouseEvent action) {
         return Reply::IGNORED;
     }
 
-    drawScrollTBox();
-    return Reply::CONTINUE;
+    return Reply::REFRESH;
 }
 
 //------------------------------------------------------------------------------
@@ -98,7 +77,9 @@ std::string ScrollingTextBox::getClassName() const {
 }
 
 //------------------------------------------------------------------------------
-void ScrollingTextBox::drawScrollTBox() {
+Reply ScrollingTextBox::printProtocol(Position pos, Boundary container,
+        bool drawMode) {
+    printBase(pos, container, drawMode);
     splitText();
     applyHorizontalAlignment();
 
@@ -131,61 +112,16 @@ void ScrollingTextBox::drawScrollTBox() {
     }
 
     // Print text
-    std::string clearLine(printableWidth, ' ');
-    int startRow = vertOffset + absolutePos.row;
+    Position currPos = absolutePos;
+    currPos.col += vertBorderSize;
+    currPos.row += vertOffset + horizBorderSize;
     for (int i = 0; i < printableLines && i < lines.size(); ++i) {
-        console.setCursorPosition(Position{ absolutePos.col + vertBorderSize,
-                startRow + horizBorderSize + i });
-        std::cout << clearLine;
-        console.setCursorPosition(Position{ absolutePos.col + vertBorderSize,
-                startRow + horizBorderSize + i });
-        std::cout << lines[i + scrollPos];
-    }
-}
-
-//------------------------------------------------------------------------------
-void ScrollingTextBox::bufferScrollTBox() {
-    splitText();
-    applyHorizontalAlignment();
-
-    // Determine spacing offset for vertical alignment
-    int printableLines = actualHeight - (horizBorderSize * 2);
-    int printableWidth = actualWidth - (vertBorderSize * 2);
-
-    int vertOffset = 0;
-    if (lines.size() < printableLines) {
-        if (alignment & Align::TOP) {
-            vertOffset = 0;
-        }
-        else if (alignment & Align::MIDDLE) {
-            vertOffset = (printableLines - lines.size()) / 2;
-        }
-        else if (alignment & Align::BOTTOM) {
-            vertOffset = printableLines - lines.size();
-        }
+        printLine(currPos, lines[i + scrollPos].c_str(), drawMode);
+        ++currPos.row;
     }
 
-    // Check scrollPos value
-    if (lines.size() <= printableLines) {
-        scrollPos = 0;
-    }
-    else if (scrollPos < 0) {
-        scrollPos = 0;
-    }
-    else if (lines.size() - scrollPos < printableLines) {
-        scrollPos = lines.size() - printableLines;
-    }
-
-    // Print text
-    std::string clearLine(printableWidth, ' ');
-    int startRow = vertOffset + absolutePos.row;
-    for (int i = 0; i < printableLines && i < lines.size(); ++i) {
-        console.writeToBuffer(Position{ absolutePos.col + vertBorderSize,
-                startRow + horizBorderSize + i }, clearLine.c_str());
-
-        console.writeToBuffer(Position{ absolutePos.col + vertBorderSize,
-                startRow + horizBorderSize + i }, lines[i + scrollPos].c_str());
-    }
+    drawn = true;
+    return Reply::CONTINUE;
 }
 
 }

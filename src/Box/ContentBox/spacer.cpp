@@ -33,39 +33,31 @@ Spacer::Spacer(int width, int height) :
 }
 
 //------------------------------------------------------------------------------
-Reply Spacer::draw(Position pos, Boundary container) {
-    printBase(pos, container);
-
-    drawn = true;
-    return Reply::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
-Reply Spacer::buffer(Position pos, Boundary container) {
-    bufferBase(pos, container);
-
-    drawn = true;
-    return Reply::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
 Reply Spacer::interact(inputEvent::MouseEvent action) {
     return Reply::IGNORED;
 }
 
-//--------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Box* Spacer::copyBox() const {
     return new Spacer(*this);
 }
 
-//--------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Box* Spacer::createBox() const {
     return new Spacer();
 }
 
-//--------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 std::string Spacer::getClassName() const {
     return std::string("Spacer");
+}
+
+//------------------------------------------------------------------------------
+Reply Spacer::printProtocol(Position pos, Boundary container, bool drawMode) {
+    printBase(pos, container, drawMode);
+
+    drawn = true;
+    return Reply::CONTINUE;
 }
 
 }

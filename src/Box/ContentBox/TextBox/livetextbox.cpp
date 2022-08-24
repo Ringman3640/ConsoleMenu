@@ -51,18 +51,6 @@ LiveTextBox::LiveTextBox(int width, int height, std::string text) :
 }
 
 //------------------------------------------------------------------------------
-Reply LiveTextBox::draw(Position pos, Boundary container) {
-    updateTextBoxContent();
-    return TextBox::draw(pos, container);
-}
-
-//------------------------------------------------------------------------------
-Reply LiveTextBox::buffer(Position pos, Boundary container) {
-    updateTextBoxContent();
-    return TextBox::buffer(pos, container);
-}
-
-//------------------------------------------------------------------------------
 Reply LiveTextBox::interact(inputEvent::MouseEvent action) {
     return Reply::IGNORED;
 }
@@ -80,6 +68,13 @@ Box* LiveTextBox::createBox() const {
 //------------------------------------------------------------------------------
 std::string LiveTextBox::getClassName() const {
     return std::string("LiveTextBox");
+}
+
+//------------------------------------------------------------------------------
+Reply LiveTextBox::printProtocol(Position pos, Boundary container,
+        bool drawMode) {
+    updateTextBoxContent();
+    return TextBox::printProtocol(pos, container, drawMode);
 }
 
 //------------------------------------------------------------------------------

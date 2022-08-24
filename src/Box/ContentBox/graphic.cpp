@@ -45,128 +45,6 @@ Graphic::Graphic(int width, int height) :
 }
 
 //------------------------------------------------------------------------------
-Reply Graphic::draw(Position pos, Boundary container) {
-    printBase(pos, container);
-    if (actualWidth == 0 || actualHeight == 0) {
-        return Reply::CONTINUE;
-    }
-
-    // Check for ideal drawing conditions for efficiency (that the canvas is
-    //     fully visible)
-    if (targetWidth == actualWidth - (vertBorderSize * 2)
-            && targetHeight == actualHeight - (horizBorderSize * 2)) {
-        Position currPos = absolutePos;
-
-        for (int i = 0; i < canvas.size(); ++i) {
-            canvas[i].push_back('\0');
-            console.writeToScreen(currPos, &canvas[i][0]);
-            canvas[i].pop_back();
-            ++currPos.row;
-        }
-
-        return Reply::CONTINUE;
-    }
-
-    // Canvas obscured due to resizing or borders condition
-    Boundary visibleArea{
-        absolutePos.col + vertBorderSize,   // Left
-        absolutePos.row + horizBorderSize,  // Top
-        absolutePos.col + actualWidth - 1 - vertBorderSize,     // Right
-        absolutePos.row + actualHeight - 1 - horizBorderSize    // Bottom
-        };
-    int horizOffset = getHorizontalOffset();
-    int vertOffset = getVerticalOffset();
-
-    Position currPos{
-        absolutePos.col + horizOffset,  // Col
-        absolutePos.row + vertOffset    // Row
-        };
-    int maxRow = absolutePos.row + canvas.size();
-    for (int row = 0; row < canvas.size(); ++row) {
-        currPos.col = absolutePos.col + horizOffset;
-
-        int rowSize = canvas[row].size();
-        for (int col = 0; col < rowSize; ++col) {
-            // Print cell if it is in the visible canvas area
-            if (currPos.row >= visibleArea.top
-                    && currPos.row <= visibleArea.bottom
-                    && currPos.col >= visibleArea.left
-                    && currPos.col <= visibleArea.right) {
-                char cStr[2] = { canvas[row][col], '\0' };
-                console.writeToScreen(currPos, cStr);
-            }
-
-            ++currPos.col;
-        }
-
-        ++currPos.row;
-    }
-
-    return Reply::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
-Reply Graphic::buffer(Position pos, Boundary container) {
-    bufferBase(pos, container);
-    if (actualWidth == 0 || actualHeight == 0) {
-        return Reply::CONTINUE;
-    }
-
-    // Check for ideal drawing conditions for efficiency (that the canvas is
-    //     fully visible)
-    if (targetWidth == actualWidth - (vertBorderSize * 2)
-        && targetHeight == actualHeight - (horizBorderSize * 2)) {
-        Position currPos = absolutePos;
-
-        for (int i = 0; i < canvas.size(); ++i) {
-            canvas[i].push_back('\0');
-            console.writeToBuffer(currPos, &canvas[i][0]);
-            canvas[i].pop_back();
-            ++currPos.row;
-        }
-
-        return Reply::CONTINUE;
-    }
-
-    // Canvas obscured due to resizing or borders condition
-    Boundary visibleArea{
-        absolutePos.col + vertBorderSize,   // Left
-        absolutePos.row + horizBorderSize,  // Top
-        absolutePos.col + actualWidth - 1 - vertBorderSize,     // Right
-        absolutePos.row + actualHeight - 1 - horizBorderSize    // Bottom
-    };
-    int horizOffset = getHorizontalOffset();
-    int vertOffset = getVerticalOffset();
-
-    Position currPos{
-        absolutePos.col + horizOffset,  // Col
-        absolutePos.row + vertOffset    // Row
-    };
-    int maxRow = absolutePos.row + canvas.size();
-    for (int row = 0; row < canvas.size(); ++row) {
-        currPos.col = absolutePos.col + horizOffset;
-
-        int rowSize = canvas[row].size();
-        for (int col = 0; col < rowSize; ++col) {
-            // Print cell if it is in the visible canvas area
-            if (currPos.row >= visibleArea.top
-                && currPos.row <= visibleArea.bottom
-                && currPos.col >= visibleArea.left
-                && currPos.col <= visibleArea.right) {
-                char cStr[2] = { canvas[row][col], '\0' };
-                console.writeToBuffer(currPos, cStr);
-            }
-
-            ++currPos.col;
-        }
-
-        ++currPos.row;
-    }
-
-    return Reply::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
 Reply Graphic::interact(inputEvent::MouseEvent action) {
     return Reply::IGNORED;
 }
@@ -205,6 +83,67 @@ void Graphic::clear() {
     for (int row = 0; row < canvas.size(); ++row) {
         std::fill(canvas[row].begin(), canvas[row].end(), ' ');
     }
+}
+
+//------------------------------------------------------------------------------
+Reply Graphic::printProtocol(Position pos, Boundary container, bool drawMode) {
+    printBase(pos, container, drawMode);
+    if (actualWidth == 0 || actualHeight == 0) {
+        return Reply::CONTINUE;
+    }
+
+    // Check for ideal drawing conditions for efficiency (that the canvas is
+    //     fully visible)
+    if (targetWidth == actualWidth - (vertBorderSize * 2)
+        && targetHeight == actualHeight - (horizBorderSize * 2)) {
+        Position currPos = absolutePos;
+
+        for (int i = 0; i < canvas.size(); ++i) {
+            canvas[i].push_back('\0');
+            printLine(currPos, &canvas[i][0], drawMode);
+            canvas[i].pop_back();
+            ++currPos.row;
+        }
+
+        return Reply::CONTINUE;
+    }
+
+    // Canvas obscured due to resizing or borders condition
+    Boundary visibleArea{
+        absolutePos.col + vertBorderSize,   // Left
+        absolutePos.row + horizBorderSize,  // Top
+        absolutePos.col + actualWidth - 1 - vertBorderSize,     // Right
+        absolutePos.row + actualHeight - 1 - horizBorderSize    // Bottom
+    };
+    int horizOffset = getHorizontalOffset();
+    int vertOffset = getVerticalOffset();
+
+    Position currPos{
+        absolutePos.col + horizOffset,  // Col
+        absolutePos.row + vertOffset    // Row
+    };
+    int maxRow = absolutePos.row + canvas.size();
+    for (int row = 0; row < canvas.size(); ++row) {
+        currPos.col = absolutePos.col + horizOffset;
+
+        int rowSize = canvas[row].size();
+        for (int col = 0; col < rowSize; ++col) {
+            // Print cell if it is in the visible canvas area
+            if (currPos.row >= visibleArea.top
+                && currPos.row <= visibleArea.bottom
+                && currPos.col >= visibleArea.left
+                && currPos.col <= visibleArea.right) {
+                char cStr[2] = { canvas[row][col], '\0' };
+                printLine(currPos, cStr, drawMode);
+            }
+
+            ++currPos.col;
+        }
+
+        ++currPos.row;
+    }
+
+    return Reply::CONTINUE;
 }
 
 //------------------------------------------------------------------------------

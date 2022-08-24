@@ -38,18 +38,6 @@ public:
     VertContainer(const VertContainer& cpy);
 
     //--------------------------------------------------------------------------
-    // Draw the contents of the BoxContainer to the output console given an
-    // origin column and row, and a constraining rectangle that represents the
-    // container boundaries that the BoxContainer is within.
-    virtual Reply draw(Position pos, Boundary container) override;
-
-    //--------------------------------------------------------------------------
-    // Buffer the contents BoxContainer to EditConsole's write buffer given an
-    // origin column and row, and a constraining rectangle that represents the
-    // container boundaries that the BoxContainer is within.
-    virtual Reply buffer(Position pos, Boundary container) override;
-
-    //--------------------------------------------------------------------------
     // Recieve a MouseEvent and send it to the corresponding contained Box.
     virtual Reply interact(inputEvent::MouseEvent action) override;
 
@@ -79,6 +67,14 @@ public:
     virtual int getWidth() const override;
 
 private:
+    //--------------------------------------------------------------------------
+    // The protocol used to print the Box object to the screen or buffer
+    // (indicated by the drawMode parameter). Each derived class of Box should
+    // implement their own protocol, which is then called through draw(),
+    // buffer(), redraw(), or rebuffer().
+    virtual Reply printProtocol(Position pos, Boundary container,
+            bool drawMode) override;
+
     //--------------------------------------------------------------------------
     // Get the spacing vector for content printed vertically given the
     // content boundary, total height of the contents, and dynamic box count.

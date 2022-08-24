@@ -89,23 +89,31 @@ Box::~Box() {
 }
 
 //------------------------------------------------------------------------------
+Reply Box::draw(Position pos, Boundary container) {
+    return printProtocol(pos, container, true);
+}
+
+//------------------------------------------------------------------------------
+Reply Box::buffer(Position pos, Boundary container) {
+    return printProtocol(pos, container, false);
+}
+
+//------------------------------------------------------------------------------
 Reply Box::redraw() {
-    // Check if Box has been drawn yet
     if (!drawn) {
         return Reply::FAILED;
     }
 
-    return draw(targetPos, savedBound);
+    return printProtocol(targetPos, savedBound, true);
 }
 
 //------------------------------------------------------------------------------
 Reply Box::rebuffer() {
-    // Check if Box has been drawn yet
     if (!drawn) {
         return Reply::FAILED;
     }
 
-    return buffer(targetPos, savedBound);
+    return printProtocol(targetPos, savedBound, false);
 }
 
 //------------------------------------------------------------------------------
@@ -358,7 +366,7 @@ void Box::calculateActualDimAndPos(Position pos, Boundary container) {
 }
 
 //------------------------------------------------------------------------------
-void Box::printBase(Position pos, Boundary container) {
+void Box::printBase(Position pos, Boundary container, bool drawMode) {
     calculateActualDimAndPos(pos, container);
     std::string topBorderRow(actualWidth, borderFill.top);
     std::string bottomBorderRow(actualWidth, borderFill.bottom);
@@ -375,61 +383,55 @@ void Box::printBase(Position pos, Boundary container) {
         internalRow[actualWidth - i - 1] = borderFill.right;
     }
 
-    // Backup current cursor position
-    Position backupPos = console.getCursorPosition();
-
     // Draw Box base to console
+    Position currPos = absolutePos;
     for (int i = 0; i < actualHeight; ++i) {
-        console.setCursorPosition(Position{ absolutePos.col,
-                absolutePos.row + i });
         if (i + 1 <= horizBorderSize) {
-            std::cout << topBorderRow;
+            printLine(currPos, topBorderRow.c_str(), drawMode);
         }
         else if (actualHeight - i <= horizBorderSize) {
-            std::cout << bottomBorderRow;
+            printLine(currPos, bottomBorderRow.c_str(), drawMode);
         }
         else {
-            std::cout << internalRow;
+            printLine(currPos, internalRow.c_str(), drawMode);
         }
+        ++currPos.row;
     }
-
-    // Resore cursor potition
-    console.setCursorPosition(backupPos);
 }
 
 //------------------------------------------------------------------------------
-void Box::bufferBase(Position pos, Boundary container) {
-    calculateActualDimAndPos(pos, container);
-    std::string topBorderRow(actualWidth, borderFill.top);
-    std::string bottomBorderRow(actualWidth, borderFill.bottom);
-    std::string internalRow(actualWidth, ' ');
-
-    // Add borders to internalRows
-    for (int i = 0; i < vertBorderSize && i < actualWidth; ++i) {
-        topBorderRow[i] = borderFill.left;
-        bottomBorderRow[i] = borderFill.left;
-        internalRow[i] = borderFill.left;
-
-        topBorderRow[actualWidth - i - 1] = borderFill.right;
-        bottomBorderRow[actualWidth - i - 1] = borderFill.right;
-        internalRow[actualWidth - i - 1] = borderFill.right;
-    }
-
-    // Draw Box base to console
-    for (int i = 0; i < actualHeight; ++i) {
-        if (i + 1 <= horizBorderSize) {
-            console.writeToBuffer(Position{ absolutePos.col,
-                    absolutePos.row + i }, topBorderRow.c_str());
-        }
-        else if (actualHeight - i <= horizBorderSize) {
-            console.writeToBuffer(Position{ absolutePos.col,
-                    absolutePos.row + i }, bottomBorderRow.c_str());
-        }
-        else {
-            console.writeToBuffer(Position{ absolutePos.col,
-                    absolutePos.row + i }, internalRow.c_str());
-        }
-    }
-}
+//void Box::bufferBase(Position pos, Boundary container) {
+//    calculateActualDimAndPos(pos, container);
+//    std::string topBorderRow(actualWidth, borderFill.top);
+//    std::string bottomBorderRow(actualWidth, borderFill.bottom);
+//    std::string internalRow(actualWidth, ' ');
+//
+//    // Add borders to internalRows
+//    for (int i = 0; i < vertBorderSize && i < actualWidth; ++i) {
+//        topBorderRow[i] = borderFill.left;
+//        bottomBorderRow[i] = borderFill.left;
+//        internalRow[i] = borderFill.left;
+//
+//        topBorderRow[actualWidth - i - 1] = borderFill.right;
+//        bottomBorderRow[actualWidth - i - 1] = borderFill.right;
+//        internalRow[actualWidth - i - 1] = borderFill.right;
+//    }
+//
+//    // Draw Box base to console
+//    for (int i = 0; i < actualHeight; ++i) {
+//        if (i + 1 <= horizBorderSize) {
+//            console.writeToBuffer(Position{ absolutePos.col,
+//                    absolutePos.row + i }, topBorderRow.c_str());
+//        }
+//        else if (actualHeight - i <= horizBorderSize) {
+//            console.writeToBuffer(Position{ absolutePos.col,
+//                    absolutePos.row + i }, bottomBorderRow.c_str());
+//        }
+//        else {
+//            console.writeToBuffer(Position{ absolutePos.col,
+//                    absolutePos.row + i }, internalRow.c_str());
+//        }
+//    }
+//}
 
 }

@@ -37,71 +37,6 @@ TextBox::TextBox(int width, int height, std::string text) :
 }
 
 //------------------------------------------------------------------------------
-Reply TextBox::draw(Position pos, Boundary container) {
-    printBase(pos, container);
-    splitText();
-    applyHorizontalAlignment();
-
-    // Determine spacing offset for vertical alignment
-    int printableLines = actualHeight - (horizBorderSize * 2);
-    int vertOffset = 0;
-    if (lines.size() < printableLines) {
-        if (alignment & Align::TOP) {
-            vertOffset = 0;
-        }
-        else if (alignment & Align::MIDDLE) {
-            vertOffset = (printableLines - lines.size()) / 2;
-        }
-        else if (alignment & Align::BOTTOM) {
-            vertOffset = printableLines - lines.size();
-        }
-    }
-
-    // Print text
-    int startRow = vertOffset + absolutePos.row;
-    for (int i = 0; i < printableLines && i < lines.size(); ++i) {
-        console.setCursorPosition(Position{ absolutePos.col + vertBorderSize,
-            startRow + horizBorderSize + i });
-        std::cout << lines[i];
-    }
-
-    drawn = true;
-    return Reply::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
-Reply TextBox::buffer(Position pos, Boundary container) {
-    bufferBase(pos, container);
-    splitText();
-    applyHorizontalAlignment();
-
-    // Determine spacing offset for vertical alignment
-    int printableLines = actualHeight - (horizBorderSize * 2);
-    int vertOffset = 0;
-    if (lines.size() < printableLines) {
-        if (alignment & Align::TOP) {
-            vertOffset = 0;
-        }
-        else if (alignment & Align::MIDDLE) {
-            vertOffset = (printableLines - lines.size()) / 2;
-        }
-        else if (alignment & Align::BOTTOM) {
-            vertOffset = printableLines - lines.size();
-        }
-    }
-
-    // Print text
-    int startRow = vertOffset + absolutePos.row;
-    for (int i = 0; i < printableLines && i < lines.size(); ++i) {
-        console.writeToBuffer(Position{ absolutePos.col + vertBorderSize,
-                startRow + horizBorderSize + i }, lines[i].c_str());
-    }
-
-    drawn = true;
-    return Reply::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
 Reply TextBox::interact(inputEvent::MouseEvent action) {
     return Reply::IGNORED;
 }
@@ -124,6 +59,40 @@ std::string TextBox::getClassName() const {
 //------------------------------------------------------------------------------
 void TextBox::setText(std::string text) {
     this->text = text;
+}
+
+//------------------------------------------------------------------------------
+Reply TextBox::printProtocol(Position pos, Boundary container, bool drawMode) {
+    printBase(pos, container, drawMode);
+    splitText();
+    applyHorizontalAlignment();
+
+    // Determine spacing offset for vertical alignment
+    int printableLines = actualHeight - (horizBorderSize * 2);
+    int vertOffset = 0;
+    if (lines.size() < printableLines) {
+        if (alignment & Align::TOP) {
+            vertOffset = 0;
+        }
+        else if (alignment & Align::MIDDLE) {
+            vertOffset = (printableLines - lines.size()) / 2;
+        }
+        else if (alignment & Align::BOTTOM) {
+            vertOffset = printableLines - lines.size();
+        }
+    }
+
+    // Print text
+    Position currPos = absolutePos;
+    currPos.col += vertBorderSize;
+    currPos.row += vertOffset + horizBorderSize;
+    for (int i = 0; i < printableLines && i < lines.size(); ++i) {
+        printLine(currPos, lines[i].c_str(), drawMode);
+        ++currPos.row;
+    }
+
+    drawn = true;
+    return Reply::CONTINUE;
 }
 
 //------------------------------------------------------------------------------

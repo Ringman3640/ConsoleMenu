@@ -44,112 +44,6 @@ HorizContainer::HorizContainer(
 }
 
 //------------------------------------------------------------------------------
-Reply HorizContainer::draw(Position pos, Boundary container) {
-    // Get acutal dimensions and print base
-    int prevTargWidth = targetWidth;
-    int prevTargHeight = targetHeight;
-    targetWidth = getWidth();
-    targetHeight = getHeight();
-    printBase(pos, container);
-    targetWidth = prevTargWidth;
-    targetHeight = prevTargHeight;
-
-    // Check if there is anything to print
-    if (contents.empty()) {
-        return Reply::CONTINUE;
-    }
-
-    // Get total content width
-    int totalWidth = 0;
-    int dynamCount = 0;
-    for (auto it = contents.begin(); it != contents.end(); ++it) {
-        if (!it->second.fixed) {
-            totalWidth += it->second.item->getWidth();
-            ++dynamCount;
-        }
-    }
-
-    // Get content space boundary and width spacing
-    Boundary contentBound = getContentBound(absolutePos);
-    std::vector<int> spacing = getSpacingWidth(contentBound, totalWidth,
-        dynamCount);
-
-    // Print contents
-    int spacingIdx = spacing.size() - 1;
-    Position offset{ actualWidth - vertBorderSize, 0 };
-    for (auto it = contents.rbegin(); it != contents.rend(); ++it) {
-        if (it->second.fixed) {
-            Position drawPos{ it->second.pos.col + pos.col, it->second.pos.row
-                    + pos.row };
-            it->second.item->draw(drawPos, contentBound);
-        }
-        else {
-            int itemWidth = it->second.item->getWidth();
-            offset.col -= spacing[spacingIdx--] + itemWidth;
-            offset.row = getRowOffset(it->second.item->getHeight());
-            it->second.item->draw(Position{ absolutePos.col + offset.col,
-                    absolutePos.row + offset.row }, contentBound);
-        }
-    }
-
-    drawn = true;
-    return Reply::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
-Reply HorizContainer::buffer(Position pos, Boundary container) {
-    // Get acutal dimensions and print base
-    int prevTargWidth = targetWidth;
-    int prevTargHeight = targetHeight;
-    targetWidth = getWidth();
-    targetHeight = getHeight();
-    bufferBase(pos, container);
-    targetWidth = prevTargWidth;
-    targetHeight = prevTargHeight;
-
-    // Check if there is anything to print
-    if (contents.empty()) {
-        return Reply::CONTINUE;
-    }
-
-    // Get total content width
-    int totalWidth = 0;
-    int dynamCount = 0;
-    for (auto it = contents.begin(); it != contents.end(); ++it) {
-        if (!it->second.fixed) {
-            totalWidth += it->second.item->getWidth();
-            ++dynamCount;
-        }
-    }
-
-    // Get content space boundary and width spacing
-    Boundary contentBound = getContentBound(absolutePos);
-    std::vector<int> spacing = getSpacingWidth(contentBound, totalWidth,
-        dynamCount);
-
-    // Print contents
-    int spacingIdx = spacing.size() - 1;
-    Position offset{ actualWidth - vertBorderSize, 0 };
-    for (auto it = contents.rbegin(); it != contents.rend(); ++it) {
-        if (it->second.fixed) {
-            Position buffPos{ it->second.pos.col + pos.col, it->second.pos.row
-                    + pos.row };
-            it->second.item->buffer(buffPos, contentBound);
-        }
-        else {
-            int itemWidth = it->second.item->getWidth();
-            offset.col -= spacing[spacingIdx--] + itemWidth;
-            offset.row = getRowOffset(it->second.item->getHeight());
-            it->second.item->buffer(Position{ absolutePos.col + offset.col,
-                    absolutePos.row + offset.row }, contentBound);
-        }
-    }
-
-    drawn = true;
-    return Reply::CONTINUE;
-}
-
-//------------------------------------------------------------------------------
 Reply HorizContainer::interact(inputEvent::MouseEvent action) {
     for (auto it = contents.begin(); it != contents.end(); ++it) {
         if (it->second.item->posInBounds(action.mousePosition)) {
@@ -213,6 +107,73 @@ int HorizContainer::getWidth() const {
 
     //updateHeightWidth = false;
     return std::max<int>(targetWidth, maxWidth);
+}
+
+//------------------------------------------------------------------------------
+Reply HorizContainer::printProtocol(Position pos, Boundary container,
+        bool drawMode) {
+    // Get acutal dimensions and print base
+    int prevTargWidth = targetWidth;
+    int prevTargHeight = targetHeight;
+    targetWidth = getWidth();
+    targetHeight = getHeight();
+    printBase(pos, container, drawMode);
+    targetWidth = prevTargWidth;
+    targetHeight = prevTargHeight;
+
+    // Check if there is anything to print
+    if (contents.empty()) {
+        return Reply::CONTINUE;
+    }
+
+    // Get total content width
+    int totalWidth = 0;
+    int dynamCount = 0;
+    for (auto it = contents.begin(); it != contents.end(); ++it) {
+        if (!it->second.fixed) {
+            totalWidth += it->second.item->getWidth();
+            ++dynamCount;
+        }
+    }
+
+    // Get content space boundary and width spacing
+    Boundary contentBound = getContentBound(absolutePos);
+    std::vector<int> spacing = getSpacingWidth(contentBound, totalWidth,
+        dynamCount);
+
+    // Print contents
+    int spacingIdx = spacing.size() - 1;
+    Position offset{ actualWidth - vertBorderSize, 0 };
+    for (auto it = contents.rbegin(); it != contents.rend(); ++it) {
+        if (it->second.fixed) {
+            Position drawPos{ it->second.pos.col + pos.col, it->second.pos.row
+                    + pos.row };
+
+            if (drawMode) {
+                it->second.item->draw(drawPos, contentBound);
+            }
+            else {
+                it->second.item->buffer(drawPos, contentBound);
+            }
+        }
+        else {
+            int itemWidth = it->second.item->getWidth();
+            offset.col -= spacing[spacingIdx--] + itemWidth;
+            offset.row = getRowOffset(it->second.item->getHeight());
+
+            if (drawMode) {
+                it->second.item->draw(Position{ absolutePos.col + offset.col,
+                        absolutePos.row + offset.row }, contentBound);
+            }
+            else {
+                it->second.item->buffer(Position{ absolutePos.col + offset.col,
+                        absolutePos.row + offset.row }, contentBound);
+            }
+        }
+    }
+
+    drawn = true;
+    return Reply::CONTINUE;
 }
 
 //------------------------------------------------------------------------------
