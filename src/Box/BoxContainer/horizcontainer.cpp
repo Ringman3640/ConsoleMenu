@@ -7,12 +7,7 @@
 //     other Box objects. HorizContainers are responsible for printing all
 //     contained Boxes horizontally within its boundary according to the
 //     specified Alignment and BoxDistrib flags applied. Any input MouseEvent is
-//     passed into the corresponding contained Box and returns its Reply
-//
-// Class Functionality:
-//     - Inherits all methods and functionality of the BoxContainer class.
-//     - Implements the draw() and interact() BoxContainer methods.
-//     - Draw the HorizContainer to the console window.
+//     passed into the corresponding contained Box and returns its Reply.
 // 
 // Dependencies: BoxContainer class.
 //------------------------------------------------------------------------------

@@ -8,17 +8,6 @@
 //      a wrapper for Windows API console functions. This class is implemented
 //      as a singleton; an instance must be aquired through the
 //      ConsoleEditor::getInstance() method. 
-//
-// Class Functionality:
-//     - Get and set the console window dimensions in character units.
-//     - Get and set the console buffer dimensions in character units.
-//     - Receive input from the console's input buffer.
-//     - Get the position of the mouse cursor on the console window.
-//     - Get and set the position of the console cursor on the console window. 
-//     - Scroll the console window vertically a specified number of character
-//       units.
-//     - Clear the console screen.
-//     - Clear the input buffer.
 // 
 // Supported OS: Windows
 //------------------------------------------------------------------------------

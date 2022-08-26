@@ -8,12 +8,6 @@
 //     window. The text content is aligned within the TextBox depending on the
 //     alignment flags specified. Does not produce any output or action upon
 //     interaction.
-//
-// Class Functionality:
-//     - Inherits all methods and functionality of the ContentBox class.
-//     - Implements the draw() and interact() ContentBox methods.
-//     - Draw the TextBox object to the console window.
-//     - Set the text of the TextBox that will be printed.
 // 
 // Dependencies: ContentBox class.
 //------------------------------------------------------------------------------

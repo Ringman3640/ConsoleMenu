@@ -8,13 +8,6 @@
 //     sent to the window screen and the corresponding REPLY returned by the
 //     VertContainer interaction. Menu objects can be printed to the window
 //     screen at regular intervals using the auto print system. 
-//
-// Class Functionality:
-//     - Access/modify the Menu's VertContainer.
-//     - Set/get the Menu's options.
-//     - Automatically print the contents of the Menu at regular intervals.
-//     - Add input hooks to modify/respond to user inputs before they are 
-//       processed.
 // 
 // Dependencies: Box, ConsoleEditor, MenuReplyActionFactory, and InputHookChain
 //      class.

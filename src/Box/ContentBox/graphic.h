@@ -10,12 +10,6 @@
 //     changes to the dimensions and position of the Graphic at run-time. The
 //     Graphic's Alignment selection will modify how the canvas is displayed
 //     if the visible area is smaller than the size of the canvas.
-//
-// Class Functionality:
-//     - Inherits all methods and functionality of the ContentBox class.
-//     - Access and modify the Graphic's canvas by character or by row line. 
-//     - Formats canvas positioning if visible area is reduced depending on
-//       Alignment selection.
 // 
 // Dependencies: ContentBox class.
 //------------------------------------------------------------------------------

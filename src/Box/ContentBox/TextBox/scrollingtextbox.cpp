@@ -6,13 +6,6 @@
 // Description: A ScrollingTextBox is a type of TextBox that allows the user-
 //     defined text to be scrolled within the Box if there is not enought space
 //     to display the entire text message at once. 
-//
-// Class Functionality:
-//     - Inherits all methods and functionality of the TextBox class.
-//     - Draw the ScrollingTextBox to the console window.
-//     - Set the text of the ScrollingTextBox that will be printed.
-//     - Scroll through the contents of the TextBox given vertical mouse scroll
-//       inputs.
 // 
 // Dependencies: TextBox class.
 //------------------------------------------------------------------------------

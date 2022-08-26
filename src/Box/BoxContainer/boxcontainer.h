@@ -8,15 +8,6 @@
 //     Boxes within its boundary according to the specified Alignment and
 //     BoxDistrib flags applied. Any input MouseEvent is passed into the 
 //     corresponding contained Box and returns its Reply.
-//
-// Class Functionality:
-//     - Inherits all methods and functionality of the Box class.
-//     - Insert Boxes into the BoxContainer.
-//     - Remove Boxes from the BoxContainer.
-//     - Get references to Boxes within the BoxContainer.
-//     - Set if the Box is dynamically sized (if its dimensions can grow based
-//     - on the size of its contents).
-//     - Set the distribution of Boxes contained within the BoxContainer.
 // 
 // Dependencies: Box class.
 //------------------------------------------------------------------------------

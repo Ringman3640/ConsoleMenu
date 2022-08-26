@@ -12,15 +12,6 @@
 //     screen with a specified character fill. The contents of the Box are
 //     aligned within the Box given specified horizontal and vertical alignment
 //     flags.
-//
-// Class Functionality:
-//     - Defines the minimum interface for all Box objects.
-//     - Draw the Box to the program console.
-//     - Get and set the dimensions of the Box object.
-//     - Set the size of the horizontal and vertical border invididually or 
-//       concurrently. 
-//     - Set the character that will be used to print the console border.
-//     - Set the horizontal and vertical alignment of the Box contents. 
 // 
 // Dependencies: EditConsole class and Flag enumerators.
 //------------------------------------------------------------------------------

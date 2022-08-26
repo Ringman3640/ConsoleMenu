@@ -7,7 +7,7 @@
 //     objects given a Reply key. All recieved MenuReplyActions from this
 //     factory must be deleted by the caller to free allocated memory.
 // 
-// Dependencies: Flan enums and MenuReplyAction class and derived classes.
+// Dependencies: Flag enums and MenuReplyAction class and derived classes.
 //------------------------------------------------------------------------------
 
 #include "Menu/menureplyaction/menureplyactionfactory.h"

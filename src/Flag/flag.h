@@ -10,12 +10,7 @@
 //     to the content's container. 
 //
 //     Reply indicates what action should be taken by the caller of a function
-//     or method once the function or method returns.
-//
-// File Functionality:
-//     - Defines Align and Reply enumerator flags.
-//     - Defines and implements logical AND and OR operator overlaods for 
-//       Align and Reply flags. 
+//     or method once the function or method returns. 
 // 
 //------------------------------------------------------------------------------
 

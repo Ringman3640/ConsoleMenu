@@ -7,13 +7,6 @@
 //     auto printing on a per-Menu basis. Menus are inserted into the
 //     MenuManager in FILO behavior, where the most recently inserted Menu is
 //     the active Menu that is being managed for auto print. 
-//
-// Class Functionality:
-//     - Get the singleton instance of the MenuManager class.
-//     - Push and pop Menu objects into the manager.
-//     - Update the MenuManager to reflect changes to Menu options.
-//     - Set/get the default frame rate.
-//     - Get the live frame rate of the auto printed Menus.
 // 
 // Dependencies: Menu class.
 //------------------------------------------------------------------------------

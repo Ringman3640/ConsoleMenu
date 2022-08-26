@@ -7,11 +7,6 @@
 //     any internal content. Spacer objects act as padding on the console
 //     screen for other Box objects. Does not produce any output or action
 //     upon interaction.
-//
-// Class Functionality:
-//     - Inherits all methods and functionality of the ContentBox class.
-//     - Implements the draw() and interact() ContentBox methods.
-//     - Draw the Spacer to the console window.
 // 
 // Dependencies: ContentBox class.
 //------------------------------------------------------------------------------

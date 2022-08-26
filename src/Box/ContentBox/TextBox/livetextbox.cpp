@@ -7,11 +7,6 @@
 //     display to the screen. This reference relationship means that any changes
 //     made to the variable are automatically applied to the LiveTextBox when
 //     drawing or buffering. LiveTextBoxes support multiple basic data types.
-//
-// Class Functionality:
-//     - Inherits all methods and functionality of the TextBox class.
-//     - Draw the LiveTextBox to the console window.
-//     - Set the reference variable of the LiveTextBox.
 // 
 // Supported Data Types:
 //     - int

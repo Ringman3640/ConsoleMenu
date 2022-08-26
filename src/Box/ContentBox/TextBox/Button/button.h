@@ -5,13 +5,6 @@
 //------------------------------------------------------------------------------
 // Description: A Button is a type of TextBox that performs some user-defined
 //     execution when interacted with a mouse click event.
-//
-// Class Functionality:
-//     - Inherits all methods and functionality of the TextBox class.
-//     - Draw the Button to the console window.
-//     - Set the text of the Button that will be printed.
-//     - Interact with the Button with a left click, which performs a 
-//       user-defined execution.
 // 
 // Dependencies: TextBox class.
 //------------------------------------------------------------------------------

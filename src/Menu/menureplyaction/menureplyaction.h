@@ -6,10 +6,6 @@
 // Description: MenuReplyActions are responsible for operating on a Menu object
 //     in response to a returned Reply from the Menu's vertical box container
 //     after passing it input. 
-//
-// Class Functionality:
-//     - Execute the intended action corresponding to a Reply
-//     - Create a copy of the MenuReplyAction object
 // 
 // Dependencies: Menu class.
 //------------------------------------------------------------------------------
