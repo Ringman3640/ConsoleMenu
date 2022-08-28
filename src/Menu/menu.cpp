@@ -68,6 +68,8 @@ Reply Menu::enter() {
 
 //------------------------------------------------------------------------------
 void Menu::print() {
+    std::lock_guard<std::mutex> lock(printLock);
+
     if (options.useBuffering) {
         container.buffer(Position{ 0, 0 }, console.getWindowBoundary());
         console.printWriteBuffer();

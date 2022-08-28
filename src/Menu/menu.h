@@ -16,6 +16,7 @@
 #pragma once
 
 #include <functional>
+#include <mutex>
 #include "ConsoleEditor/consoleeditor.h"
 #include "Menu/menumanager.h"
 #include "Menu/inputhookchain.h"
@@ -132,6 +133,7 @@ private:
     static MenuReplyActionFactory& actionFactory;
 
     // Member data
+    std::mutex printLock;
     InputHookChain hookChain;
     VertContainer container;
     bool exitMenu;
