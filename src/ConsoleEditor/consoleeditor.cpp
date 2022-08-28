@@ -243,6 +243,9 @@ Position ConsoleEditor::getMousePosition() {
         return Position{ inBuff[i].Event.MouseEvent.dwMousePosition.X,
                 inBuff[i].Event.MouseEvent.dwMousePosition.Y };
     }
+
+    // No mouse position available
+    return Position{ -1, -1 };
 }
 
 //------------------------------------------------------------------------------
@@ -327,7 +330,8 @@ void ConsoleEditor::writeToBuffer(const Position& pos, const char text[]) {
         return;
     }
     Position drawIdx = { pos.col, pos.row };
-    Position buffDim{ writeBuffer[0].size() - 1, writeBuffer.size() - 1 };
+    Position buffDim{ (int)writeBuffer[0].size() - 1, 
+            (int)writeBuffer.size() - 1 };
 
     // Check draw position
     if (pos.col < 0 || pos.col > buffDim.col) {
@@ -338,7 +342,8 @@ void ConsoleEditor::writeToBuffer(const Position& pos, const char text[]) {
     }
 
     // Write to write buffer
-    while (text[textIdx] && pos.col + textIdx < writeBuffer[pos.row].size()) {
+    while (text[textIdx] && pos.col + textIdx 
+            < (int)writeBuffer[pos.row].size()) {
         writeBuffer[pos.row][drawIdx.col++] = text[textIdx++];
     }
 }
@@ -351,7 +356,7 @@ void ConsoleEditor::printWriteBuffer() {
     Position writePos = { 0, 0 };
     LPDWORD charsWritten = 0;
 
-    for (writePos.row; writePos.row < writeBuffer.size(); ++writePos.row) {
+    for (writePos.row; writePos.row < (int)writeBuffer.size(); ++writePos.row) {
         setCursorPosition(writePos);
         WriteConsoleA(OUT_HANDLE, &writeBuffer[writePos.row][0], 
                 writeBuffer[writePos.row].size(), charsWritten, NULL);
@@ -420,7 +425,7 @@ int ConsoleEditor::readInputBuffer(INPUT_RECORD inBuff[], int buffSize) {
 //------------------------------------------------------------------------------
 bool ConsoleEditor::fitBufferToWindow() {
     Position winSize = getWindowDimensions();
-    SMALL_RECT dim = { 0, 0, winSize.col - 1, winSize.row - 1 };
+    SMALL_RECT dim = { 0, 0, (SHORT)winSize.col - 1, (SHORT)winSize.row - 1 };
 
     // I do not know why, but I need to resize the window buffer screen and the
     // window buffer to accurately resize the screen (removing the additional

@@ -77,8 +77,17 @@ Reply ScrollingTextBox::printProtocol(Position pos, Boundary container,
     applyHorizontalAlignment();
 
     // Determine spacing offset for vertical alignment
-    int printableLines = actualHeight - (horizBorderSize * 2);
-    int printableWidth = actualWidth - (vertBorderSize * 2);
+    int temp = actualHeight - (horizBorderSize * 2);
+    if (temp < 0) {
+        temp = 0;
+    }
+    unsigned printableLines = static_cast<unsigned>(temp);
+
+    temp = actualWidth - (vertBorderSize * 2);
+    if (temp < 0) {
+        temp = 0;
+    }
+    unsigned printableWidth = static_cast<unsigned>(temp);
 
     int vertOffset = 0;
     if (lines.size() < printableLines) {
@@ -108,7 +117,7 @@ Reply ScrollingTextBox::printProtocol(Position pos, Boundary container,
     Position currPos = absolutePos;
     currPos.col += vertBorderSize;
     currPos.row += vertOffset + horizBorderSize;
-    for (int i = 0; i < printableLines && i < lines.size(); ++i) {
+    for (unsigned i = 0; i < printableLines && i < lines.size(); ++i) {
         printLine(currPos, lines[i + scrollPos].c_str(), drawMode);
         ++currPos.row;
     }

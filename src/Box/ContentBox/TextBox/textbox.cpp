@@ -62,7 +62,11 @@ Reply TextBox::printProtocol(Position pos, Boundary container, bool drawMode) {
     applyHorizontalAlignment();
 
     // Determine spacing offset for vertical alignment
-    int printableLines = actualHeight - (horizBorderSize * 2);
+    int temp = actualHeight - (horizBorderSize * 2);
+    if (temp < 0) {
+        temp = 0;
+    }
+    unsigned printableLines = static_cast<unsigned>(temp);
     int vertOffset = 0;
     if (lines.size() < printableLines) {
         if (alignment & Align::TOP) {
@@ -80,7 +84,7 @@ Reply TextBox::printProtocol(Position pos, Boundary container, bool drawMode) {
     Position currPos = absolutePos;
     currPos.col += vertBorderSize;
     currPos.row += vertOffset + horizBorderSize;
-    for (int i = 0; i < printableLines && i < lines.size(); ++i) {
+    for (unsigned i = 0; i < printableLines && i < lines.size(); ++i) {
         printLine(currPos, lines[i].c_str(), drawMode);
         ++currPos.row;
     }
@@ -100,10 +104,15 @@ void TextBox::splitText() {
         return;
     }
 
-    for (int i = 0; i < text.size(); ++i) {
+    for (unsigned i = 0; i < text.size(); ++i) {
 
         // Check if current range is larger than the allottable content width
-        if (i - startIdx >= actualWidth - (vertBorderSize * 2)) {
+        int temp = actualWidth - (vertBorderSize * 2);
+        if (temp < 0) {
+            temp = 0;
+        }
+        unsigned contentWidth = static_cast<unsigned>(temp);
+        if (i - startIdx >= contentWidth) {
 
             // Check if current range is one large word
             if (startIdx == endIdx) {
@@ -136,14 +145,14 @@ void TextBox::applyHorizontalAlignment() {
         return;
     }
     if (alignment & Align::CENTER) {
-        for (int i = 0; i < lines.size(); ++i) {
+        for (unsigned i = 0; i < lines.size(); ++i) {
             int padding = (contentWidth - lines[i].size()) / 2;
             lines[i] = std::string(padding, ' ') + lines[i];
         }
         return;
     }
     if (alignment & Align::RIGHT) {
-        for (int i = 0; i < lines.size(); ++i) {
+        for (unsigned i = 0; i < lines.size(); ++i) {
             int padding = (contentWidth - lines[i].size());
             lines[i] = std::string(padding, ' ') + lines[i];
         }

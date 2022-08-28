@@ -65,7 +65,7 @@ GraphicLine Graphic::operator [] (int idx) {
 
 //------------------------------------------------------------------------------
 GraphicLine Graphic::at(int idx) {
-    if (idx < 0 || idx > canvas.size() - 1) {
+    if (idx < 0 || static_cast<unsigned>(idx) > canvas.size() - 1) {
         throw std::out_of_range("Index out of range in Graphic::at()");
     }
 
@@ -74,7 +74,7 @@ GraphicLine Graphic::at(int idx) {
 
 //------------------------------------------------------------------------------
 void Graphic::clear() {
-    for (int row = 0; row < canvas.size(); ++row) {
+    for (unsigned row = 0; row < canvas.size(); ++row) {
         std::fill(canvas[row].begin(), canvas[row].end(), ' ');
     }
 }
@@ -92,7 +92,7 @@ Reply Graphic::printProtocol(Position pos, Boundary container, bool drawMode) {
         && targetHeight == actualHeight - (horizBorderSize * 2)) {
         Position currPos = absolutePos;
 
-        for (int i = 0; i < canvas.size(); ++i) {
+        for (unsigned i = 0; i < canvas.size(); ++i) {
             canvas[i].push_back('\0');
             printLine(currPos, &canvas[i][0], drawMode);
             canvas[i].pop_back();
@@ -117,7 +117,7 @@ Reply Graphic::printProtocol(Position pos, Boundary container, bool drawMode) {
         absolutePos.row + vertOffset    // Row
     };
     int maxRow = absolutePos.row + canvas.size();
-    for (int row = 0; row < canvas.size(); ++row) {
+    for (unsigned row = 0; row < canvas.size(); ++row) {
         currPos.col = absolutePos.col + horizOffset;
 
         int rowSize = canvas[row].size();
@@ -210,7 +210,7 @@ char& GraphicLine::operator [] (int idx) {
 
 //------------------------------------------------------------------------------
 char& GraphicLine::at(int idx) {
-    if (idx < 0 || idx > canvasLine->size() - 1) {
+    if (idx < 0 || static_cast<unsigned>(idx) > canvasLine->size() - 1) {
         throw std::out_of_range("Index out of range in GraphicsLine::at()");
     }
 
