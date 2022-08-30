@@ -107,37 +107,37 @@ public:
 
     //--------------------------------------------------------------------------
     // Set the target width and height of the Box.
-    void virtual setDimensions(int width, int height);
+    virtual void setDimensions(int width, int height);
 
     //--------------------------------------------------------------------------
     // Set the size in character units of the horizontal and vertical border 
     // sides.
-    void virtual setBorderSize(int size);
+    virtual void setBorderSize(int size);
 
     //--------------------------------------------------------------------------
     // Set the size in character units of the horizontal border sides.
-    void virtual setHorizontalBorderSize(int size);
+    virtual void setHorizontalBorderSize(int size);
 
     //--------------------------------------------------------------------------
     // Set the size in character units of the vertical border sides.
-    void virtual setVerticalBorderSize(int size);
+    virtual void setVerticalBorderSize(int size);
 
     //--------------------------------------------------------------------------
     // Set the fill character for the horizontal and vertical borders.
-    void virtual setBorderFill(char fill);
+    virtual void setBorderFill(char fill);
 
     //--------------------------------------------------------------------------
     // Set the individual fill characters for all border sides.
-    void virtual setBorderFill(const BorderFill& fill);
+    virtual void setBorderFill(const BorderFill& fill);
 
     //--------------------------------------------------------------------------
     // Set the alignment of the Box contents.
-    void virtual setAlignment(Align inAlign);
+    virtual void setAlignment(Align inAlign);
 
     //--------------------------------------------------------------------------
     // Check if the provided coordinate position is within the bounds of the
     // Box object. Returns false if the Box has not been drawn yet.
-    bool virtual posInBounds(Position pos) const;
+    virtual bool posInBounds(Position pos) const;
 
 protected:
     //--------------------------------------------------------------------------
