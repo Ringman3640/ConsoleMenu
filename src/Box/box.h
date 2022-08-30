@@ -107,37 +107,37 @@ public:
 
     //--------------------------------------------------------------------------
     // Set the target width and height of the Box.
-    void setDimensions(int width, int height);
+    void virtual setDimensions(int width, int height);
 
     //--------------------------------------------------------------------------
     // Set the size in character units of the horizontal and vertical border 
     // sides.
-    void setBorderSize(int size);
+    void virtual setBorderSize(int size);
 
     //--------------------------------------------------------------------------
     // Set the size in character units of the horizontal border sides.
-    void setHorizontalBorderSize(int size);
+    void virtual setHorizontalBorderSize(int size);
 
     //--------------------------------------------------------------------------
     // Set the size in character units of the vertical border sides.
-    void setVerticalBorderSize(int size);
+    void virtual setVerticalBorderSize(int size);
 
     //--------------------------------------------------------------------------
     // Set the fill character for the horizontal and vertical borders.
-    void setBorderFill(char fill);
+    void virtual setBorderFill(char fill);
 
     //--------------------------------------------------------------------------
     // Set the individual fill characters for all border sides.
-    void setBorderFill(const BorderFill& fill);
+    void virtual setBorderFill(const BorderFill& fill);
 
     //--------------------------------------------------------------------------
     // Set the alignment of the Box contents.
-    void setAlignment(Align inAlign);
+    void virtual setAlignment(Align inAlign);
 
     //--------------------------------------------------------------------------
     // Check if the provided coordinate position is within the bounds of the
     // Box object. Returns false if the Box has not been drawn yet.
-    bool posInBounds(Position pos) const;
+    bool virtual posInBounds(Position pos) const;
 
 protected:
     //--------------------------------------------------------------------------
