@@ -56,6 +56,10 @@ public:
     virtual std::string getClassName() const override;
 
     //--------------------------------------------------------------------------
+    // Set the target width and height of the Graphic
+    virtual void setDimensions(int width, int height) override;
+
+    //--------------------------------------------------------------------------
     // Get a GraphicLine from the Graphic's canvas.
     // Does not bounds check
     GraphicLine operator [] (int idx);

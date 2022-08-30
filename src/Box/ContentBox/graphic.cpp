@@ -59,6 +59,12 @@ std::string Graphic::getClassName() const {
 }
 
 //------------------------------------------------------------------------------
+void Graphic::setDimensions(int width, int height) {
+    Box::setDimensions(width, height);
+    updateCanvasSize();
+}
+
+//------------------------------------------------------------------------------
 GraphicLine Graphic::operator [] (int idx) {
     return GraphicLine(canvas[idx]);
 }
