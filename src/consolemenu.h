@@ -17,6 +17,7 @@
 #include "Box/BoxContainer/horizcontainer.h"
 #include "Box/BoxContainer/vertcontainer.h"
 #include "Box/ContentBox/spacer.h"
+#include "Box/ContentBox/graphic.h"
 #include "Box/ContentBox/TextBox/textbox.h"
 #include "Box/ContentBox/TextBox/livetextbox.h"
 #include "Box/ContentBox/TextBox/scrollingtextbox.h"
