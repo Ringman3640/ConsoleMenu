@@ -226,14 +226,14 @@ std::vector<int> VertContainer::getSpacingHeight(
             return std::move(spacing);
         }
 
-        if (alignment & Align::LEFT) {
+        if (alignment & Align::TOP) {
             spacing[spacing.size() - 1] = totalSpace;
         }
-        else if (alignment & Align::RIGHT) {
+        else if (alignment & Align::BOTTOM) {
             // do nothing
         }
         else {
-            // Default alignment is CENTER
+            // Default alignment is MIDDLE
             spacing[spacing.size() - 1] = totalSpace / 2;
         }
         break;
