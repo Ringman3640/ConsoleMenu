@@ -135,6 +135,10 @@ public:
     virtual void setAlignment(Align inAlign);
 
     //--------------------------------------------------------------------------
+    // Set whether the Box's base background is transparent.
+    virtual void backgroundTransparent(bool transparent);
+
+    //--------------------------------------------------------------------------
     // Check if the provided coordinate position is within the bounds of the
     // Box object. Returns false if the Box has not been drawn yet.
     virtual bool posInBounds(Position pos) const;
@@ -165,6 +169,7 @@ protected:
     // Drawing information
     Align alignment;
     bool drawn;
+    bool transparent;
 
     //--------------------------------------------------------------------------
     // The protocol used to print the Box object to the screen or buffer

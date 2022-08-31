@@ -44,7 +44,8 @@ Box::Box() :
     targetPos{ DEFAULT_POS },
     savedBound{ DEFAULT_BOUND },
     alignment{ Align::LEFT | Align::MIDDLE },
-    drawn{ false } {
+    drawn{ false },
+    transparent{ false } {
 
 }
 
@@ -61,7 +62,8 @@ Box::Box(int width, int height) :
     targetPos{ DEFAULT_POS },
     savedBound{ DEFAULT_BOUND },
     alignment{ Align::LEFT | Align::MIDDLE },
-    drawn{ false } {
+    drawn{ false },
+    transparent{ false } {
 
     // Cannot have negative width or height
     if (width < 0) {
@@ -159,6 +161,11 @@ void Box::setBorderFill(const BorderFill& fill) {
 //------------------------------------------------------------------------------
 void Box::setAlignment(Align inAlign) {
     alignment = inAlign;
+}
+
+//------------------------------------------------------------------------------
+void Box::backgroundTransparent(bool transparent) {
+    this->transparent = transparent;
 }
 
 //------------------------------------------------------------------------------
@@ -362,6 +369,7 @@ void Box::printBase(Position pos, Boundary container, bool drawMode) {
     std::string topBorderRow(actualWidth, borderFill.top);
     std::string bottomBorderRow(actualWidth, borderFill.bottom);
     std::string internalRow(actualWidth, ' ');
+    Position currPos = absolutePos;
 
     // Add vertical borders
     for (int i = 0; i < vertBorderSize && i < actualWidth; ++i) {
@@ -374,8 +382,38 @@ void Box::printBase(Position pos, Boundary container, bool drawMode) {
         internalRow[actualWidth - i - 1] = borderFill.right;
     }
 
-    // Draw Box base to console
-    Position currPos = absolutePos;
+    // Only print border if transparent
+    if (transparent) {
+        if (horizBorderSize == 0 && vertBorderSize == 0) {
+            return;
+        }
+
+        for (int i = 0; i < actualHeight; ++i) {
+            if (i + 1 <= horizBorderSize) {
+                printLine(currPos, topBorderRow.c_str(), drawMode);
+            }
+            else if (actualHeight - i <= horizBorderSize) {
+                printLine(currPos, bottomBorderRow.c_str(), drawMode);
+            }
+            else {
+                // Print vertical borders
+                int maxCol = currPos.col + actualWidth;
+                for (int j = 0; j < vertBorderSize; ++j) {
+                    char temp[2] = { borderFill.left, '\0' };
+                    printLine(Position{ currPos.col + i, currPos.row }, temp,
+                        drawMode);
+
+                    temp[0] = borderFill.right;
+                    printLine(Position{ maxCol - i, currPos.row }, temp, drawMode);
+                }
+            }
+            ++currPos.row;
+        }
+
+        return;
+    }
+
+    // Otherwise print opaque Box base to console
     for (int i = 0; i < actualHeight; ++i) {
         if (i + 1 <= horizBorderSize) {
             printLine(currPos, topBorderRow.c_str(), drawMode);
