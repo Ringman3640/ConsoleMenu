@@ -43,6 +43,11 @@ struct MenuOptions {
                             //     until the Menu is called to print through
                             //     the auto print system or a REFRESH reply.
 
+    bool backgroundTrans;   // Indicate if the Menu's background is transparent.
+                            //      If true, any previously printed information
+                            //      will not be overwritten if behind the blank
+                            //      space of the Menu.
+
     bool useBuffering;      // Use buffering to print the contents of the Menu
                             //     to the window screen. Otherwise, use drawing.
 

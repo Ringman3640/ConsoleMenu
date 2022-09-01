@@ -28,6 +28,7 @@ MenuReplyActionFactory& Menu::actionFactory
 //------------------------------------------------------------------------------
 MenuOptions::MenuOptions() :
     printOnEnter{ true },
+    backgroundTrans{ false },
     useBuffering{ true },
     useAutoPrint{ true },
     frameRate{ DEFAULT_FRAME_RATE } {
@@ -70,6 +71,7 @@ Reply Menu::enter() {
 void Menu::print() {
     std::lock_guard<std::mutex> lock(printLock);
 
+    container.backgroundTransparent(options.backgroundTrans);
     if (options.useBuffering) {
         container.buffer(Position{ 0, 0 }, console.getWindowBoundary());
         console.printWriteBuffer();
