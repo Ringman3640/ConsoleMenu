@@ -105,6 +105,7 @@ Reply Graphic::printProtocol(Position pos, Boundary container, bool drawMode) {
             ++currPos.row;
         }
 
+        drawn = true;
         return Reply::CONTINUE;
     }
 
@@ -143,6 +144,7 @@ Reply Graphic::printProtocol(Position pos, Boundary container, bool drawMode) {
         ++currPos.row;
     }
 
+    drawn = true;
     return Reply::CONTINUE;
 }
 
