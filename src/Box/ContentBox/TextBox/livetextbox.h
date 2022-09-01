@@ -62,6 +62,7 @@ public:
     void setLiveVariable(unsigned& var);
     void setLiveVariable(float& var);
     void setLiveVariable(double& var);
+    void setLiveVariable(char& var);
     void setLiveVariable(std::string& var);
 
     // Deleted setText() method
@@ -76,6 +77,7 @@ private:
         UNSIGNED,
         FLOAT,
         DOUBLE,
+        CHAR,
         STRING,
         UNINITIALIZED
     };
@@ -88,6 +90,7 @@ private:
         unsigned* unsignedPtr;
         float* floatPtr;
         double* doublePtr;
+        char* charPtr;
         std::string* stringPtr;
 
         // Uninitialized constructor

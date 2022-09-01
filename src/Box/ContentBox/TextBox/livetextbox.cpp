@@ -93,6 +93,10 @@ void LiveTextBox::setLiveVariable(double& var) {
     savedVar.doublePtr = &var;
     savedType = VARIABLE_TYPE::DOUBLE;
 }
+void LiveTextBox::setLiveVariable(char& var) {
+    savedVar.charPtr = &var;
+    savedType = VARIABLE_TYPE::CHAR;
+}
 void LiveTextBox::setLiveVariable(std::string& var) {
     savedVar.stringPtr = &var;
     savedType = VARIABLE_TYPE::STRING;
@@ -121,6 +125,10 @@ void LiveTextBox::updateTextBoxContent() {
 
     case VARIABLE_TYPE::DOUBLE:
         content = std::to_string(*savedVar.doublePtr);
+        break;
+
+    case VARIABLE_TYPE::CHAR:
+        content = *savedVar.charPtr;
         break;
 
     case VARIABLE_TYPE::STRING:
