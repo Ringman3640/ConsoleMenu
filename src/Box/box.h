@@ -80,6 +80,11 @@ public:
     virtual int getWidth() const = 0;
 
     //--------------------------------------------------------------------------
+    // Get the actual position of the Box when printed. 
+    // If the Box was not printed before, returns Position { -1, -1 }.
+    virtual Position getPosition() const;
+
+    //--------------------------------------------------------------------------
     // Draw the Box to the output console given an origin column and row, and
     // a constraining rectangle that represents the container boundaries that
     // the Box is within.

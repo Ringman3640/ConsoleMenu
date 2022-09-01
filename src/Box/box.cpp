@@ -82,6 +82,15 @@ Box::~Box() {
 }
 
 //------------------------------------------------------------------------------
+Position Box::getPosition() const {
+    if (!drawn) {
+        return Position{ -1, -1 };
+    }
+
+    return absolutePos;
+}
+
+//------------------------------------------------------------------------------
 Reply Box::draw(Position pos, Boundary container) {
     return printProtocol(pos, container, true);
 }
