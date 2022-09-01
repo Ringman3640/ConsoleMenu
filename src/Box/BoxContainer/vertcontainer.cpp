@@ -157,8 +157,6 @@ Reply VertContainer::printProtocol(Position pos, Boundary container,
             int itemHeight = it->second.item->getHeight();
             offset.row -= spacing[spacingIdx--] + itemHeight + 0; // TODO: test the + 1
             offset.col = getColOffset(it->second.item->getWidth());
-            it->second.item->draw(Position{ absolutePos.col + offset.col,
-                    absolutePos.row + offset.row }, contentBound);
 
             if (drawMode) {
                 it->second.item->draw(Position{ absolutePos.col + offset.col,
