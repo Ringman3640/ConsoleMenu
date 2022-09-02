@@ -132,7 +132,7 @@ void TextBox::splitText() {
     }
 
     // Append remaining words if necessary
-    if (startIdx != text.size() - 1) {
+    if (startIdx != text.size()) {
         lines.push_back(text.substr(startIdx));
     }
 }
