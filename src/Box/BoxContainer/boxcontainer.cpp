@@ -49,6 +49,15 @@ ItemAccessor BoxContainer::operator[] (int layer) {
 }
 
 //------------------------------------------------------------------------------
+void BoxContainer::insert(const Box& inBox) {
+    int layer = 1;
+    for (layer; contents.find(layer) != contents.end(); ++layer);
+
+    contents[layer] = BoxItem{ inBox.copyBox(), false, Position{-1, -1} };
+    updateHeightWidth = true;
+}
+
+//------------------------------------------------------------------------------
 void BoxContainer::insert(int layer, const Box& inBox) {
     if (contents.find(layer) != contents.end()) {
         delete contents[layer].item;

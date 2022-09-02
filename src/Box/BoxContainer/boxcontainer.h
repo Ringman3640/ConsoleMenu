@@ -121,6 +121,11 @@ public:
     virtual int getWidth() const = 0;
 
     //--------------------------------------------------------------------------
+    // Insert a Box into the BoxContainer at the next available layer
+    // incrementally starting from layer 1. The Box is marked as "dynamic".
+    virtual void insert(const Box& inBox);
+
+    //--------------------------------------------------------------------------
     // Insert a Box into the BoxContainer at a given layer. The Box is marked as
     // "dynamic", meaning that the Box is positioned according to the
     // BoxContainer's alignment and distribution flags.
