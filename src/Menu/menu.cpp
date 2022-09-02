@@ -82,6 +82,21 @@ void Menu::print() {
 }
 
 //------------------------------------------------------------------------------
+void Menu::insert(const Box& inBox) {
+    container.insert(inBox);
+}
+
+//------------------------------------------------------------------------------
+void Menu::insert(int layer, const Box& inBox) {
+    container.insert(layer, inBox);
+}
+
+//------------------------------------------------------------------------------
+void Menu::insert(int layer, const Box& inBox, const Position& pos) {
+    container.insert(layer, inBox, pos);
+}
+
+//------------------------------------------------------------------------------
 void Menu::exit() {
     exitMenu = true;
 }

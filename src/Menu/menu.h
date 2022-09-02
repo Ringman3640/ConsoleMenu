@@ -97,6 +97,25 @@ public:
     void print();
 
     //--------------------------------------------------------------------------
+    // Insert a Box into the Menu at the next available layer incrementally
+    // starting from layer 1. The Box is marked as "dynamic".
+    void insert(const Box& inBox);
+
+    //--------------------------------------------------------------------------
+    // Insert a Box into the Menu at a given layer. The Box is marked as
+    // "dynamic", meaning that the Box is positioned according to the
+    // BoxContainer's alignment and distribution flags.
+    void insert(int layer, const Box& inBox);
+
+    //--------------------------------------------------------------------------
+    // Insert a Box into the Menu at a specific position at a given layer. The
+    // Box is marked as "fixed", meaning that the the presence of the Box is not
+    // affected by the alignment and distribution flags of the BoxContainer, and
+    // the distribution of the dynamic Boxes are not affected by the inserted
+    // Box.
+    void insert(int layer, const Box& inBox, const Position& pos);
+
+    //--------------------------------------------------------------------------
     // Set the current options of the menu.
     void setOptions(const MenuOptions& options);
 
