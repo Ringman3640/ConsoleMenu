@@ -142,6 +142,13 @@ void Box::setBorderSize(int size) {
 }
 
 //------------------------------------------------------------------------------
+void Box::setBorderSize(BorderSize size) {
+    horizBorderSize = size.horizontal;
+    vertBorderSize = size.vertical;
+}
+
+
+//------------------------------------------------------------------------------
 void Box::setHorizontalBorderSize(int size) {
     horizBorderSize = size;
 }

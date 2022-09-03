@@ -127,6 +127,7 @@ public:
     // Set the size in character units of the horizontal and vertical border 
     // sides.
     virtual void setBorderSize(int size);
+    virtual void setBorderSize(BorderSize size);
 
     //--------------------------------------------------------------------------
     // Set the size in character units of the horizontal border sides.
