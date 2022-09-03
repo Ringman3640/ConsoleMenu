@@ -173,6 +173,17 @@ void Box::setAlignment(Align inAlign) {
 }
 
 //------------------------------------------------------------------------------
+BorderSize Box::getBorderSize() const {
+    return BorderSize{ horizBorderSize, vertBorderSize };
+}
+
+//------------------------------------------------------------------------------
+BorderFill Box::getBorderFill() const {
+    return borderFill;
+}
+
+
+//------------------------------------------------------------------------------
 void Box::backgroundTransparent(bool transparent) {
     this->transparent = transparent;
 }

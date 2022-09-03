@@ -29,9 +29,18 @@ namespace conu {
 const int MAXIMUM = (std::numeric_limits<int>::max)();
 
 //------------------------------------------------------------------------------
+// BorderSize struct
+// Contains information about the horizontal and vertical border sizes of the
+// Box object.
+struct BorderSize {
+    int horizontal;
+    int vertical;
+};
+
+//------------------------------------------------------------------------------
 // BorderFill struct
 // Contains information about the border fill characters for each side of
-// the box object.
+// the Box object.
 struct BorderFill {
     char left;
     char top;
@@ -138,6 +147,14 @@ public:
     //--------------------------------------------------------------------------
     // Set the alignment of the Box contents.
     virtual void setAlignment(Align inAlign);
+
+    //--------------------------------------------------------------------------
+    // Get the current horizontal and vertical border sizes of the Box.
+    virtual BorderSize getBorderSize() const;
+
+    //--------------------------------------------------------------------------
+    // Get the current current set of fill characters used by the Box.
+    virtual BorderFill getBorderFill() const;
 
     //--------------------------------------------------------------------------
     // Set whether the Box's base background is transparent.
