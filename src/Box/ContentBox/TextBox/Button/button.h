@@ -50,11 +50,16 @@ public:
     // invoked, the current Button will pass a reference to itself as an
     // argument.
     void setAction(std::function<Reply(Button&)> action);
+    void setAction(std::function<Reply(Button&, 
+            inputEvent::MouseEvent)> action);
 
 protected:
-    //--------------------------------------------------------------------------
     // Click handler function that is called in interact()
     std::function<Reply(Button&)> clickHandler;
+    std::function<Reply(Button&, inputEvent::MouseEvent)> inputClickHandler;
+
+    // Indicate if the clickHandler should pass the original InputEvent
+    bool passInput;
 
 };
 

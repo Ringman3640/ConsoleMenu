@@ -16,14 +16,18 @@ namespace conu {
 //--------------------------------------------------------------------------
 Button::Button(std::string text) :
     TextBox(text),
-    clickHandler{ nullptr } {
+    clickHandler{ nullptr },
+    inputClickHandler{ nullptr }, 
+    passInput{ false } {
 
 }
 
 //--------------------------------------------------------------------------
 Button::Button(int width, int height, std::string text) :
     TextBox(width, height, text),
-    clickHandler{ nullptr } {
+    clickHandler{ nullptr },
+    inputClickHandler{ nullptr },
+    passInput{ false } {
 
 }
 
@@ -33,7 +37,10 @@ Reply Button::interact(inputEvent::MouseEvent action) {
     if (!drawn) {
         return Reply::FAILED;
     }
-    if (clickHandler == nullptr) {
+    if (!passInput && clickHandler == nullptr) {
+        return Reply::FAILED;
+    }
+    if (passInput && inputClickHandler == nullptr) {
         return Reply::FAILED;
     }
 
@@ -49,6 +56,9 @@ Reply Button::interact(inputEvent::MouseEvent action) {
     }
 
     // Execute click handler and return reply
+    if (passInput) {
+        return inputClickHandler(*this, action);
+    }
     return clickHandler(*this);
 }
 
@@ -70,6 +80,14 @@ std::string Button::getClassName() const {
 //--------------------------------------------------------------------------
 void Button::setAction(std::function<Reply(Button&)> action) {
     clickHandler = action;
+    passInput = false;
+}
+
+//--------------------------------------------------------------------------
+void Button::setAction(std::function<Reply(Button&, 
+        inputEvent::MouseEvent)> action) {
+    inputClickHandler = action;
+    passInput = true;
 }
 
 }
