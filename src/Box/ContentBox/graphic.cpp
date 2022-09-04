@@ -65,14 +65,6 @@ void Graphic::setDimensions(int width, int height) {
 }
 
 //------------------------------------------------------------------------------
-int Graphic::getWidth() const {
-
-}
-
-//------------------------------------------------------------------------------
-int Graphic::getHeight
-
-//------------------------------------------------------------------------------
 GraphicLine Graphic::operator [] (int idx) {
     return GraphicLine(canvas[idx]);
 }
