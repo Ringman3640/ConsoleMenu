@@ -225,4 +225,16 @@ char& GraphicLine::at(int idx) {
     return (*canvasLine)[idx];
 }
 
+//------------------------------------------------------------------------------
+std::string GraphicLine::getString() const {
+    std::string lineString;
+    lineString.reserve(canvasLine->size());
+
+    for (char currChar : *canvasLine) {
+        lineString.push_back(currChar);
+    }
+    return lineString;
+}
+
+
 }

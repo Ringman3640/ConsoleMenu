@@ -17,6 +17,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include <stdexcept>
 #include <algorithm>
 #include "Box/ContentBox/contentbox.h"
@@ -126,6 +127,10 @@ public:
     // Get a reference to a character in the GraphicLine.
     // Throws out_of_range exception if index is outisde the line range.
     char& at(int idx);
+
+    //--------------------------------------------------------------------------
+    // Get a copy of the GraphicLine contents as an std::string object.
+    std::string getString() const;
 
 private:
     std::vector<char>* canvasLine;
