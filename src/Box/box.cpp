@@ -136,6 +136,23 @@ void Box::setDimensions(int width, int height) {
 }
 
 //------------------------------------------------------------------------------
+void Box::setDimensions(Position dimensions) {
+    // Cannot have negative width or height
+    if (dimensions.col < 0) {
+        dimensions.col = 0;
+    }
+    if (dimensions.row < 0) {
+        dimensions.row = 0;
+    }
+
+    targetWidth = dimensions.col;
+    actualWidth = dimensions.col;
+
+    targetHeight = dimensions.row;
+    actualHeight = dimensions.row;
+}
+
+//------------------------------------------------------------------------------
 void Box::setBorderSize(int size) {
     horizBorderSize = size;
     vertBorderSize = size;
@@ -177,6 +194,21 @@ void Box::setBorderFill(const BorderFill& fill) {
 //------------------------------------------------------------------------------
 void Box::setAlignment(Align inAlign) {
     alignment = inAlign;
+}
+
+//------------------------------------------------------------------------------
+Position Box::getDimensions() const {
+    return Position{ targetWidth, targetHeight };
+}
+
+//------------------------------------------------------------------------------
+int Box::getWidth() const {
+    return targetWidth;
+}
+
+//------------------------------------------------------------------------------
+int Box::getHeight() const {
+    return targetHeight;
 }
 
 //------------------------------------------------------------------------------

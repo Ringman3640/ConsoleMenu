@@ -124,9 +124,17 @@ public:
     virtual void setDimensions(int width, int height);
 
     //--------------------------------------------------------------------------
+    // Set the target width and height of the Box using a Position struct.
+    virtual void setDimensions(Position dimensions);
+
+    //--------------------------------------------------------------------------
     // Set the size in character units of the horizontal and vertical border 
     // sides.
     virtual void setBorderSize(int size);
+
+    //--------------------------------------------------------------------------
+    // Set the size in character units of the horizontal and vertical border
+    // sides individually using a BorderSize struct.
     virtual void setBorderSize(BorderSize size);
 
     //--------------------------------------------------------------------------
@@ -148,6 +156,20 @@ public:
     //--------------------------------------------------------------------------
     // Set the alignment of the Box contents.
     virtual void setAlignment(Align inAlign);
+
+    //--------------------------------------------------------------------------
+    // Get the target dimensions of the Box as a Position struct. The width is
+    // expressed as the col value of the Position, and the height is expressed
+    // as the row value of the Position.
+    virtual Position getDimensions() const;
+
+    //--------------------------------------------------------------------------
+    // Get the target width of the Box object.
+    virtual int getWidth() const;
+
+    //--------------------------------------------------------------------------
+    // Get the target height of the Box object.
+    virtual int getHeight() const;
 
     //--------------------------------------------------------------------------
     // Get the current horizontal and vertical border sizes of the Box.
