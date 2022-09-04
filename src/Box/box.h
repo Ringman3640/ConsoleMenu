@@ -161,15 +161,15 @@ public:
     // Get the target dimensions of the Box as a Position struct. The width is
     // expressed as the col value of the Position, and the height is expressed
     // as the row value of the Position.
-    virtual Position getDimensions() const;
+    virtual Position getTargetDimensions() const;
 
     //--------------------------------------------------------------------------
     // Get the target width of the Box object.
-    virtual int getWidth() const;
+    virtual int getTargetWidth() const;
 
     //--------------------------------------------------------------------------
     // Get the target height of the Box object.
-    virtual int getHeight() const;
+    virtual int getTargetHeight() const;
 
     //--------------------------------------------------------------------------
     // Get the current horizontal and vertical border sizes of the Box.

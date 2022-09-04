@@ -197,17 +197,17 @@ void Box::setAlignment(Align inAlign) {
 }
 
 //------------------------------------------------------------------------------
-Position Box::getDimensions() const {
+Position Box::getTargetDimensions() const {
     return Position{ targetWidth, targetHeight };
 }
 
 //------------------------------------------------------------------------------
-int Box::getWidth() const {
+int Box::getTargetWidth() const {
     return targetWidth;
 }
 
 //------------------------------------------------------------------------------
-int Box::getHeight() const {
+int Box::getTargetHeight() const {
     return targetHeight;
 }
 
