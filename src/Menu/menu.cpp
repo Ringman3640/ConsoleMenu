@@ -96,6 +96,10 @@ void Menu::insert(int layer, const Box& inBox, const Position& pos) {
     container.insert(layer, inBox, pos);
 }
 
+void Menu::remove(int layer) {
+    container.remove(layer);
+}
+
 //------------------------------------------------------------------------------
 Box* Menu::get(int layer) const {
     return container.get(layer);

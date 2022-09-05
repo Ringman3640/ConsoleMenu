@@ -116,6 +116,10 @@ public:
     void insert(int layer, const Box& inBox, const Position& pos);
 
     //--------------------------------------------------------------------------
+    // Remove a Box from the Menu at a specified layer. 
+    virtual void remove(int layer);
+
+    //--------------------------------------------------------------------------
     // Get a pointer reference to a contained Box item given its layer value. 
     // Returns nullptr if there was no Box found at the given layer.
     virtual Box* get(int layer) const;
