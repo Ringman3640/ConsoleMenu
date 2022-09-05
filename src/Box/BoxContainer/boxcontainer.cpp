@@ -19,6 +19,7 @@ namespace conu {
 //------------------------------------------------------------------------------
 BoxContainer::BoxContainer() :
     Box(),
+    recent{ nullptr },
     distribution{ BoxDistrib::NONE },
     returnHeight{ 0 },
     returnWidth{ 0 },
@@ -30,6 +31,7 @@ BoxContainer::BoxContainer() :
 //------------------------------------------------------------------------------
 BoxContainer::BoxContainer(int width, int height) :
     Box(width, height),
+    recent{ nullptr },
     distribution{ BoxDistrib::NONE },
     returnHeight{ 0 },
     returnWidth{ 0 },
@@ -53,7 +55,8 @@ void BoxContainer::insert(const Box& inBox) {
     int layer = 1;
     for (layer; contents.find(layer) != contents.end(); ++layer);
 
-    contents[layer] = BoxItem{ inBox.copyBox(), false, Position{-1, -1} };
+    recent = inBox.copyBox();
+    contents[layer] = BoxItem{ recent, false, Position{-1, -1} };
     updateHeightWidth = true;
 }
 
@@ -64,7 +67,8 @@ void BoxContainer::insert(int layer, const Box& inBox) {
         contents.erase(layer);
     }
 
-    contents[layer] = BoxItem{ inBox.copyBox(), false, Position{-1, -1} };
+    recent = inBox.copyBox();
+    contents[layer] = BoxItem{ recent, false, Position{-1, -1} };
     updateHeightWidth = true;
 }
 
@@ -75,7 +79,8 @@ void BoxContainer::insert(int layer, const Box& inBox, const Position& pos) {
         contents.erase(layer);
     }
 
-    contents[layer] = BoxItem{ inBox.copyBox(), true, pos };
+    recent = inBox.copyBox();
+    contents[layer] = BoxItem{ recent, true, pos };
     updateHeightWidth = true;
 }
 
@@ -86,6 +91,9 @@ void BoxContainer::remove(int layer) {
         return;
     }
 
+    if (recent == it->second.item) {
+        recent = nullptr;
+    }
     delete it->second.item;
     contents.erase(layer);
 }
@@ -98,6 +106,11 @@ Box* BoxContainer::get(int layer) const {
     }
 
     return target->second.item;
+}
+
+//------------------------------------------------------------------------------
+Box* BoxContainer::getRecent() const {
+    return recent;
 }
 
 //------------------------------------------------------------------------------

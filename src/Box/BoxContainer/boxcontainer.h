@@ -149,6 +149,12 @@ public:
     virtual Box* get(int layer) const;
 
     //--------------------------------------------------------------------------
+    // Get a pointer reference to the most recently inserted Box item within the
+    // BoxContainer. Returns nullptr if no Boxes have been inserted, or if the
+    // most recently inserted box was removed.
+    virtual Box* getRecent() const;
+
+    //--------------------------------------------------------------------------
     // Set whether or not the BoxContainer is dynamically sized. A dynamically
     // sized box will change its dimensions to fit the combined size of its
     // contents, up to the size of the containing Boundary. Otherwise, the 
@@ -173,6 +179,7 @@ protected:
     };
 
     std::map<int, BoxItem> contents;
+    Box* recent;
     BoxDistrib distribution;
     int returnHeight;
     int returnWidth;
