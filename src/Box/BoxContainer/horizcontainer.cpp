@@ -66,11 +66,7 @@ std::string HorizContainer::getClassName() const {
 
 //------------------------------------------------------------------------------
 int HorizContainer::getHeight() const {
-    if (!updateHeightWidth) {
-        return returnHeight;
-    }
     if (!dynamicSized) {
-        //updateHeightWidth = false;
         return targetHeight;
     }
 
@@ -80,17 +76,12 @@ int HorizContainer::getHeight() const {
     }
     maxHeight += horizBorderSize * 2;
 
-    //updateHeightWidth = false;
     return std::max<int>(targetHeight, maxHeight);
 }
 
 //------------------------------------------------------------------------------
 int HorizContainer::getWidth() const {
-    if (!updateHeightWidth) {
-        return returnWidth;
-    }
     if (!dynamicSized) {
-        //updateHeightWidth = false;
         return targetWidth;
     }
 
@@ -100,7 +91,6 @@ int HorizContainer::getWidth() const {
     }
     maxWidth += vertBorderSize * 2;
 
-    //updateHeightWidth = false;
     return std::max<int>(targetWidth, maxWidth);
 }
 

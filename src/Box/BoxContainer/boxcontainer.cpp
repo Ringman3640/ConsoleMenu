@@ -23,7 +23,6 @@ BoxContainer::BoxContainer() :
     distribution{ BoxDistrib::NONE },
     returnHeight{ 0 },
     returnWidth{ 0 },
-    updateHeightWidth{ true },
     dynamicSized{ false } {
 
 }
@@ -35,7 +34,6 @@ BoxContainer::BoxContainer(int width, int height) :
     distribution{ BoxDistrib::NONE },
     returnHeight{ 0 },
     returnWidth{ 0 },
-    updateHeightWidth{ true },
     dynamicSized{ false } {
 
 }
@@ -57,7 +55,6 @@ void BoxContainer::insert(const Box& inBox) {
 
     recent = inBox.copyBox();
     contents[layer] = BoxItem{ recent, false, Position{-1, -1} };
-    updateHeightWidth = true;
 }
 
 //------------------------------------------------------------------------------
@@ -69,7 +66,6 @@ void BoxContainer::insert(int layer, const Box& inBox) {
 
     recent = inBox.copyBox();
     contents[layer] = BoxItem{ recent, false, Position{-1, -1} };
-    updateHeightWidth = true;
 }
 
 //------------------------------------------------------------------------------
@@ -81,7 +77,6 @@ void BoxContainer::insert(int layer, const Box& inBox, const Position& pos) {
 
     recent = inBox.copyBox();
     contents[layer] = BoxItem{ recent, true, pos };
-    updateHeightWidth = true;
 }
 
 //------------------------------------------------------------------------------
@@ -115,7 +110,6 @@ Box* BoxContainer::getRecent() const {
 
 //------------------------------------------------------------------------------
 void BoxContainer::dynamicallySized(bool set) {
-    updateHeightWidth = true;
     dynamicSized = set;
 }
 

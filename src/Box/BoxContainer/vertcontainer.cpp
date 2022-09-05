@@ -66,11 +66,7 @@ std::string VertContainer::getClassName() const {
 
 //------------------------------------------------------------------------------
 int VertContainer::getHeight() const {
-    if (!updateHeightWidth) {
-        return returnHeight;
-    }
     if (!dynamicSized) {
-        //updateHeightWidth = false;
         return targetHeight;
     }
 
@@ -81,17 +77,12 @@ int VertContainer::getHeight() const {
     }
     maxHeight += horizBorderSize * 2;
 
-    //updateHeightWidth = false;
     return std::max<int>(targetHeight, maxHeight);
 }
 
 //------------------------------------------------------------------------------
 int VertContainer::getWidth() const {
-    if (!updateHeightWidth) {
-        return returnWidth;
-    }
     if (!dynamicSized) {
-        //updateHeightWidth = false;
         return targetWidth;
     }
 
@@ -102,7 +93,6 @@ int VertContainer::getWidth() const {
     }
     maxWidth += vertBorderSize * 2;
 
-    //updateHeightWidth = false;
     return std::max<int>(targetWidth, maxWidth);
 }
 

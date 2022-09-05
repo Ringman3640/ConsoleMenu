@@ -183,7 +183,6 @@ protected:
     BoxDistrib distribution;
     int returnHeight;
     int returnWidth;
-    mutable bool updateHeightWidth;
     bool dynamicSized;
 
     //--------------------------------------------------------------------------
