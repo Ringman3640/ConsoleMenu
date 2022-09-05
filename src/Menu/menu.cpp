@@ -97,6 +97,16 @@ void Menu::insert(int layer, const Box& inBox, const Position& pos) {
 }
 
 //------------------------------------------------------------------------------
+Box* Menu::get(int layer) const {
+    return container.get(layer);
+}
+
+//------------------------------------------------------------------------------
+Box* Menu::getRecent() const {
+    return container.getRecent();
+}
+
+//------------------------------------------------------------------------------
 void Menu::exit() {
     exitMenu = true;
 }

@@ -116,6 +116,17 @@ public:
     void insert(int layer, const Box& inBox, const Position& pos);
 
     //--------------------------------------------------------------------------
+    // Get a pointer reference to a contained Box item given its layer value. 
+    // Returns nullptr if there was no Box found at the given layer.
+    virtual Box* get(int layer) const;
+
+    //--------------------------------------------------------------------------
+    // Get a pointer reference to the most recently inserted Box item within the
+    // Menu. Returns nullptr if no Boxes have been inserted, or if the most
+    // recently inserted box was removed.
+    virtual Box* getRecent() const;
+
+    //--------------------------------------------------------------------------
     // Set the current options of the menu.
     void setOptions(const MenuOptions& options);
 
