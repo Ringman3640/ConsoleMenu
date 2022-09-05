@@ -71,6 +71,11 @@ public:
     GraphicLine at(int idx);
 
     //--------------------------------------------------------------------------
+    // Get the entire contents of the Canvas as an std::string object. Each
+    // line of the canvas is separated by a newline character.
+    std::string getString() const;
+
+    //--------------------------------------------------------------------------
     // Clear the Graphic canvas
     void clear();
 

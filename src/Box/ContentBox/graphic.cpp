@@ -79,6 +79,26 @@ GraphicLine Graphic::at(int idx) {
 }
 
 //------------------------------------------------------------------------------
+std::string Graphic::getString() const {
+    std::string canvasString;
+    canvasString.reserve(targetWidth * targetHeight + targetHeight);
+
+    for (int i = 0; i < targetHeight; ++i) {
+        for (char currChar : canvas[i]) {
+            canvasString.push_back(currChar);
+        }
+        canvasString.push_back('\n');
+    }
+
+    // Remove hanging newline character
+    if (!canvasString.empty()) {
+        canvasString.pop_back();
+    }
+
+    return canvasString;
+}
+
+//------------------------------------------------------------------------------
 void Graphic::clear() {
     for (unsigned row = 0; row < canvas.size(); ++row) {
         std::fill(canvas[row].begin(), canvas[row].end(), ' ');
