@@ -110,6 +110,10 @@ Box* Menu::getRecent() const {
     return container.getRecent();
 }
 
+void Menu::setAlignment(Align alignment) {
+    container.setAlignment(alignment);
+}
+
 //------------------------------------------------------------------------------
 void Menu::exit() {
     exitMenu = true;

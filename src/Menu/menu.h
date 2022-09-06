@@ -131,6 +131,10 @@ public:
     virtual Box* getRecent() const;
 
     //--------------------------------------------------------------------------
+    // Set the alignment of the Menu contents.
+    void setAlignment(Align alignment);
+
+    //--------------------------------------------------------------------------
     // Set the current options of the menu.
     void setOptions(const MenuOptions& options);
 
