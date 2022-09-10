@@ -12,7 +12,7 @@
 // Supported OS: Windows
 //------------------------------------------------------------------------------
 
-#include "consoleeditor.h"
+#include "ConsoleEditor/consoleeditor.h"
 
 namespace conu {
 
