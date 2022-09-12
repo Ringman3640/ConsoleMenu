@@ -28,8 +28,8 @@ MenuManager::MenuManager() :
     frameInterval{ std::chrono::milliseconds(0) },
     threadTargetState{ ManagerState::INACTIVE },
     threadCurrentState{ ManagerState::INACTIVE },
-    managerLock{ std::mutex() },
-    managerCV{ std::condition_variable() } {
+    managerLock{ },
+    managerCV{ } {
 
 }
 
