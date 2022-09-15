@@ -102,6 +102,13 @@ bool ConsoleEditor::resizeManagerRunning() const {
 
 //------------------------------------------------------------------------------
 bool ConsoleEditor::setWindowDimensions(short width, short height) {
+    // height needs to be incremented to prevent flickering effect on release
+    // builds of CONU programs. The window screen seems to be slightly smaller
+    // than that provided height, so any output to the bottom row causes all
+    // contents above to be shifted up sometimes. 
+    // Currently a problem with the library, need to look for solutions.
+    ++height;
+
     // Check if screen buffer is too small, resize if necessary
     CONSOLE_SCREEN_BUFFER_INFO buffSize;
     if (!GetConsoleScreenBufferInfo(OUT_HANDLE, &buffSize)) {
@@ -155,7 +162,9 @@ Position ConsoleEditor::getWindowDimensions() const {
         return Position{ -1, -1 };
     }
 
-    return Position{ winInfo.srWindow.Right + 1, winInfo.srWindow.Bottom + 1 };
+    // Do not add 1 to srWindow.Bottom to hide additional height as described
+    // setWindowDimensions().
+    return Position{ winInfo.srWindow.Right + 1, winInfo.srWindow.Bottom + 0 };
 }
 
 //------------------------------------------------------------------------------
@@ -165,7 +174,10 @@ Boundary ConsoleEditor::getWindowBoundary() const {
         return Boundary{ -1, -1, -1, -1 };
     }
 
-    return Boundary{ 0, 0, winInfo.srWindow.Right, winInfo.srWindow.Bottom };
+    // Subtract 1 from srWindow.Bottom to hide additional height as described
+    // in setWindowDimensions().
+    return Boundary{ 0, 0, winInfo.srWindow.Right, 
+            winInfo.srWindow.Bottom - 1 };
 }
 
 //------------------------------------------------------------------------------
