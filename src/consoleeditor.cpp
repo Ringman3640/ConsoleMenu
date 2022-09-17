@@ -117,7 +117,8 @@ bool ConsoleEditor::setWindowDimensions(short width, short height) {
     if (buffSize.dwMaximumWindowSize.X <= width 
             || buffSize.dwMaximumWindowSize.Y <= height) {
         SHORT buffWidth = std::max<int>(width, buffSize.dwMaximumWindowSize.X);
-        SHORT buffHeight = std::max<int>(height, buffSize.dwMaximumWindowSize.Y);
+        SHORT buffHeight = std::max<int>(height, 
+                buffSize.dwMaximumWindowSize.Y);
         SetConsoleScreenBufferSize(OUT_HANDLE, COORD{ buffWidth, buffHeight });
     }
 
@@ -378,7 +379,9 @@ void ConsoleEditor::printWriteBuffer() {
 }
 
 //------------------------------------------------------------------------------
-// https://stackoverflow.com/questions/5866529/how-do-we-clear-the-console-in-assembly/5866648#5866648
+// Implementation copied from:
+// https://stackoverflow.com/questions/5866529/how-do-we-clear-the-console-in-
+// assembly/5866648#5866648
 void ConsoleEditor::clearScreen() {
     COORD tl = { 0, 0 };
     CONSOLE_SCREEN_BUFFER_INFO s;
@@ -438,6 +441,10 @@ int ConsoleEditor::readInputBuffer(INPUT_RECORD inBuff[], int buffSize) {
 bool ConsoleEditor::fitBufferToWindow() {
     Position winSize = getWindowDimensions();
     SMALL_RECT dim = { 0, 0, (SHORT)winSize.col - 1, (SHORT)winSize.row - 1 };
+
+    // Need to increment winSize.col to get actual window dimensions as
+    // described in setWindowDimensions().
+    ++winSize.col;
 
     // I do not know why, but I need to resize the window buffer screen and the
     // window buffer to accurately resize the screen (removing the additional
