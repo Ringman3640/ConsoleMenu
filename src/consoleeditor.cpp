@@ -440,11 +440,12 @@ int ConsoleEditor::readInputBuffer(INPUT_RECORD inBuff[], int buffSize) {
 //------------------------------------------------------------------------------
 bool ConsoleEditor::fitBufferToWindow() {
     Position winSize = getWindowDimensions();
-    SMALL_RECT dim = { 0, 0, (SHORT)winSize.col - 1, (SHORT)winSize.row - 1 };
 
-    // Need to increment winSize.col to get actual window dimensions as
+    // Need to increment winSize.row to get actual window dimensions as
     // described in setWindowDimensions().
-    ++winSize.col;
+    ++winSize.row;
+
+    SMALL_RECT dim = { 0, 0, (SHORT)winSize.col - 1, (SHORT)winSize.row - 1 };
 
     // I do not know why, but I need to resize the window buffer screen and the
     // window buffer to accurately resize the screen (removing the additional
