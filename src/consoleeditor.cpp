@@ -24,7 +24,7 @@ ConsoleEditor ConsoleEditor::consoleInstance;
 
 //------------------------------------------------------------------------------
 ConsoleEditor::ConsoleEditor() :
-    initialized{ false },
+    init{ false },
     restoreMode{ 0 },
     resizeManagerThread{ },
     resizeHandler{ []() { return; } },
@@ -54,21 +54,26 @@ void ConsoleEditor::initialize() {
         | ENABLE_MOUSE_INPUT
         | ~ENABLE_QUICK_EDIT_MODE;
     SetConsoleMode(IN_HANDLE, mode);
-    initialized = true;
+    init = true;
 
     FlushConsoleInputBuffer(IN_HANDLE);
 }
 
 //------------------------------------------------------------------------------
 void ConsoleEditor::restore() {
-    if (!initialized) {
+    if (!init) {
         return;
     }
 
     SetConsoleMode(IN_HANDLE, restoreMode);
-    initialized = false;
+    init = false;
 
     stopResizeManager();
+}
+
+//------------------------------------------------------------------------------
+bool ConsoleEditor::initialized() const {
+    return init;
 }
 
 //------------------------------------------------------------------------------

@@ -48,6 +48,10 @@ public:
     void restore();
 
     //--------------------------------------------------------------------------
+    // Check if ConsoleEditor has been initialized.
+    bool initialized() const;
+
+    //--------------------------------------------------------------------------
     // Launch the resize manager if it is not already started.
     void startResizeManager();
 
@@ -168,7 +172,7 @@ private:
     static ConsoleEditor consoleInstance;
 
     // Windows console mode restoration members
-    bool initialized;
+    bool init;
     DWORD restoreMode;
 
     // Resize manager thread instance members
