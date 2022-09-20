@@ -28,6 +28,7 @@ MenuReplyActionFactory& Menu::actionFactory
 //------------------------------------------------------------------------------
 MenuOptions::MenuOptions() :
     printOnEnter{ true },
+    clearOnExit{ false },
     backgroundTrans{ false },
     useBuffering{ true },
     useAutoPrint{ true },
@@ -63,6 +64,9 @@ Reply Menu::enter() {
     }
     entryLoop();
 
+    if (options.clearOnExit) {
+        console.clearScreen();
+    }
     manager.popMenu();
     return exitReply;
 }

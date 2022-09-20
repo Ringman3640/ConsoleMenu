@@ -33,6 +33,8 @@ class MenuReplyActionFactory;
 //     default options for a Menu are as follows:
 //     
 //     printOnEnter = true
+//     clearOnExit = false
+//     backgroundTrans = false
 //     useBuffering = true
 //     useAutoPrint = true
 //     frameRate    = DEFAULT_FRAME_RATE
@@ -42,6 +44,9 @@ struct MenuOptions {
                             //     false, the window screen will not be updated
                             //     until the Menu is called to print through
                             //     the auto print system or a REFRESH reply.
+
+    bool clearOnExit;       // Clear the contents of the console window upon
+                            //     exit of the Menu. 
 
     bool backgroundTrans;   // Indicate if the Menu's background is transparent.
                             //      If true, any previously printed information
