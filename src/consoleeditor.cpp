@@ -56,6 +56,9 @@ void ConsoleEditor::initialize() {
     SetConsoleMode(IN_HANDLE, mode);
     init = true;
 
+    // Disable cursor visibility
+    setCursorVisibility(false);
+
     FlushConsoleInputBuffer(IN_HANDLE);
 }
 
