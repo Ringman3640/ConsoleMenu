@@ -19,11 +19,13 @@ namespace conu {
 //------------------------------------------------------------------------------
 // Static member initialization
 MenuManager MenuManager::instance;
+ConsoleEditor& MenuManager::console = ConsoleEditor::getInstance();
 int MenuManager::defaultFrameRate = 30;
 int MenuManager::realtimeFrameRate = INVALID_FRAME_RATE;
 
 //------------------------------------------------------------------------------
 MenuManager::MenuManager() :
+    restoreConsoleOnEmpty{ false },
     menuStack{ },
     frameInterval{ std::chrono::milliseconds(0) },
     threadTargetState{ ManagerState::INACTIVE },
@@ -60,11 +62,21 @@ void MenuManager::popMenu() {
 //------------------------------------------------------------------------------
 void MenuManager::update() {
     if (menuStack.empty()) {
+        if (restoreConsoleOnEmpty) {
+            
+            restoreConsoleOnEmpty = false;
+        }
         stopFrameRateManager();
         return;
     }
     if (threadCurrentState == ManagerState::INACTIVE) {
         startFrameRateManager(ManagerState::PAUSED);
+    }
+
+    // Check if need to initialize ConsoleEditor
+    if (!console.initialized()) {
+        console.initialize();
+        restoreConsoleOnEmpty = true;
     }
 
     MenuOptions currOptions = menuStack.top()->getOptions();

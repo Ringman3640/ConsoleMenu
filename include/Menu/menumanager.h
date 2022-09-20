@@ -17,6 +17,7 @@
 #include <thread>
 #include <mutex>
 #include <chrono>
+#include "ConsoleEditor/consoleeditor.h"
 
 namespace conu {
 
@@ -84,10 +85,12 @@ private:
     static MenuManager instance;
 
     // Static member data
+    static ConsoleEditor& console;
     static int defaultFrameRate;
     static int realtimeFrameRate;
 
     // Member data
+    bool restoreConsoleOnEmpty;
     std::stack<Menu*> menuStack;
     std::chrono::milliseconds frameInterval;
 
