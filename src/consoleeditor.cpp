@@ -387,9 +387,10 @@ void ConsoleEditor::printWriteBuffer() {
 }
 
 //------------------------------------------------------------------------------
-// Implementation copied from:
+// Implementation copied from Jerry Coffin at Stack Overflow:
+// https://stackoverflow.com/users/179910/jerry-coffin
 // https://stackoverflow.com/questions/5866529/how-do-we-clear-the-console-in-
-// assembly/5866648#5866648
+//     assembly/5866648#5866648
 void ConsoleEditor::clearScreen() {
     COORD tl = { 0, 0 };
     CONSOLE_SCREEN_BUFFER_INFO s;
