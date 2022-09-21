@@ -3,9 +3,13 @@
 // Interface for the ConsoleMenu library
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------
-// Description: 
-// 
-// Dependencies: 
+// Description: Includes all necessary header files needed for full usage of the
+//     ConsoleMenu library. This file should be included in a project that
+//     utilizes the ConsoleMenu library.
+//
+// Library Link: https://github.com/Ringman3640/ConsoleMenu
+//
+// Version: 1.00
 //------------------------------------------------------------------------------
 
 #pragma once
