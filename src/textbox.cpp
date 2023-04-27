@@ -117,7 +117,7 @@ void TextBox::splitText() {
             // Check if current range is one large word
             if (startIdx == endIdx) {
                 // Set endIdx to max range index
-                endIdx = i - 1;
+                endIdx = i;
             }
 
             lines.push_back(text.substr(startIdx, endIdx - startIdx));
@@ -146,6 +146,9 @@ void TextBox::applyHorizontalAlignment() {
     }
     if (alignment & Align::CENTER) {
         for (unsigned i = 0; i < lines.size(); ++i) {
+            if (lines[i].size() >= contentWidth) {
+                continue;
+            }
             int padding = (contentWidth - lines[i].size()) / 2;
             lines[i] = std::string(padding, ' ') + lines[i];
         }
@@ -153,6 +156,9 @@ void TextBox::applyHorizontalAlignment() {
     }
     if (alignment & Align::RIGHT) {
         for (unsigned i = 0; i < lines.size(); ++i) {
+            if (lines[i].size() >= contentWidth) {
+                continue;
+            }
             int padding = (contentWidth - lines[i].size());
             lines[i] = std::string(padding, ' ') + lines[i];
         }
