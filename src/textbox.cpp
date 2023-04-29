@@ -116,7 +116,7 @@ void TextBox::splitText() {
 
             // Check if current range is one large word
             bool largeWordSplit = false;
-            if (startIdx == endIdx) {
+            if (startIdx >= endIdx) {
                 // Set endIdx to max range index
                 endIdx = i;
                 largeWordSplit = true;
