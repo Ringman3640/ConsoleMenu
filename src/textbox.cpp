@@ -115,14 +115,22 @@ void TextBox::splitText() {
         if (i - startIdx >= contentWidth) {
 
             // Check if current range is one large word
+            bool largeWordSplit = false;
             if (startIdx == endIdx) {
                 // Set endIdx to max range index
                 endIdx = i;
+                largeWordSplit = true;
             }
 
             lines.push_back(text.substr(startIdx, endIdx - startIdx));
-            startIdx = endIdx + 1;
+            startIdx = endIdx;
             endIdx = startIdx;
+
+            // If the line was not a single large word, need to increment
+            // startIdx to skip proceeding space
+            if (!largeWordSplit) {
+                ++startIdx;
+            }
         }
 
         // Check for word split
