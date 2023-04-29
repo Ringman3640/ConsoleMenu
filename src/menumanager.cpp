@@ -120,6 +120,17 @@ int& MenuManager::getLiveFrameRate() {
 }
 
 //------------------------------------------------------------------------------
+void MenuManager::refreshMenu() {
+    std::lock_guard<std::mutex> lock(stackLock);
+    if (menuStack.empty()) {
+        return;
+    }
+
+    menuStack.top()->print();
+}
+
+
+//------------------------------------------------------------------------------
 void MenuManager::frameRateManager() {
     threadCurrentState = ManagerState::ACTIVE;
     std::chrono::milliseconds prevPrintTime = getTimeMS();

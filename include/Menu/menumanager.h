@@ -72,6 +72,11 @@ public:
     //     will be a negative value.
     static int& getLiveFrameRate();
 
+    //--------------------------------------------------------------------------
+    // Refresh the screen of the topmost menu within the MenuManager.
+    // No effect if there are no Menus.
+    void refreshMenu();
+
 private:
     // ManagerState enumerator to indicate the target/current state of the 
     //     frame rate manager.
