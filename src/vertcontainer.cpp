@@ -211,7 +211,7 @@ std::vector<int> VertContainer::getSpacingHeight(
 
         // Check edge case
         if (dynamCount == 0) {
-            return std::move(spacing);
+            return spacing;
         }
 
         if (alignment & Align::TOP) {
@@ -227,7 +227,7 @@ std::vector<int> VertContainer::getSpacingHeight(
         break;
     }
 
-    return std::move(spacing);
+    return spacing;
 }
 
 //------------------------------------------------------------------------------

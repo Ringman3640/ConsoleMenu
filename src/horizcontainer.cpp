@@ -209,7 +209,7 @@ std::vector<int> HorizContainer::getSpacingWidth(
 
         // Check edge case
         if (dynamCount == 0) {
-            return std::move(spacing);
+            return spacing;
         }
 
         if (alignment & Align::LEFT) {
@@ -225,7 +225,7 @@ std::vector<int> HorizContainer::getSpacingWidth(
         break;
     }
 
-    return std::move(spacing);
+    return spacing;
 }
 
 //------------------------------------------------------------------------------
