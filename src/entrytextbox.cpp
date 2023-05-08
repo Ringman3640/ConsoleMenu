@@ -165,12 +165,20 @@ void EntryTextBox::setProcessHandler(
 }
 
 //------------------------------------------------------------------------------
+void EntryTextBox::setInput(std::string input) {
+    std::lock_guard<std::mutex> lock(textLock);
+    userInput = input;
+}
+
+//------------------------------------------------------------------------------
 std::string EntryTextBox::getInput() const {
+    std::lock_guard<std::mutex> lock(textLock);
     return userInput;
 }
 
 //------------------------------------------------------------------------------
 void EntryTextBox::clearInput() {
+    std::lock_guard<std::mutex> lock(textLock);
     userInput.clear();
 }
 

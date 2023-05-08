@@ -82,6 +82,10 @@ public:
     void setProcessHandler(std::function<void(std::string&)> handler);
 
     //--------------------------------------------------------------------------
+    // Set the current user input string.
+    void setInput(std::string input);
+
+    //--------------------------------------------------------------------------
     // Get the current user input string.
     std::string getInput() const;
 
@@ -96,7 +100,7 @@ public:
     void autoMenuRefreshing(bool autoRefreshing);
 
 protected:
-    std::mutex textLock;
+    mutable std::mutex textLock;
     std::string displayText;
     std::string userInput;
 
