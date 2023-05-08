@@ -167,7 +167,7 @@ std::vector<int> BoxContainer::getSpacingHeight(const Boundary& container,
         break;
     }
 
-    return std::move(spacing);
+    return spacing;
 }
 
 //------------------------------------------------------------------------------
