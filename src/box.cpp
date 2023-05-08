@@ -27,8 +27,8 @@ const Position Box::DEFAULT_POS = Position{ 0, 0 };
 const Boundary Box::DEFAULT_BOUND = Boundary{ 0, 0, 0, 0 };
 const int Box::DEFAULT_HEIGHT = 5;
 const int Box::DEFAULT_WIDTH = 5;
-const int Box::DEFAULT_HORIZ_BORDER_SIZE = 1;
-const int Box::DEFAULT_VERT_BORDER_SIZE = 2;
+const int Box::DEFAULT_HORIZ_BORDER_SIZE = 0;
+const int Box::DEFAULT_VERT_BORDER_SIZE = 0;
 const BorderFill Box::DEFAULT_BORDER_FILL = BorderFill{ ' ', ' ', ' ', ' ' };
 
 //------------------------------------------------------------------------------
