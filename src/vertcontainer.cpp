@@ -65,11 +65,7 @@ std::string VertContainer::getClassName() const {
 }
 
 //------------------------------------------------------------------------------
-int VertContainer::getHeight() const {
-    if (!dynamicSized) {
-        return targetHeight;
-    }
-
+int VertContainer::getContentHeight() const {
     int maxHeight = 0;
     for (auto it = contents.begin(); it != contents.end(); ++it) {
         //maxHeight = std::max<int>(maxHeight, it->second.item->getHeight());
@@ -81,11 +77,7 @@ int VertContainer::getHeight() const {
 }
 
 //------------------------------------------------------------------------------
-int VertContainer::getWidth() const {
-    if (!dynamicSized) {
-        return targetWidth;
-    }
-
+int VertContainer::getContentWidth() const {
     int maxWidth = 0;
     for (auto it = contents.begin(); it != contents.end(); ++it) {
         //maxWidth += it->second.item->getWidth();

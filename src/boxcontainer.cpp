@@ -49,6 +49,24 @@ ItemAccessor BoxContainer::operator[] (int layer) {
 }
 
 //------------------------------------------------------------------------------
+int BoxContainer::getHeight() const {
+    if (dynamicSized) {
+        return getContentHeight();
+    }
+
+    return targetHeight;
+}
+
+//------------------------------------------------------------------------------
+int BoxContainer::getWidth() const {
+    if (dynamicSized) {
+        return getContentWidth();
+    }
+
+    return targetWidth;
+}
+
+//------------------------------------------------------------------------------
 void BoxContainer::insert(const Box& inBox) {
     int layer = 1;
     for (layer; contents.find(layer) != contents.end(); ++layer);

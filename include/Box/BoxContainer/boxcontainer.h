@@ -112,13 +112,21 @@ public:
     // Get the target height of the BoxContainer. If the BoxContainer is 
     // dynamically sized, it will get the maximum height the BoxContainer may
     // become.
-    virtual int getHeight() const = 0;
+    virtual int getHeight() const;
+
+    //--------------------------------------------------------------------------
+    // Get the total maximum height of the BoxContainer's inner contents.
+    virtual int getContentHeight() const = 0;
 
     //--------------------------------------------------------------------------
     // Get the target width of the BoxContainer. If the BoxContainer is 
     // dynamically sized, it will get the maximum width the BoxContainer may
     // become.
-    virtual int getWidth() const = 0;
+    virtual int getWidth() const;
+
+    //--------------------------------------------------------------------------
+    // Get the total maximum width of the BoxContainer's inner contents.
+    virtual int getContentWidth() const = 0;
 
     //--------------------------------------------------------------------------
     // Insert a Box into the BoxContainer at the next available layer

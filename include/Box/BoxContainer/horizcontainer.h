@@ -50,16 +50,12 @@ public:
     virtual std::string getClassName() const override;
 
     //--------------------------------------------------------------------------
-    // Get the target height of the BoxContainer. If the BoxContainer is 
-    // dynamically sized, it will get the maximum height the BoxContainer may
-    // become.
-    virtual int getHeight() const override;
+    // Get the total maximum height of the BoxContainer's inner contents.
+    virtual int getContentHeight() const override;
 
     //--------------------------------------------------------------------------
-    // Get the target width of the BoxContainer. If the BoxContainer is 
-    // dynamically sized, it will get the maximum width the BoxContainer may
-    // become.
-    virtual int getWidth() const override;
+    // Get the total maximum width of the BoxContainer's inner contents.
+    virtual int getContentWidth() const override;
 
 private:
     //--------------------------------------------------------------------------
