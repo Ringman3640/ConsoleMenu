@@ -35,6 +35,7 @@ class MenuReplyActionFactory;
 //     printOnEnter = true
 //     clearOnExit = false
 //     backgroundTrans = false
+//     resizeScreen = false;
 //     useBuffering = true
 //     useAutoPrint = true
 //     frameRate    = DEFAULT_FRAME_RATE
@@ -52,6 +53,12 @@ struct MenuOptions {
                             //      If true, any previously printed information
                             //      will not be overwritten if behind the blank
                             //      space of the Menu.
+
+    bool resizeScreen;      // Indicate if the Menu screen's window should be
+                            //      resized according to the values passed 
+                            //      through setScreenDimensions(). If true, the
+                            //      the screen will resize on entry and exit.
+                            //      If false, the screen will not change size.
 
     bool useBuffering;      // Use buffering to print the contents of the Menu
                             //     to the window screen. Otherwise, use drawing.
@@ -139,6 +146,12 @@ public:
     // Set the alignment of the Menu contents.
     void setAlignment(Align alignment);
 
+    // Set the dimensions of the Menu screen window. This will resize the menu
+    // window to the given dimensions upon menu entry. The screen widnow
+    // dimensions will be reverted to its original size upon menu exit. Calling
+    // this method will automatically set the option 'resizeScreen' to true.
+    void setScreenDimensions(short width, short height);
+
     //--------------------------------------------------------------------------
     // Set the current options of the menu.
     void setOptions(const MenuOptions& options);
@@ -186,11 +199,19 @@ private:
     VertContainer container;
     bool exitMenu;
     Reply exitReply;
+    short screenWidth;
+    short screenHeight;
+    short prevScreenWidth;
+    short prevScreenHeight;
     MenuOptions options;
 
     //--------------------------------------------------------------------------
     // Primary operation loop of the Menu object.
     virtual void entryLoop();
+
+    //--------------------------------------------------------------------------
+    // Resize the screen if applicable.
+    void resizeScreen();
 
 };
 

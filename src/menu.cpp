@@ -30,6 +30,7 @@ MenuOptions::MenuOptions() :
     printOnEnter{ true },
     clearOnExit{ false },
     backgroundTrans{ false },
+    resizeScreen{ false },
     useBuffering{ true },
     useAutoPrint{ true },
     frameRate{ DEFAULT_FRAME_RATE } {
@@ -40,7 +41,11 @@ MenuOptions::MenuOptions() :
 Menu::Menu() :
     container{ VertContainer(MAXIMUM, MAXIMUM) },
     exitMenu{ false },
-    exitReply{ Reply::CONTINUE } {
+    exitReply{ Reply::CONTINUE },
+    screenWidth{ -1 },
+    screenHeight{ -1 },
+    prevScreenWidth{ -1 },
+    prevScreenHeight{ -1 } {
 
 }
 
@@ -59,13 +64,21 @@ Reply Menu::enter() {
     exitMenu = false;
     manager.pushMenu(*this);
 
+    prevScreenWidth = console.getWindowWidth();
+    prevScreenHeight = console.getWindowHeight();
+    resizeScreen();
+
     if (options.printOnEnter) {
         print();
     }
+
     entryLoop();
 
     if (options.clearOnExit) {
         console.clearScreen();
+    }
+    if (options.resizeScreen) {
+        console.setWindowDimensions(prevScreenWidth, prevScreenHeight);
     }
     manager.popMenu();
     return exitReply;
@@ -114,8 +127,17 @@ Box* Menu::getRecent() const {
     return container.getRecent();
 }
 
+//------------------------------------------------------------------------------
 void Menu::setAlignment(Align alignment) {
     container.setAlignment(alignment);
+}
+
+//------------------------------------------------------------------------------
+void Menu::setScreenDimensions(short width, short height) {
+    screenWidth = width;
+    screenHeight = height;
+    options.resizeScreen = true;
+    resizeScreen();
 }
 
 //------------------------------------------------------------------------------
@@ -126,6 +148,7 @@ void Menu::exit() {
 //------------------------------------------------------------------------------
 void Menu::setOptions(const MenuOptions& options) {
     this->options = options;
+    resizeScreen();
 }
 
 //------------------------------------------------------------------------------
@@ -171,6 +194,21 @@ void Menu::entryLoop() {
         action->execute(*this);
         delete action;
     }
+}
+
+//------------------------------------------------------------------------------
+void Menu::resizeScreen() {
+    if (this != manager.peekMenu()) {
+        return;
+    }
+    if (!options.resizeScreen) {
+        return;
+    }
+    if (screenWidth < 0 || screenHeight < 0) {
+        return;
+    }
+
+    console.setWindowDimensions(screenWidth, screenHeight);
 }
 
 }
