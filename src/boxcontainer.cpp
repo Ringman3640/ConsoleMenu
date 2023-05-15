@@ -51,7 +51,7 @@ ItemAccessor BoxContainer::operator[] (int layer) {
 //------------------------------------------------------------------------------
 int BoxContainer::getHeight() const {
     if (dynamicSized) {
-        return getContentHeight();
+        return std::max<int>(getContentHeight(), targetHeight);
     }
 
     return targetHeight;
@@ -60,7 +60,7 @@ int BoxContainer::getHeight() const {
 //------------------------------------------------------------------------------
 int BoxContainer::getWidth() const {
     if (dynamicSized) {
-        return getContentWidth();
+        return std::max<int>(getContentWidth(), targetWidth);
     }
 
     return targetWidth;

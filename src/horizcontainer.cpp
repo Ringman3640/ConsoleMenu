@@ -72,7 +72,7 @@ int HorizContainer::getContentHeight() const {
     }
     maxHeight += horizBorderSize * 2;
 
-    return std::max<int>(targetHeight, maxHeight);
+    return maxHeight;
 }
 
 //------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ int HorizContainer::getContentWidth() const {
     }
     maxWidth += vertBorderSize * 2;
 
-    return std::max<int>(targetWidth, maxWidth);
+    return maxWidth;
 }
 
 //------------------------------------------------------------------------------
