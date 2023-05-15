@@ -60,6 +60,15 @@ void MenuManager::popMenu() {
 }
 
 //------------------------------------------------------------------------------
+const Menu* MenuManager::peekMenu() {
+    std::lock_guard<std::mutex> lock(stackLock);
+    if (menuStack.empty()) {
+        return nullptr;
+    }
+    return menuStack.top();
+}
+
+//------------------------------------------------------------------------------
 void MenuManager::update() {
     if (menuStack.empty()) {
         if (restoreConsoleOnEmpty) {

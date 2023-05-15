@@ -53,6 +53,10 @@ public:
     void popMenu();
 
     //--------------------------------------------------------------------------
+    // Get a pointer to the topmost Menu from the MenuManager.
+    const Menu* peekMenu();
+
+    //--------------------------------------------------------------------------
     // Update the MenuManager to reflect any changes made to a Menu's options.
     void update();
 
