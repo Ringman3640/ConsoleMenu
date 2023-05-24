@@ -147,7 +147,11 @@ void TextBox::splitText() {
 
 //------------------------------------------------------------------------------
 void TextBox::applyHorizontalAlignment() {
-    int contentWidth = actualWidth - (vertBorderSize * 2);
+    int temp = actualWidth - (vertBorderSize * 2);
+    if (temp < 0) {
+        temp = 0;
+    }
+    unsigned contentWidth = temp;
 
     if (alignment & Align::LEFT) {
         return;
