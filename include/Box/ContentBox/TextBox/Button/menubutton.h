@@ -47,6 +47,10 @@ public:
     // Get the name of the specific MenuButton class. Returns "MenuButton".
     virtual std::string getClassName() const override;
 
+    //--------------------------------------------------------------------------
+    // Set the Menu that will be entered on interact().
+    void setEntryMenu(Menu& entryMenu);
+
 private:
     //--------------------------------------------------------------------------
     // Pointer to the Menu that is to be entered upon interact

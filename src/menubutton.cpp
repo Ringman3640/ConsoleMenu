@@ -79,4 +79,9 @@ std::string MenuButton::getClassName() const {
     return std::string("MenuButton");
 }
 
+//------------------------------------------------------------------------------
+void MenuButton::setEntryMenu(Menu& entryMenu) {
+    this->entryMenu = &entryMenu;
+}
+
 }
