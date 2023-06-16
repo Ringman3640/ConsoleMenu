@@ -1,9 +1,9 @@
 //------------------------------------------------------------------------------
-// conuhome.cpp
-// CONUHome program for demonstrating CONU.
+// basicmenu.cpp
+// BasicMenu program for demonstrating CONU.
 // Author: Franz Alarcon
 //------------------------------------------------------------------------------
-// Program Description: CONUHome is a demonstration program to showcase the
+// Program Description: BasicMenu is a demonstration program to showcase the
 //     CONU library.
 // 
 // Dependencies: ConsoleMenu Library
