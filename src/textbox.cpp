@@ -100,18 +100,18 @@ void TextBox::splitText() {
     lines.clear();
 
     // Check if there is no printable width for text
-    if (actualWidth - (vertBorderSize * 2) <= 0) {
+    int temp = actualWidth - (vertBorderSize * 2);
+    if (temp < 0) {
+        temp = 0;
+    }
+    unsigned contentWidth = static_cast<unsigned>(temp);
+    if (contentWidth == 0) {
         return;
     }
 
     for (unsigned i = 0; i < text.size(); ++i) {
 
         // Check if current range is larger than the allottable content width
-        int temp = actualWidth - (vertBorderSize * 2);
-        if (temp < 0) {
-            temp = 0;
-        }
-        unsigned contentWidth = static_cast<unsigned>(temp);
         if (i - startIdx >= contentWidth) {
 
             // Check if current range is one large word
@@ -131,6 +131,13 @@ void TextBox::splitText() {
             if (!largeWordSplit) {
                 ++startIdx;
             }
+        }
+
+        // Check for newline
+        else if (text[i] == '\n') {
+            lines.push_back(text.substr(startIdx, endIdx - startIdx));
+            startIdx = i + 1;
+            endIdx = startIdx;
         }
 
         // Check for word split
